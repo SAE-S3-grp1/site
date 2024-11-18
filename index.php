@@ -9,10 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public_style.css">
 </head>
-
-<?php include_once "header.php" ?>
-
 <body>
+    <?php include_once "header.php" ?>
+    
 
 </body>
 </html>

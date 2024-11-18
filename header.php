@@ -1,26 +1,26 @@
 <!-- HEADER -->
 <header>
-      <a id="accueil" href="./index.html">
+      <a id="accueil" href="./index.php">
         <img src="assets/logo.png" alt="Logo de l'ADIIL"> </a>
       <nav>
         <ul>
           <li>
-            <a href="./evenements.html">Evenements</a>
+            <a href="./evenements.php">Evenements</a>
           </li>
           <li>
-            <a href="./actualites.html">Actualités</a>
+            <a href="./actualites.php">Actualités</a>
           </li>
           <li>
-            <a href="./boutique.html">Boutique</a>
+            <a href="./boutique.php">Boutique</a>
           </li>
           <li>
-            <a href="./agenda.html">Agenda</a>
+            <a href="./agenda.php">Agenda</a>
           </li>
           <li>
-            <a href="./aPropos.html">À propos</a>
+            <a href="./aPropos.php">À propos</a>
           </li>
           <li>
-            <a href="./monCompte.html">Mon compte</a>
+            <a href="./monCompte.php">Mon compte</a>
           </li>
         </ul>
       </nav>
