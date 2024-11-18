@@ -19,16 +19,21 @@
 
 <body>
 
+<!-- HEADER -->
 <?php require_once "header.php" ?>
+
+<!-- CORPS DE LA PRESENTATION -->
 <section>
-    <H2>LE BUREAU</H2>
-    <H3>Edition 2024</H3>
-    <img src="assets/photo_bureau_ADIIL.png" alt="Photo de groupe du bureau du BDE 2024" />
+    <H2 class='titre_section_apropos'>LE BUREAU</H2>
+    <div>
+        <H3>Edition 2024</H3>
+        <img src="assets/photo_bureau_ADIIL.png" alt="Photo de groupe du bureau du BDE 2024" />
+    </div>
     <p>Le Bureau des Étudiants "ADIIL" du département informatique de l'IUT de Laval a pour ambition de créer un environnement stimulant et convivial pour tous les étudiants. Notre motivation principale est de favoriser les échanges, de créer des opportunités d’apprentissage et de renforcer les liens entre les membres de notre communauté. Nous organisons des événements variés, allant des ateliers techniques aux soirées conviviales, pour répondre aux intérêts de chacun.</p>
 </section>
 
 <section>
-    <H2>LES MEMBRES</H2>
+    <H2 class='titre_section_apropos'>LES MEMBRES</H2>
     
     <div>
         <p>Enzo, notre Président : </p>
@@ -63,6 +68,9 @@
 
 </section>
 
+
+<!-- FOOTER -->
+<?php require_once "footer.php" ?>
 
 </body>
 </html>

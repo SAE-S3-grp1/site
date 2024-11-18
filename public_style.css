@@ -13,6 +13,10 @@ html{
     margin-top: 140px;
 }
 
+p {
+    font-size: 25px;
+}
+
 /*******************
 ****** HEADER ******
 ********************/
@@ -39,23 +43,27 @@ nav {
 
 header li {
     display: inline-block;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-right: 20px;
     transition-duration: 0.2s;
 }
 
 header li:hover{
-    background-color:red;
+    background-color: rgb(119, 241, 190);
 }
 
 header a {
     display: inline-block; /*pour étendre la zone de clique*/
-    padding: 20px;
+    padding: 10px;
     text-decoration: none;
     font-family: 'Inter', serif;
     font-weight: bold;
     font-size: 25px;
     color: white;
+}
+
+header a:hover{
+    color: rgb(23, 23, 23);
 }
 
 #accueil {
@@ -76,6 +84,52 @@ header a {
     font-size: 15px;
     color: rgb(208, 255, 0);
 }
+
+
+/*******************
+****** FOOTER ******
+********************/
+footer {
+    display: flex; /* Utiliser flexbox pour disposer les éléments */
+    justify-content: space-between; /* Espacement entre les liens et l'image */
+    align-items: center; /* Centrer verticalement les éléments */
+    background-color: rgb(23, 23, 23);
+    width: 100%; /* Largeur pleine */
+    height: 250px; /* Hauteur du footer */
+    padding: 35px; /* Ajouter un peu d'espace à l'intérieur */
+    margin-top : 40px;
+    position: relative; /* Le footer se place normalement dans le flux de la page */
+}
+
+footer .links {
+    display: flex;
+    flex-direction: column; /* Placer les liens les uns sous les autres */
+    justify-content: space-between; /* Espacer les éléments de manière égale */
+    flex-grow: 1; /* Faire en sorte que la section des liens prenne l'espace disponible */
+    height: 100%; /* Pour que l'espacement prenne toute la hauteur du footer */
+    text-align: left; /* Justifier les liens à gauche */
+}
+
+footer .links a {
+    text-decoration: none; /* Retirer le soulignement */
+    font-size: 30px; 
+    color: white; 
+    font-family: "Inter", sans-serif;
+    font-weight:500;
+    font-size: 25px;
+}
+
+footer .footer-image {
+    height: 100%;
+}
+
+footer .footer-image img {
+    width: auto; 
+    max-height: 100%;
+    max-width: 150px;
+}
+
+
 
 /********************
 *** LOGIN FORM ******
@@ -135,4 +189,14 @@ header a {
 
 .login-form button:hover {
     background-color: #0056b3;
+}
+
+
+/*********************
+****** A PROPOS ******
+**********************/
+
+.titre_section_apropos{
+    font-size: 70px;
+    text-align: center;
 }
