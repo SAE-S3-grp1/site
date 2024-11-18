@@ -63,13 +63,13 @@ header a {
     justify-content: flex-start;
     align-items: center;
     padding: 0px;
-    font-size: 31px;
+    padding-left: 35px;
+
 }
 
 #accueil img {
     margin: 0px;
-    width: 200px;
-    height: 98px;
+    width: 160px;
 }
 
 #header_admin{
