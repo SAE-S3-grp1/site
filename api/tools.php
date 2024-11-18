@@ -17,7 +17,7 @@ class tools
 
         $name = self::generateUUID() . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $name)) {
+        if (move_uploaded_file($_FILES['file']['tmp_name'], 'files/' . $name)) {
             return $name;
         }
 
@@ -37,6 +37,19 @@ class tools
             return false;
         }
 
-        return self::saveFile();
+        // On s'assure que l'extension du fichier ne causerait pas de problèmes
+        return DB::clean(self::saveFile());
+    }
+
+
+    public static function deleteFile($fileName)
+    {
+
+        if (file_exists('files/' . $fileName)) {
+            unlink('files/' . $fileName);
+            return true;
+        }
+
+        return false;
     }
 }
