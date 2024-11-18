@@ -114,6 +114,7 @@ main{
     align-items: flex-start;
     gap: 10px;
     padding: 25px;
+    overflow-y: auto;
 }
 nav + main { /* If there is a nav before the main, reduce the width of the main to make room for the nav */
     width: calc(100% - var(--nav-width));
@@ -125,10 +126,13 @@ nav + main { /* If there is a nav before the main, reduce the width of the main 
     align-items: center;
     justify-content: center;
     gap: 10px;
-    position: absolute;
-    bottom: 25px;
+    position: sticky;
+    bottom: 0;
+    margin-top: 15px;
     left: 50%;
-    transform: translateX(-50%);
+}
+.saves-buttons button{
+    backdrop-filter: blur(40px);
 }
 
 /* A PROPERTIE */
@@ -197,6 +201,20 @@ input:focus{
     border-color: var(--text-lighter);
 }
 
+/* TEXTAREA */
+textarea{
+    width: 100%;
+    background-color: var(--background-color-whiter);
+    border: 1.5px solid var(--background-color-darker);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    color: var(--text-lighter);
+    outline: none;
+    resize: none;
+}
+
 /* TOGGLE */
 .toggle{
     position: relative;
@@ -207,7 +225,7 @@ input:focus{
     cursor: pointer;
     user-select: none;
     transition-duration: 0.2s;
-    transition-timing-function: var(--bounce);
+    transition-timing-function: ease-in;
 }
 .toggle::after{
     content: '';

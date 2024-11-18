@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique</title>
+    <title>Evenements</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 
     <!-- HEADER -->
     <header>
-        <h1>Boutique</h1>
+        <h1>Evenements</h1>
     </header>
 
     <!-- NAVIGUATION -->
@@ -25,13 +25,14 @@
         <ul>
 
             <!-- AUTO GENERATED -->
-            <li>Canette Coca-Cola</li>
-            <li>Canette Oasis</li>
-            <li>Sweet BDE Taille M</li>
+            <li>Barbecue Campus en fête</li>
+            <li>Soirée d'intégration</li>
+            <li>Après-midi jeux de cartes</li>
+            <li>Raclette</li>
 
         </ul>
 
-        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un produit</button>
+        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un événement</button>
 
     </nav>
 
@@ -41,41 +42,61 @@
         <div class="propertie">
             <div>
                 <p>Image de présentation</p>
-                <p>Mettre à jour l’image de présentation du produit.</p>
+                <p>Mettre à jour l'image de présentation de l'événement.</p>
             </div>
             <div>
-                <img src="https://khaan-poke.com/wp-content/uploads/2020/05/coca-khaan-burger-canette-700x700.png" alt="Image du grade">
+                <img src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg" alt="Image de l'événement">
                 <img src="../ressources/edit.svg" alt="Charger une nouvelle image">
             </div>
         </div>
 
         <div class="propertie">
             <div>
-                <p>Nom de l’article</p>
-                <p>Nom affiché de l’article sur la boutique et dans le panier.</p>
+                <p>Nom de l'événement</p>
+                <p>Nom affiché de l'événement sur le calendrier.</p>
             </div>
             <div>
-                <input type="text" placeholder="Coca Cola">
+                <input type="text" placeholder="Barbecue de l'ADIIL">
             </div>
         </div>
 
         <div class="propertie">
             <div>
-                <p>Quantités</p>
-                <p>Quantités disponibles à l'achat de l'article. -1 Signifie illimité.</p>
+                <p>Lieu de l'événement</p>
+                <p>Endroit où l'événement va se dérouller.</p>
             </div>
             <div>
-                <input type="number" placeholder="12" min="-1">
+                <input type="text" placeholder="Parking Batiment Info">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Places disponibles</p>
+                <p>Places disponibles à la ventre de l'évènement. -1 Signifie illimité.</p>
+            </div>
+            <div>
+                <input type="number" placeholder="50" min="-1">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Prix de la place</p>
+                <p>Prix (en euros) d'une place à cet évènement. Mettre 0 pour afficher “gratuit”.</p>
+            </div>
+            <div>
+                <input type="number" placeholder="4.99" min="0">
             </div>
         </div>
 
         <div class="propertie">
             <div>
                 <p>Réductions applicables</p>
-                <p>Est-ce que les réductions du prix des grades peuvent s’appliquer sur cet article ?</p>
+                <p>Est-ce que les réductions du prix des grades peuvent s'appliquer sur cet événement ?</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle toggle-active"></div>
             </div>
         </div>
 

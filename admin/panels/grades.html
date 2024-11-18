@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique</title>
+    <title>Grades</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 
     <!-- HEADER -->
     <header>
-        <h1>Boutique</h1>
+        <h1>Grades</h1>
     </header>
 
     <!-- NAVIGUATION -->
@@ -25,13 +25,13 @@
         <ul>
 
             <!-- AUTO GENERATED -->
-            <li>Canette Coca-Cola</li>
-            <li>Canette Oasis</li>
-            <li>Sweet BDE Taille M</li>
+            <li>Fer</li>
+            <li>Or</li>
+            <li>Diamand</li>
 
         </ul>
 
-        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un produit</button>
+        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un grade</button>
 
     </nav>
 
@@ -44,38 +44,38 @@
                 <p>Mettre à jour l’image de présentation du produit.</p>
             </div>
             <div>
-                <img src="https://khaan-poke.com/wp-content/uploads/2020/05/coca-khaan-burger-canette-700x700.png" alt="Image du grade">
+                <img src="https://fr.minecraft.wiki/images/Lingot_d%27or.png?1ebba" alt="Image du grade">
                 <img src="../ressources/edit.svg" alt="Charger une nouvelle image">
             </div>
         </div>
 
         <div class="propertie">
             <div>
-                <p>Nom de l’article</p>
-                <p>Nom affiché de l’article sur la boutique et dans le panier.</p>
+                <p>Nom affiché</p>
+                <p>Nom affiché sur le profil et dans la boutique.</p>
             </div>
             <div>
-                <input type="text" placeholder="Coca Cola">
-            </div>
-        </div>
-
-        <div class="propertie">
-            <div>
-                <p>Quantités</p>
-                <p>Quantités disponibles à l'achat de l'article. -1 Signifie illimité.</p>
-            </div>
-            <div>
-                <input type="number" placeholder="12" min="-1">
+                <input type="text" placeholder="Or">
             </div>
         </div>
 
         <div class="propertie">
             <div>
-                <p>Réductions applicables</p>
-                <p>Est-ce que les réductions du prix des grades peuvent s’appliquer sur cet article ?</p>
+                <p>Prix d’achat</p>
+                <p>Prix à débourser pour obtenir le grade.</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <input type="number" placeholder="13" min="0">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Réduction sur les achats</p>
+                <p>Taux de réduction (en pourcentage) à appliquer à tous les achats éligibles sur la boutique. 0 pour désactiver.</p>
+            </div>
+            <div>
+                <input type="number" placeholder="5" min="0">
             </div>
         </div>
 
