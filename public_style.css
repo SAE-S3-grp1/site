@@ -1,0 +1,65 @@
+/********************
+****** GENERAL ******
+********************/
+*{
+    background-color: blue;
+    font-family: "Inter", sans-serif;
+}
+
+
+
+/*******************
+****** HEADER ******
+********************/
+header {
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    background-color: orange;
+    width: 100%;
+    height: 98px;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 99px;
+}
+
+header li {
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+header li:hover{
+    background-color:red;
+}
+
+header a {
+    display: inline-block; /*pour étendre la zone de clique*/
+    padding: 20px;
+    text-decoration: none;
+    font-family: 'Inter', serif;
+    font-weight: bold;
+    font-size: 25px;
+    color: white;
+}
+
+#accueil {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px;
+    font-size: 31px;
+}
+
+#accueil img {
+    margin: 0px;
+    width: 200px;
+    height: 98px;
+}
+
