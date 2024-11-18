@@ -56,7 +56,7 @@ function get_grades($DB){
 
 function create_grade($DB)
 {
-    if (!isset($_POST['name'], $_POST['description'], $_POST['price'], $_POST['reduction'], $_FILES['image'])) {
+    if (!isset($_POST['name'], $_POST['description'], $_POST['price'], $_POST['reduction'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Incomplete data']);
         return;
@@ -67,7 +67,7 @@ function create_grade($DB)
 
     if ($image_name === false) {
         http_response_code(415);
-        echo json_encode(['error' => 'Image couldn\'t be processed']);
+        echo json_encode(['error' => 'Image could not be processed']);
         return;
     }
 
