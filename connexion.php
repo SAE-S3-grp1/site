@@ -26,8 +26,20 @@
 
         <!-- Gestion de la connexion -->
         <?php
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Récupérer le nom d'utilisateur
+                $user = trim($_POST['username']);
+            
+                if (!empty($user)) {
 
-
+                    $_SESSION['user'] = $user;
+            
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    $error = "Veuillez entrer un nom d'utilisateur.";
+                }
+            }
 
         ?>
     </body>
