@@ -74,19 +74,20 @@ header a {
 
 #header_admin{
     font-size: 15px;
-    color: red;
+    color: rgb(208, 255, 0);
 }
 
 /********************
 *** LOGIN FORM ******
 ********************/
 .login-form {
+    color: #613333;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
     width: 350px;
-    margin: 100px auto; /* Centrer le formulaire */
+    margin: 50px auto; /* Centrer le formulaire */
     display: flex;
     flex-direction: column;
     align-items: center;

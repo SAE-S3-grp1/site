@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="public_style.css">
 </head>
     <body>
-        <p>JDBFJDSBFJBSJDFDJSVFJSVJDVF</p>
         <?php 
             require_once 'header.php';
             require_once 'database.php';
         ?>
+
 
         <!-- Formulaire de connexion -->
         <form method="POST" action="" class="login-form">
@@ -30,30 +30,40 @@
 
         <!-- Gestion de la connexion -->
         <?php
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $mail = htmlspecialchars(trim($_POST['mail']));
-                $password = password_hash(htmlspecialchars(trim($_POST['password'])), PASSWORD_DEFAULT);
-
+                $password = htmlspecialchars(trim($_POST['password']));
                 //Injections SQL ? :
-                $loginOk = !empty(
-                    executeSelectQuery(
-                        $db,
-                        "SELECT email_membre from MEMBRE where email_membre = ?",
-                        [$mail]
-                    )) && !empty(
-                        $db,
-                        "SELECT password_membre from MEMBRE where password_membre = ?",
-                        [$password]
-                    )
 
-                if($loginOk){
+                $db_mail = executeSelectQuery(
+                    $db,
+                    "SELECT email_membre FROM MEMBRE WHERE email_membre = ?",
+                    [$mail]
+                )[0]["email_membre"];
+                
+                $db_password = executeSelectQuery(
+                    $db,
+                    "SELECT password_membre FROM MEMBRE WHERE email_membre = ?",
+                    [$mail]
+                )[0]["password_membre"];
+    
+                $mail_ok = ($db_mail == $mail);
+
+                $password_ok = password_verify($password, $db_password);
+
+                if($mail_ok && $password_ok){
                     $_SESSION['user'] = $mail;
-                    $_SESSION['password'] = $password;
-                    echo 'Connection OK'
+                    //check if perm -> admin ok
+
+                    header("Location: index.php");
+                    exit;
+                }else{
+                    echo "<h3 class=\"login-form\"> Erreur dans les identifiants. </h3>";
                 }
-                // header("Location: index.php");
-                // exit;
+
+
             }
 
         ?>
