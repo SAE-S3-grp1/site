@@ -33,7 +33,11 @@ class tools
             return false;
         }
 
-        if (getimagesize($_FILES['image']['tmp_name']) === false && !in_array($_FILES['image']['type'], ['image/jpeg', 'image/png', 'image/webp'])) {
+        // Vérifie le type MIME avec finfo
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->file($_FILES['file']['tmp_name']);
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($mimeType, $allowedTypes)) {
             return false;
         }
 
