@@ -29,6 +29,36 @@ function executeModifyQuery($conn, $query, $params = []) {
     return $stmt->execute();
 }
 
+function printSelectQuery($query_response) {
+    if (empty($query_response)) {
+        echo "Aucun résultat trouvé.";
+        return;
+    }
+
+    // Début du tableau HTML
+    echo "<table border='1' cellpadding='5' cellspacing='0'>";
+
+    // Afficher les noms des colonnes (en utilisant les clés du premier élément)
+    echo "<tr>";
+    foreach (array_keys($query_response[0]) as $col_name) {
+        echo "<th>" . htmlspecialchars($col_name) . "</th>";
+    }
+    echo "</tr>";
+
+    // Afficher les lignes de résultats
+    foreach ($query_response as $row) {
+        echo "<tr>";
+        foreach ($row as $value) {
+            echo "<td>" . htmlspecialchars($value) . "</td>";
+        }
+        echo "</tr>";
+    }
+
+    // Fin du tableau HTML
+    echo "</table>";
+}
+
+
 $conn = connectDatabase(
     "lithium.voltis.cloud",
     "u101_saQxwWi2aa",
@@ -36,5 +66,6 @@ $conn = connectDatabase(
     "s101_bdeTest"
 );
 
+#printSelectQuery(executeSelectQuery($conn, "SELECT * FROM MEMBRE"));
 
 ?>
