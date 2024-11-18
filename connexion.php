@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="public_style.css">
 </head>
     <body>
+        <?php include_once 'header.php'?>
+
         <!-- Formulaire de connexion -->
         <form method="POST" action="" class="login-form">
             <h1>Connexion</h1>
@@ -24,7 +26,7 @@
 
         <!-- Gestion de la connexion -->
         <?php
-            
+
 
 
         ?>
