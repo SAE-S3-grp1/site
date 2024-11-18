@@ -7,7 +7,7 @@ const SERVER_API_URL = 'https://bdeinfo.fr/api';
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
  * @param {string} endpoint - L'endpoint de la requête.
- * @param {string} method - La méthode HTTP (GET, POST, PUT, DELETE).
+ * @param {string} method - La méthode HTTP (GET, POST, PUT, PATCH, DELETE).
  * @param {Object} data - Les données à envoyer (pour POST, PUT).
  * @param {Object} headers - Les en-têtes HTTP supplémentaires (facultatif).
  * @returns {Promise} - Résout avec les données de la réponse ou rejette avec une erreur.
@@ -30,9 +30,10 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
             }
         };
 
-        // Ajouter le corps de la requête pour POST, PUT
-        if (data && (method === 'POST' || method === 'PUT')) {
+        // Ajouter le corps de la requête pour POST, PUT et PATCH
+        if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
             options.body = JSON.stringify(data);
+            options.headers['Content-Type'] = 'multipart/form-data';
         }
 
         const response = await fetch(url, options);
@@ -81,6 +82,16 @@ function requestPUT(endpoint, data) {
 }
 
 /**
+ * Effectue une requête PATCH.
+ * @param {string} endpoint - L'endpoint de la requête.
+ * @param {Object} data - Les données à envoyer.
+ * @returns {Promise}
+ */
+function requestPATCH(endpoint, data) {
+    return request(endpoint, 'PATCH', data);
+}
+
+/**
  * Effectue une requête DELETE.
  * @param {string} endpoint - L'endpoint de la requête.
  * @returns {Promise}
@@ -90,4 +101,4 @@ function requestDELETE(endpoint) {
 }
 
 // Export des fonctions
-export { request, requestGET, requestPOST, requestPUT, requestDELETE };
+export { request, requestGET, requestPOST, requestPUT, requestPATCH, requestDELETE };

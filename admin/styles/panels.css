@@ -71,7 +71,6 @@ nav li:hover::after{
     outline: none;
     border: none;
     background-color: transparent;
-    padding: 15px;
 
     display: flex;
     flex-direction: row;
@@ -159,6 +158,25 @@ main{
     font-weight: normal;
     color: var(--text-lighter);
 }
+.propertie > div:last-child img{
+    width: 84px;
+    height: 84px;
+    border-radius: 10px;
+    border: 1.5px dashed var(--border-color);
+    padding: 10px;
+}
+.propertie > div:last-child img:last-child{
+    padding: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+.propertie > div:last-child img:last-child:hover{
+    padding: 27px;
+}
+.propertie > div:last-child img:last-child:active{
+    padding: 33px;
+}
 
 /* INPUT */
 input{
@@ -174,4 +192,35 @@ input{
 }
 input:focus{
     border-color: var(--text-lighter);
+}
+
+/* TOGGLE */
+.toggle{
+    position: relative;
+    background-color: var(--background-color-darker);
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    transition-duration: 0.2s;
+    transition-timing-function: var(--bounce);
+}
+.toggle::after{
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    transition-duration: 0.2s;
+    top: 5px;
+    left: 5px;
+}
+
+.toggle-active{
+    background-color: #63CA60;
+}
+.toggle-active::after{
+    left: calc(100% - 25px);
 }

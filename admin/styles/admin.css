@@ -44,6 +44,7 @@
     gap: 15px;
     width: 100%;
     user-select: none;
+    overflow: auto;
 }
 #main nav ul li{
     width: 100%;

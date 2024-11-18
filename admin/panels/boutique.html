@@ -44,7 +44,8 @@
                 <p>Mettre a jour l'image de présentation du produit.</p>
             </div>
             <div>
-                <input type="text" placeholder="Coca Cola">
+                <img src="https://fr.minecraft.wiki/images/Lingot_d%27or.png?1ebba" alt="Image du grade">
+                <img src="../ressources/edit.svg" alt="Charger une nouvelle image">
             </div>
         </div>
 
@@ -64,10 +65,19 @@
                 <p>Mettre a jour l'image de présentation du produit.</p>
             </div>
             <div>
-                <input type="text" placeholder="Coca Cola">
+                <input type="number" placeholder="12" min="0">
             </div>
         </div>
 
+        <div class="propertie">
+            <div>
+                <p>Image de présentation</p>
+                <p>Mettre a jour l'image de présentation du produit.</p>
+            </div>
+            <div>
+                <div class="toggle"></div>
+            </div>
+        </div>
 
         <div class="saves-buttons">
             <button class="btn-transparent btn-blue"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
@@ -77,6 +87,7 @@
     </main>
 
     <!-- SCRIPTS -->
+    <script type="module" src="../scripts/toggle.js"></script>
     <script type="module" src="../scripts/boutique.js"></script>
     
 </body>
