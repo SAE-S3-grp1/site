@@ -61,3 +61,27 @@ function get_users($DB) {
     http_response_code(200);
     echo json_encode($data);
 }
+
+function create_user($DB): void
+{
+
+
+    if (!isset($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['tp'])) {
+        http_response_code(400);
+        echo json_encode(["message" => "Missing parameters"]);
+        return;
+    }
+
+    $imagename = tools::saveImage();
+
+    if (!$imagename) {
+        http_response_code(415);
+        echo json_encode(["message" => "Image could not be processed"]);
+        return;
+    }
+
+    $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, tp_membre, pp_membre) VALUES (?, ?, ?, ?, ?)", "sssss", [$_POST['name'], $_POST['surname'], $_POST['email'], $_POST['tp'], $imagename]);
+
+    http_response_code(201);
+    echo json_encode(["id" => $id]);
+}
