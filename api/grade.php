@@ -33,8 +33,24 @@ switch ($methode) {
 
 
 function get_grades($DB){
-    $grades = $DB->select("SELECT * FROM GRADE");
+
+    if (isset($_GET['id']))
+    {
+        $id = $DB->clean($_GET['id']);
+        $grades = $DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$id]);
+
+        if (count($grades) === 0) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Grade not found']);
+            return;
+        }
+
+    } else {
+        $grades = $DB->select("SELECT * FROM GRADE");
+    }
+
     echo json_encode($grades);
+
 }
 
 function create_grade($DB)
