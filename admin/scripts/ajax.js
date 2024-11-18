@@ -71,6 +71,7 @@ function requestPOST(endpoint, data) {
     return request(endpoint, 'POST', data);
 }
 
+
 /**
  * Effectue une requête PUT.
  * @param {string} endpoint - L'endpoint de la requête.

@@ -1,0 +1,14 @@
+/* SET LOGS INPUT SIZE */
+textarea{
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color-whiter);
+    border: 1.5px solid var(--background-color-darker);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    color: var(--text-lighter);
+    outline: none;
+    resize: none;
+}

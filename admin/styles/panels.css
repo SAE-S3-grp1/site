@@ -107,13 +107,16 @@ nav li:hover::after{
 main{
     position: relative;
     height: 100%;
-    width: calc(100% - var(--nav-width));
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
     padding: 25px;
+}
+nav + main { /* If there is a nav before the main, reduce the width of the main to make room for the nav */
+    width: calc(100% - var(--nav-width));
 }
 .saves-buttons{
     width: 100%;
