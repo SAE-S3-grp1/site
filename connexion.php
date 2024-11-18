@@ -10,13 +10,17 @@
     <link rel="stylesheet" href="public_style.css">
 </head>
     <body>
-        <?php include_once 'header.php'?>
+        <?php 
+            require_once 'header.php';
+            require_once 'database.php';
+        ?>
+
 
         <!-- Formulaire de connexion -->
         <form method="POST" action="" class="login-form">
             <h1>Connexion</h1>
-            <label for="username">Nom d'utilisateur :</label>
-            <input type="text" id="username" name="username" required>
+            <label for="mail">Nom d'utilisateur :</label>
+            <input type="email" id="mail" name="mail" required>
 
             <label for="password">Mot de passe :</label>
             <input type="password" id="password" name="password" required>
@@ -26,19 +30,40 @@
 
         <!-- Gestion de la connexion -->
         <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Récupérer le nom d'utilisateur
-                $user = trim($_POST['username']);
-            
-                if (!empty($user)) {
 
-                    $_SESSION['user'] = $user;
-            
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                $mail = htmlspecialchars(trim($_POST['mail']));
+                $password = htmlspecialchars(trim($_POST['password']));
+                //Injections SQL ? :
+
+                $db_mail = executeSelectQuery(
+                    $db,
+                    "SELECT email_membre FROM MEMBRE WHERE email_membre = ?",
+                    [$mail]
+                )[0]["email_membre"];
+                
+                $db_password = executeSelectQuery(
+                    $db,
+                    "SELECT password_membre FROM MEMBRE WHERE email_membre = ?",
+                    [$mail]
+                )[0]["password_membre"];
+    
+                $mail_ok = ($db_mail == $mail);
+
+                $password_ok = password_verify($password, $db_password);
+
+                if($mail_ok && $password_ok){
+                    $_SESSION['user'] = $mail;
+                    //check if perm -> admin ok
+
                     header("Location: index.php");
                     exit;
-                } else {
-                    $error = "Veuillez entrer un nom d'utilisateur.";
+                }else{
+                    echo "<h3 class=\"login-form\"> Erreur dans les identifiants. </h3>";
                 }
+
+
             }
 
         ?>

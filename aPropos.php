@@ -19,7 +19,7 @@
 
 <body>
 
-<?php include_once "header.php" ?>
+<?php require_once "header.php" ?>
 <section>
     <H2>LE BUREAU</H2>
     <H3>Edition 2024</H3>
