@@ -1,15 +1,16 @@
 <?php
+
 function connectDatabase($host, $username, $password, $database) {
-    $conn = new mysqli($host, $username, $password, $database);
-    if ($conn->connect_error) {
-        die("Échec de la connexion : " . $conn->connect_error);
+    $db = new mysqli($host, $username, $password, $database);
+    if ($db->connect_error) {
+        die("Échec de la connexion : " . $db->connect_error);
     }
-    return $conn;
+    return $db;
 }
 
 // Fonction pour exécuter une requête SELECT
-function executeSelectQuery($conn, $query, $params = []) {
-    $stmt = $conn->prepare($query);
+function executeSelectQuery($db, $query, $params = []) {
+    $stmt = $db->prepare($query);
     if (!empty($params)) {
         $types = str_repeat("s", count($params)); // Assume string types for simplicity
         $stmt->bind_param($types, ...$params);
@@ -20,8 +21,8 @@ function executeSelectQuery($conn, $query, $params = []) {
 }
 
 // Fonction pour exécuter une requête INSERT/UPDATE/DELETE
-function executeModifyQuery($conn, $query, $params = []) {
-    $stmt = $conn->prepare($query);
+function executeModifyQuery($db, $query, $params = []) {
+    $stmt = $db->prepare($query);
     if (!empty($params)) {
         $types = str_repeat("s", count($params));
         $stmt->bind_param($types, ...$params);
@@ -59,13 +60,14 @@ function printSelectQuery($query_response) {
 }
 
 
-$conn = connectDatabase(
+$db = connectDatabase(
     "lithium.voltis.cloud",
     "u101_saQxwWi2aa",
     "L+glq7vxzK=.p9HMFwMQNssu",
     "s101_bdeTest"
 );
 
-#printSelectQuery(executeSelectQuery($conn, "SELECT * FROM MEMBRE"));
+#printSelectQuery(executeSelectQuery($db, "SELECT * FROM MEMBRE;"));
+
 
 ?>

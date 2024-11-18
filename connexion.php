@@ -10,13 +10,17 @@
     <link rel="stylesheet" href="public_style.css">
 </head>
     <body>
-        <?php include_once 'header.php'?>
+        <p>JDBFJDSBFJBSJDFDJSVFJSVJDVF</p>
+        <?php 
+            require_once 'header.php';
+            require_once 'database.php';
+        ?>
 
         <!-- Formulaire de connexion -->
         <form method="POST" action="" class="login-form">
             <h1>Connexion</h1>
-            <label for="username">Nom d'utilisateur :</label>
-            <input type="text" id="username" name="username" required>
+            <label for="mail">Nom d'utilisateur :</label>
+            <input type="email" id="mail" name="mail" required>
 
             <label for="password">Mot de passe :</label>
             <input type="password" id="password" name="password" required>
@@ -27,18 +31,29 @@
         <!-- Gestion de la connexion -->
         <?php
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Récupérer le nom d'utilisateur
-                $user = trim($_POST['username']);
-            
-                if (!empty($user)) {
 
-                    $_SESSION['user'] = $user;
-            
-                    header("Location: index.php");
-                    exit;
-                } else {
-                    $error = "Veuillez entrer un nom d'utilisateur.";
+                $mail = htmlspecialchars(trim($_POST['mail']));
+                $password = password_hash(htmlspecialchars(trim($_POST['password'])), PASSWORD_DEFAULT);
+
+                //Injections SQL ? :
+                $loginOk = !empty(
+                    executeSelectQuery(
+                        $db,
+                        "SELECT email_membre from MEMBRE where email_membre = ?",
+                        [$mail]
+                    )) && !empty(
+                        $db,
+                        "SELECT password_membre from MEMBRE where password_membre = ?",
+                        [$password]
+                    )
+
+                if($loginOk){
+                    $_SESSION['user'] = $mail;
+                    $_SESSION['password'] = $password;
+                    echo 'Connection OK'
                 }
+                // header("Location: index.php");
+                // exit;
             }
 
         ?>
