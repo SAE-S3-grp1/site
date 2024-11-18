@@ -29,7 +29,7 @@ class tools
         // Vérification des données de l'image, puis enregistrement.
         // Retourne Faux si l'image n'en est pas une, ou si elle n'a pas pu être enregistrée.
 
-        if ($_FILES['image']['tmp_name'] === '') {
+        if (!isset($_FILES['file']) || $_FILES['file']['tmp_name'] === '') {
             return false;
         }
 
