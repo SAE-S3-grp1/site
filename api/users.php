@@ -11,21 +11,34 @@ $methode = $_SERVER['REQUEST_METHOD'];
 
 $DB = new DB();
 
+
+# On accepte le format multipart/form-data UNIQUEMENT sur les requetes POST et PATCH
+# Sinon, il faudrait coder un parser de multipart/form-data
 switch ($methode) {
     case 'GET':                      # READ
-        get_users($DB);
+        if (tools::methodAccepted('application/json')) {
+            get_users($DB);
+        }
         break;
     case 'POST':                     # CREATE
-        create_user($DB);
+        if (tools::methodAccepted('multipart/form-data')) {
+            create_user($DB);
+        }
         break;
     case 'PUT':                      # UPDATE (données seulement)
-        update_user($DB);
+        if (tools::methodAccepted('application/json')) {
+            update_user($DB);
+        }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-        update_image($DB);
+        if (tools::methodAccepted('multipart/form-data')) {
+            update_image($DB);
+        }
         break;
     case 'DELETE':                   # DELETE
-        delete_user($DB);
+        if (tools::methodAccepted('application/json')) {
+            delete_user($DB);
+        }
         break;
     default:
         # 405 Method Not Allowed
@@ -90,18 +103,19 @@ function create_user($DB)
 function update_user($DB)
 {
 
-    $_PUT =  json_decode(file_get_contents('php://input'),true);
-    if (!isset($_PUT['name'], $_PUT['surname'], $_PUT['email'], $_PUT['tp'])) {
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    if (!isset($data['name'], $data['surname'], $data['email'], $data['tp'], $_GET['id'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
         return;
     }
 
-    $id = $DB->clean($_PUT['id']);
-    $name = $DB->clean($_PUT['name']);
-    $surname = $DB->clean($_PUT['surname']);
-    $email = $DB->clean($_PUT['email']);
-    $tp = $DB->clean($_PUT['tp']);
+    $id = $DB->clean($_GET['id']);
+    $name = $DB->clean($data['name']);
+    $surname = $DB->clean($data['surname']);
+    $email = $DB->clean($data['email']);
+    $tp = $DB->clean($data['tp']);
 
     $DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, tp_membre = ? WHERE id_membre = ?", "ssssi", [$name, $surname, $email, $tp, $id]);
 
@@ -129,8 +143,7 @@ function update_user($DB)
 
 function update_image($DB)
 {
-    $_PATCH =  json_decode(file_get_contents('php://input'),true);
-    $id = $DB->clean($_PATCH['id']);
+    $id = $DB->clean($_GET['id']);
 
     $user = $DB->select("SELECT pp_membre FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
 
@@ -160,8 +173,7 @@ function update_image($DB)
 
 function delete_user($DB)
 {
-    $_DELETE =  json_decode(file_get_contents('php://input'),true);
-    $id = $DB->clean($_DELETE['id']);
+    $id = $DB->clean($_GET['id']);
 
     $user = $DB->select("SELECT pp_membre FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
 
