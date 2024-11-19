@@ -151,7 +151,7 @@ footer .footer-image img {
 ******  INDEX   ******
 **********************/
 
-#index > div:not(:first-child){
+#index section{
     display: flex;
     align-items: center;
     margin-right: 4%;
@@ -197,7 +197,7 @@ footer .footer-image img {
 
 #podium{
     width: 65%;
-    height: 500px;
+    height: 550px;
     margin: auto;
 
     display: flex;
@@ -207,29 +207,26 @@ footer .footer-image img {
 
 #podium > div{
     width: 20%; 
-    height: 300px; 
     display: flex;
 
-    justify-content: center; 
     align-items: center;
     flex-direction: column;
-
-    gap: 5%;
-    
 }
+
 #podium > div h3{
     font-size: 70px;
 }
 #podium > div h4{
     font-weight: 500;
     font-size: 35px;
+    margin-bottom: 6%;
 }
 
 #podium > div > div{
     padding: 10%;
     background-color: black;
     border: 1px solid white;
-    border-radius: 10px;
+    border-radius: 15px;
 
     display: flex;
     flex-direction: column;
@@ -239,20 +236,28 @@ footer .footer-image img {
 
     font-size: 35px;
     width: 95%;
-}
-
-
-#podium > div > div:nth-child(1){
 
 }
 
-#podium > div > div:nth-child(2){
-    height: 700px;
+#podium > div:nth-child(1) > div{
+    height: 350px;
 }
 
+#podium > div:nth-child(2) > div{
+    height: 550px;
+}
 
-#podium > div > div:nth-child(3){
+#podium > div:nth-child(3) > div{
+    height: 250px;
+}
 
+.profile_picture{
+    border: 1px solid black;
+    width: 90px;
+    height: 90px;
+
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 /********************

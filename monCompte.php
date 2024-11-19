@@ -24,7 +24,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //
     if($_POST['deconnexion']){
-        unset($_SESSION['user']);
+        unset($_SESSION['userid']);
         $message = "Vous avez été déconnecté.";
     }
     echo $message;

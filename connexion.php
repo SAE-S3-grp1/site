@@ -38,40 +38,38 @@
                 //Injections SQL ? :
 
 
-                $selection_db = executeSelectQuery(
-                    $db,
+                $selection_db = $db->select(
                     "SELECT id_membre, email_membre, password_membre FROM MEMBRE WHERE email_membre = ?",
-                    [$mail]);
+                    "s",
+                    [$mail]
+                );
 
                 $db_mail = $selection_db[0]["email_membre"];
                 
                 $db_password = $selection_db[0]["password_membre"];
-
-                $db_id = $selection_db[0]["id_membre"];
     
                 $mail_ok = ($db_mail == $mail);
 
                 $password_ok = password_verify($password, $db_password);
 
                 if($mail_ok && $password_ok){
-                    $_SESSION['user'] = $mail;
-                    
-                    //check if perm -> panel admin ok
-                    if(executeSelectQuery($db,
-                    "SELECT COUNT(*) as nb_roles FROM ASSIGNATION WHERE id_membre = ? ;",
-                    [$db_id])[0]["nb_roles"] > 0){
-                        $_SESSION["isAdmin"] = true;
-                    }
 
-                    $db->close();
+                    $_SESSION['userid'] = $selection_db[0]["id_membre"];
+
+                    //check if perm -> panel admin ok
+                    if($db->select(
+                        "SELECT COUNT(*) as nb_roles FROM ASSIGNATION WHERE id_membre = ? ;",
+                        "i",
+                        [$_SESSION['id']])[0]["nb_roles"] > 0){
+                        
+                            $_SESSION["isAdmin"] = true;
+                    }
 
                     header("Location: index.php");
                     exit;
                 }else{
                     echo "<h3 class=\"login-form\"> Erreur dans les identifiants. </h3>";
                 }
-
-
             }
         ?>
     </body>

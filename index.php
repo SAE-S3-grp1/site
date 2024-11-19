@@ -10,16 +10,20 @@
     <link rel="stylesheet" href="public_style.css">
 </head>
 <body id="index" class="body_margin">
-    <?php require_once 'header.php' ?>
+    <?php
+     require_once 'header.php';
+     require_once 'database.php';
+    ?>
 
     <!--H1 A METTRE -->
-    <div>
+    <section>
         <h2 class="titre_vertical">ADIIL</h2>
         <div id="index_carrousel">
             <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
         </div>
-    </div>
-    <div>
+    </section>
+
+    <section>
         <div class="paragraphes">
             <p>
                 <b class="underline">L'ADIIL</b>, ou l'<b>Association</b> du <b>Département</b> <b>Informatique</b> de l'<b>IUT</b> de <b>Laval</b>, 
@@ -34,40 +38,45 @@
             </p>
         </div>
         <h2 class="titre_vertical">L'ASSO</h2>
-    </div>
-    <div>
+    </section>
+
+    <section>
         <h2 class="titre_vertical">SCORES</h2>
 
         <div id="podium">
+            <?php
+                $podium = $db->select(
+                    "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
+                );
+            ?>
             <!--Deuxieme-->
             <div>
                 <h3>#02</h3>
-                <h4>"nom"</h4>
+                <h4><?php echo $podium[1]['prenom_membre'];?></h4>
                 <div>
-                    <img src="" alt="PP"> 
-                    XP
+                    <img src="/api/files/<?php echo $podium[1]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                    <?php echo $podium[1]['xp_membre'];?> px
                 </div>
             </div>
             <!--Premier-->
             <div>
                 <h3>#01</h3>
-                <h4>"nom"</h4>
+                <h4><?php echo $podium[0]['prenom_membre'];?></h4>
                 <div>
-                    <img src="" alt="PP"> 
-                    XP
+                    <img src="/api/files/<?php echo $podium[0]['pp_membre'];?>" alt="Profile Picture" class="profile_picture"> 
+                    <?php echo $podium[0]['xp_membre'];?> px
                 </div>
             </div>
             <!--Troiseme-->
             <div>
                 <h3>#03</h3>
-                <h4>"nom"</h4>
+                <h4><?php echo $podium[2]['prenom_membre'];?></h4>
                 <div>
-                    <img src="" alt="PP"> 
-                    XP
+                    <img src="/api/files/<?php echo $podium[2]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                    <?php echo $podium[2]['xp_membre'];?> px
                 </div>
             </div>
         </div>
-    </div>
-    
+    </section>
 </body>
 </html>
