@@ -76,7 +76,6 @@ function create_accounting($DB)
     $file = tools::saveFile();
 
     if ($file) {
-        $DB = new DB();
 
         $DB->query("INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre)
                      VALUES (?, ?, ?, ?)", "sssi", [$_POST['date_comptabilite'], $_POST['nom_comptabilite'], $file, $_POST['id_membre']]);

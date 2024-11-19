@@ -20,12 +20,12 @@ switch ($methode) {
         break;
     case 'POST':                     # CREATE
         if (tools::methodAccepted('multipart/form-data')) {
-            create_accounting($DB);
+            create_meeting($DB);
         }
         break;
     case 'DELETE':                   # DELETE
         if (tools::methodAccepted('application/json')) {
-            delete_accounting($DB);
+            delete_meeting($DB);
         }
         break;
     default:
@@ -70,15 +70,13 @@ function get_meetings($DB) {
 }
 
 
-function create_accounting($DB)
+function create_meeting($DB)
 {
     // TODO : Récupérer l'ID de membre grace au token PHP
 
     $file = tools::saveFile();
 
     if ($file) {
-        $DB = new DB();
-
         $DB->query("INSERT INTO REUNION (date_reunion, fichier_reunion, id_membre)
                      VALUES (?, ?, ?)", "ssi", [$_POST['date_reunion'], $file, $_POST['id_membre']]);
 
@@ -92,7 +90,7 @@ function create_accounting($DB)
 }
 
 
-function delete_accounting($DB)
+function delete_meeting($DB)
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
