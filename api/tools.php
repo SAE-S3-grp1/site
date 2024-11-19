@@ -79,4 +79,41 @@ class tools
         // On arrête le script
         exit;
     }
+
+    function checkPermission($userid, $permission)
+    {
+        // Vérifie si l'utilisateur a la permission demandée
+        // Si l'utilisateur n'a pas la permission, retourne une erreur 403 Forbidden, et on met fin à la requête
+
+        $permissions = getPermissions($userid);
+
+            // !$permissions signifie que l'utilisateur n'existe pas dans la base.
+            // Cela est mis en place au cas ou. (Par ex, si il a été supprimé entre temps)
+        if (!$permissions || $permissions[$permission] == 0) {
+            http_response_code(403);
+            header('Content-Type: application/json');
+            echo json_encode([
+                'error' => 'Forbidden',
+                'message' => "You need the permission '{$permission}' to access this resource."
+            ]);
+            exit;
+        }
+    }
+
+    function getPermissions($userid)
+    {
+        $DB = new DB();
+
+        $fetchedPermissions = $DB->select("
+                                SELECT *
+                                FROM LISTE_PERMISSIONS
+                                WHERE id_membre = ?
+                                ", "i", [$userid]);
+
+        if (count($fetchedPermissions) == 0) {
+            return false;
+        }
+
+        return $fetchedPermissions[0];
+    }
 }
