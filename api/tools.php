@@ -18,7 +18,7 @@ class tools
         $name = self::generateUUID() . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], 'files/' . $name)) {
-            return $name;
+            return DB::clean($name);
         }
 
         return false;
@@ -42,7 +42,7 @@ class tools
         }
 
         // On s'assure que l'extension du fichier ne causerait pas de problèmes
-        return DB::clean(self::saveFile());
+        return self::saveFile();
     }
 
 
