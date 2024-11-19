@@ -7,6 +7,11 @@
     margin: 0;
 }
 
+body > *:not(:first-child){
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
 html{
     font-family: "Inter", sans-serif;
     color: white;
@@ -133,6 +138,46 @@ footer .footer-image img {
     width: auto; 
     max-height: 100%;
     max-width: 150px;
+}
+
+/*********************
+******  INDEX   ******
+**********************/
+
+#index > div:not(:first-child){
+    display: flex;
+    align-items: center;
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
+#index > div:nth-child(2){
+
+}
+
+.titre_vertical{
+    display: flex;
+    width: fit-content;
+
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+
+    letter-spacing: 15px;
+
+    font-weight: 300;
+
+    font-size: 90px;
+}
+
+#index_carrousel{
+    align-self: center;
+    margin: auto;
+    border: white 1px solid;
+    border-radius: 10%;
+}
+
+#index_carrousel img{
+    border-radius: 10%;
 }
 
 /********************
