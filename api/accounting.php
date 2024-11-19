@@ -34,6 +34,7 @@ switch ($methode) {
         break;
 }
 
+
 function get_accounting($DB) {
     if (isset($_GET['id'])) {
         // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
