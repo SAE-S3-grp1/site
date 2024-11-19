@@ -33,9 +33,41 @@
                 tout en renforçant les liens au sein de la communauté.
             </p>
         </div>
-
-
         <h2 class="titre_vertical">L'ASSO</h2>
     </div>
+    <div>
+        <h2 class="titre_vertical">SCORES</h2>
+
+        <div id="podium">
+            <!--Deuxieme-->
+            <div>
+                <h3>#02</h3>
+                <h4>"nom"</h4>
+                <div>
+                    <img src="" alt="PP"> 
+                    XP
+                </div>
+            </div>
+            <!--Premier-->
+            <div>
+                <h3>#01</h3>
+                <h4>"nom"</h4>
+                <div>
+                    <img src="" alt="PP"> 
+                    XP
+                </div>
+            </div>
+            <!--Troiseme-->
+            <div>
+                <h3>#03</h3>
+                <h4>"nom"</h4>
+                <div>
+                    <img src="" alt="PP"> 
+                    XP
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
