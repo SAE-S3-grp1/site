@@ -44,7 +44,7 @@
                 <h3>#02</h3>
                 <h4>"nom"</h4>
                 <div>
-                    <img src="" alt="PP"> 
+                    <img src="" alt="PP" class="profile_picture">
                     XP
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 <h3>#01</h3>
                 <h4>"nom"</h4>
                 <div>
-                    <img src="" alt="PP"> 
+                    <img src="" alt="PP" class="profile_picture">
                     XP
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 <h3>#03</h3>
                 <h4>"nom"</h4>
                 <div>
-                    <img src="" alt="PP"> 
+                    <img src="" alt="PP" class="profile_picture">
                     XP
                 </div>
             </div>
