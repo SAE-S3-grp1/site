@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evenements</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/panels.css">
+
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>Evenements</h1>
+    </header>
+
+    <!-- NAVIGUATION -->
+    <nav>
+        <ul>
+
+            <!-- AUTO GENERATED -->
+            <li>Barbecue Campus en fête</li>
+            <li>Soirée d'intégration</li>
+            <li>Après-midi jeux de cartes</li>
+            <li>Raclette</li>
+
+        </ul>
+
+        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un événement</button>
+
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+
+        <div class="propertie">
+            <div>
+                <p>Image de présentation</p>
+                <p>Mettre à jour l'image de présentation de l'événement.</p>
+            </div>
+            <div>
+                <img src="https://cdn.pixabay.com/photo/2015/06/15/20/20/bbq-810545_1280.jpg" alt="Image de l'événement">
+                <img src="../ressources/edit.svg" alt="Charger une nouvelle image">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Nom de l'événement</p>
+                <p>Nom affiché de l'événement sur le calendrier.</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Barbecue de l'ADIIL">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Lieu de l'événement</p>
+                <p>Endroit où l'événement va se dérouller.</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Parking Batiment Info">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Places disponibles</p>
+                <p>Places disponibles à la ventre de l'évènement. -1 Signifie illimité.</p>
+            </div>
+            <div>
+                <input type="number" placeholder="50" min="-1">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Prix de la place</p>
+                <p>Prix (en euros) d'une place à cet évènement. Mettre 0 pour afficher “gratuit”.</p>
+            </div>
+            <div>
+                <input type="number" placeholder="4.99" min="0">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Réductions applicables</p>
+                <p>Est-ce que les réductions du prix des grades peuvent s'appliquer sur cet événement ?</p>
+            </div>
+            <div>
+                <div class="toggle toggle-active"></div>
+            </div>
+        </div>
+
+        <div class="saves-buttons">
+            <button class="btn-transparent btn-blue"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+            <button class="btn-transparent btn-red"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script type="module" src="../scripts/toggle.js"></script>
+    <script type="module" src="../scripts/boutique.js"></script>
+    
+</body>
+</html>
