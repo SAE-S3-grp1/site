@@ -250,13 +250,23 @@ footer .footer-image img {
 ****** MON COMPTE ******
 ************************/
 
+
 #carreCompte {
-    background-color: rgb(119, 241, 190);
-    border: 1px solid rgb(23, 23, 23);
+    border: 4px solid white;
     border-radius: 10px;
     padding: 30px;
-    color: rgb(23, 23, 23);
+    color: white;
     width: 600px;
+    align-self: center;
+    margin: auto;
+    flex-direction: row;
+    display : grid;
+    grid-template-columns: 50% 50%;
+}
+
+#carreCompte img{
+    width: 100px;
+    height: 100px;
 }
 
 #account-form {
@@ -280,11 +290,15 @@ footer .footer-image img {
     text-align: left;
     width: 40%;
     margin-left: 0;
+    border-radius: 5px;
+    border: 5px solid white;
 }
 
 #account-form button {
     align-self: center;  /* Centre le bouton */
     width: 100px;  /* Largeur du bouton */
     height: 45px;
+    border: 5px solid rgb(119, 241, 190);
     border-radius: 10px;
+    background-color: rgb(119, 241, 190);
 }

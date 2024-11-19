@@ -33,9 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<!-- CORPS DE LA PRESENTATION -->
+<!-- PARTIE MON COMPTE -->
+
+<H2>MON COMPTE</H2>
 <section>
     <div id=carreCompte>
+
+        <div>
+            <img src="assets/photo_mathis.png" alt="Photo de groupe du bureau du BDE 2024"/>
+        </div>
+
         <form method="POST" action="" id="account-form">
 
             <div>
