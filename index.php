@@ -55,7 +55,7 @@
                 <h4><?php echo $podium[1]['prenom_membre'];?></h4>
                 <div>
                     <img src="/api/files/<?php echo $podium[1]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
-                    <?php echo $podium[1]['xp_membre'];?>
+                    <?php echo $podium[1]['xp_membre'];?> px
                 </div>
             </div>
             <!--Premier-->
@@ -63,7 +63,8 @@
                 <h3>#01</h3>
                 <h4><?php echo $podium[0]['prenom_membre'];?></h4>
                 <div>
-                <img src="/api/files/<?php echo $podium[0]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">                <?php echo $podium[0]['xp_membre'];?>
+                    <img src="/api/files/<?php echo $podium[0]['pp_membre'];?>" alt="Profile Picture" class="profile_picture"> 
+                    <?php echo $podium[0]['xp_membre'];?> px
                 </div>
             </div>
             <!--Troiseme-->
@@ -71,7 +72,8 @@
                 <h3>#03</h3>
                 <h4><?php echo $podium[2]['prenom_membre'];?></h4>
                 <div>
-                <img src="/api/files/<?php echo $podium[2]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">                <?php echo $podium[2]['xp_membre'];?>
+                    <img src="/api/files/<?php echo $podium[2]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                    <?php echo $podium[2]['xp_membre'];?> px
                 </div>
             </div>
         </div>
