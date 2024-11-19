@@ -248,13 +248,16 @@ footer .footer-image img {
     height: 550px;
 }
 
-
 #podium > div:nth-child(3) > div{
     height: 250px;
 }
 
 .profile_picture{
     border: 1px solid black;
+    width: 90px;
+    height: 90px;
+
+    object-fit: cover;
     border-radius: 50%;
 }
 

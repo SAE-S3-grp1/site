@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="public_style.css">
 </head>
 <body id="index" class="body_margin">
-    <?php require_once 'header.php' ?>
+    <?php
+     require_once 'header.php';
+     require_once 'database.php';
+    ?>
 
     <!--H1 A METTRE -->
     <div>
@@ -39,35 +42,39 @@
         <h2 class="titre_vertical">SCORES</h2>
 
         <div id="podium">
+            <?php
+                $podium = $db->select(
+                    "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
+                );
+            ?>
+            /api/files/<?php echo $podium[1]['pp_membre'];?>
+
             <!--Deuxieme-->
             <div>
                 <h3>#02</h3>
-                <h4>"nom"</h4>
+                <h4><?php echo $podium[1]['prenom_membre'];?></h4>
                 <div>
-                    <img src="" alt="PP" class="profile_picture">
-                    XP
+                    <img src="/api/files/<?php echo $podium[1]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                    <?php echo $podium[1]['xp_membre'];?>
                 </div>
             </div>
             <!--Premier-->
             <div>
                 <h3>#01</h3>
-                <h4>"nom"</h4>
+                <h4><?php echo $podium[0]['prenom_membre'];?></h4>
                 <div>
-                    <img src="" alt="PP" class="profile_picture">
-                    XP
+                <img src="/api/files/<?php echo $podium[0]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">                <?php echo $podium[0]['xp_membre'];?>
                 </div>
             </div>
             <!--Troiseme-->
             <div>
                 <h3>#03</h3>
-                <h4>"nom"</h4>
+                <h4><?php echo $podium[2]['prenom_membre'];?></h4>
                 <div>
-                    <img src="" alt="PP" class="profile_picture">
-                    XP
+                <img src="/api/files/<?php echo $podium[2]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">                <?php echo $podium[2]['xp_membre'];?>
                 </div>
             </div>
         </div>
     </div>
-    
 </body>
 </html>
