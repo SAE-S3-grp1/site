@@ -35,24 +35,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!-- CORPS DE LA PRESENTATION -->
 <section>
-    <div>
-        <form method="POST" action="" class="account-form">
-            
+    <div id=carreCompte>
+        <form method="POST" action="" id="account-form">
+
+            <div>
                 <label for="user_name">Prénom :</label>
                 <input type="text" id="name" name="name" required>
+            </div>
 
+            <div>
                 <label for="user_lastName">Nom :</label>
                 <input type="text" id="lastName" name="lastName" required>
+            </div>
 
+            <div>
                 <label for="user_mail">Adresse mail :</label>
                 <input type="email" id="mail" name="mail" required>
-
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+            </div>
 
                 <button type="submit">Enregistrer les modifications</button>
-            </form>
-        </div>
+        </form>
+    </div>
 
 </section>
 

@@ -151,10 +151,6 @@ footer .footer-image img {
     margin-left: 4%;
 }
 
-#index > div:nth-child(2){
-
-}
-
 .titre_vertical{
     display: flex;
     width: fit-content;
