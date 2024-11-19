@@ -12,19 +12,29 @@ $DB = new DB();
 
 switch ($methode) {
     case 'GET':                      # READ
-        get_grades($DB);
+        if (tools::methodAccepted('application/json')) {
+            get_grades($DB);
+        }
         break;
     case 'POST':                     # CREATE
-        create_grade($DB);
+        if (tools::methodAccepted('multipart/form-data')) {
+            create_grade($DB);
+        }
         break;
     case 'PUT':                      # UPDATE (données seulement)
-        update_grade($DB);
+        if (tools::methodAccepted('application/json')) {
+            update_grade($DB);
+        }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-        update_image($DB);
+        if (tools::methodAccepted('multipart/form-data')) {
+            update_image($DB);
+        }
         break;
     case 'DELETE':                   # DELETE
-        delete_grade($DB);
+        if (tools::methodAccepted('application/json')) {
+            delete_grade($DB);
+        }
         break;
     default:
         # 405 Method Not Allowed
@@ -87,17 +97,17 @@ function create_grade($DB)
 }
 
 function update_grade($DB){
-    // Requis, car il n'existe pas de $_PUT en PHP (pas comme $_POST ou $_GET)
+
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
 
-    if (!isset($data['id'], $data['name'], $data['description'], $data['price'], $data['reduction'])) {
+    if (!isset($_GET['id'], $data['name'], $data['description'], $data['price'], $data['reduction'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Incomplete data']);
         return;
     }
 
-    $id = $DB->clean($data['id']);
+    $id = $DB->clean($_GET['id']);
     $name = $DB->clean($data['name']);
     $description = $DB->clean($data['description']);
     $price = $DB->clean($data['price']);
@@ -106,24 +116,22 @@ function update_grade($DB){
     $DB->query("UPDATE GRADE SET nom_grade = ?, description_grade = ?, prix_grade = ?, reduction_grade = ? WHERE id_grade = ?",
                 "ssddi", [$name, $description, $price, $reduction, $id]);
 
+    $grade = $DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$id]);
+
     http_response_code(204);
-    echo json_encode(['id' => $id, 'name' => $name, 'description' => $description, 'price' => $price, 'reduction' => $reduction]);
+    echo json_encode($grade[0]);
 
 }
 
 function update_image($DB)
 {
-
-    $input = file_get_contents('php://input');
-    $data = json_decode($input, true);
-
-    if (!isset($data['id'])) {
+    if (!isset($_GET['id'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Please provide an id']);
         return;
     }
 
-    $id = $DB->clean($data['id']);
+    $id = $DB->clean($_GET['id']);
 
     $image_name = tools::saveImage();
 
@@ -148,23 +156,20 @@ function update_image($DB)
                 "si", [$image_name, $id]);
 
     http_response_code(204);
-    echo json_encode(['id' => $id, 'image' => $image_name]);
+    echo json_encode($result[0]);
 
 }
 
 function delete_grade($DB)
 {
 
-    $input = file_get_contents('php://input');
-    $data = json_decode($input, true);
-
-    if (!isset($data['id'])) {
+    if (!isset($_GET['id'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Please provide an id']);
         return;
     }
 
-    $id = $DB->clean($data['id']);
+    $id = $DB->clean($_GET['id']);
 
 
     // On vérifie que le grade existe, et on récupère l'image pour la supprimer
