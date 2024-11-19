@@ -20,6 +20,13 @@
         </div>
     </div>
     <div>
+
+        <p>
+            L'ADIIL, ou <b>A</b>ssociation du <b>D</b>épartement <b>I</b>nformatique de l'<b>I</b>UT de <b>L</b>aval, 
+            est une organisation étudiante dédiée à créer un environnement propice à l'épanouissement dans le campus. 
+            Participer a des évèvements, et plus globalement a la vie du département.
+        </p>
+
         <h2 class="titre_vertical">L'ASSO</h2>
     </div>
 </body>
