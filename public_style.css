@@ -7,7 +7,7 @@
     margin: 0;
 }
 
-body > *:not(:first-child){
+#body_margin > *:not(:first-child){
     margin-right: 4%;
     margin-left: 4%;
 }
@@ -22,6 +22,11 @@ html{
 p {
     font-size: 25px;
 }
+
+.underline {
+    text-decoration: underline;
+}
+
 
 
 /*******************
@@ -176,6 +181,19 @@ footer .footer-image img {
     border-radius: 10%;
 }
 
+.paragraphes p{
+    margin-bottom: 50px;
+    width: 70vw;
+    text-align: justify;
+}
+.paragraphes {
+    align-self: center;
+    margin: auto;
+}
+.paragraphes b{
+    color: rgb(119, 241, 190);
+}
+
 /********************
 *** LOGIN FORM ******
 ********************/
@@ -186,7 +204,7 @@ footer .footer-image img {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
     width: 350px;
-    margin: 50px auto; /* Centrer le formulaire */
+    margin: 65px auto;
     display: flex;
     flex-direction: column;
     align-items: center;

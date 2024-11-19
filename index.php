@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="public_style.css">
 </head>
-<body id="index">
+<body id="index" class="body_margin">
     <?php require_once 'header.php' ?>
 
     <!--H1 A METTRE -->
@@ -20,12 +20,20 @@
         </div>
     </div>
     <div>
+        <div class="paragraphes">
+            <p>
+                <b class="underline">L'ADIIL</b>, ou l'<b>Association</b> du <b>Département</b> <b>Informatique</b> de l'<b>IUT</b> de <b>Laval</b>, 
+                est une organisation étudiante dédiée à créer un environnement propice à l'épanouissement dans le campus. 
+                Participer a des évèvements, et plus globalement a la vie du département.
+            </p>
+            <p>
+                L'ADIIL, véritable moteur de la vie étudiante à l'IUT de Laval, 
+                offre un cadre propice à l'épanouissement académique et social des étudiants en informatique. 
+                En participant à ses événements variés, les étudiants enrichissent leur expérience universitaire,
+                tout en renforçant les liens au sein de la communauté.
+            </p>
+        </div>
 
-        <p>
-            L'ADIIL, ou <b>A</b>ssociation du <b>D</b>épartement <b>I</b>nformatique de l'<b>I</b>UT de <b>L</b>aval, 
-            est une organisation étudiante dédiée à créer un environnement propice à l'épanouissement dans le campus. 
-            Participer a des évèvements, et plus globalement a la vie du département.
-        </p>
 
         <h2 class="titre_vertical">L'ASSO</h2>
     </div>
