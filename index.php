@@ -16,13 +16,14 @@
     ?>
 
     <!--H1 A METTRE -->
-    <div>
+    <section>
         <h2 class="titre_vertical">ADIIL</h2>
         <div id="index_carrousel">
             <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
         </div>
-    </div>
-    <div>
+    </section>
+
+    <section>
         <div class="paragraphes">
             <p>
                 <b class="underline">L'ADIIL</b>, ou l'<b>Association</b> du <b>Département</b> <b>Informatique</b> de l'<b>IUT</b> de <b>Laval</b>, 
@@ -37,8 +38,9 @@
             </p>
         </div>
         <h2 class="titre_vertical">L'ASSO</h2>
-    </div>
-    <div>
+    </section>
+
+    <section>
         <h2 class="titre_vertical">SCORES</h2>
 
         <div id="podium">
@@ -47,8 +49,6 @@
                     "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
                 );
             ?>
-            /api/files/<?php echo $podium[1]['pp_membre'];?>
-
             <!--Deuxieme-->
             <div>
                 <h3>#02</h3>
@@ -75,6 +75,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </body>
 </html>
