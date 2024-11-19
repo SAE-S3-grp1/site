@@ -14,6 +14,11 @@ html{
     margin-top: 140px;
 }
 
+body > *:not(:first-child){
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
 p {
     font-size: 25px;
 }
@@ -141,12 +146,6 @@ footer .footer-image img {
 #index > div:not(:first-child){
     display: flex;
     align-items: center;
-    margin-right: 4%;
-    margin-left: 4%;
-}
-
-#index > div:nth-child(2){
-
 }
 
 .titre_vertical{
@@ -166,11 +165,11 @@ footer .footer-image img {
 #index_carrousel{
     align-self: center;
     margin: auto;
-    border: white 1px solid;
-    border-radius: 10%;
+    width: fit-content;
 }
 
 #index_carrousel img{
+    border: white 1px solid;
     border-radius: 10%;
 }
 

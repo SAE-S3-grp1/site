@@ -19,6 +19,8 @@
             <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
         </div>
     </div>
-
+    <div>
+        <h2 class="titre_vertical">L'ASSO</h2>
+    </div>
 </body>
 </html>
