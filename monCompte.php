@@ -37,9 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <H2>MON COMPTE</H2>
 <section>
     <div id=carreCompte>
-
-        <div>
-            <img src="assets/photo_mathis.png" alt="Photo de profil de l'utilisateur"/>
+        
+        <div id="account-info">
+                <div id="cadre-photo">
+                    <img src="assets/photo_mathis.png" alt="Photo de profil de l'utilisateur"/>
+                </div>
+                <p>210 XP</p>
+                <div>
+                    <p>Grade diamant</p>
+                    
+                </div>
+                <button type="button"> <img src="assets/logo_discord.png" alt="Logo de Discord"/>Associer à Discord</button>
         </div>
 
         <form method="POST" action="" id="account-form">
@@ -79,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <button type="submit">Enregistrer les modifications</button>
         </form>
+
 
     </div>
 

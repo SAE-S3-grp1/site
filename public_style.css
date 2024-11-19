@@ -74,7 +74,7 @@ header a {
     color: white;
 }
 
-header a:hover:not(:first-child){
+header a:hover:not(#accueil){
     color: rgb(23, 23, 23);    
     margin-right: auto;
     margin-left: auto;
@@ -337,18 +337,29 @@ footer .footer-image img {
     border-radius: 10px;
     padding: 30px;
     color: white;
-    width: 50%;
+    width: 40%;
     align-self: center;
     margin: auto;
     flex-direction: row;
     display : flex;
 }
 
-#carreCompte img{
-    object-fit: cover;
-    width: 100px;
-    height: 100px;
+#cadre-photo {
+    width: 125px; /* Largeur fixe du cadre */
+    height: 125px; /* Hauteur fixe du cadre */
+    overflow: hidden; /* Coupe les parties de l'image qui dépassent */
+    border-radius: 10px; /* Coins arrondis (ou 50% pour un cercle) */
+    position: relative; /* Nécessaire pour le comportement d'image */
 }
+
+#cadre-photo img {
+    width: 100%; /* Largeur de l'image relative au cadre */
+    height: 100%; /* Hauteur de l'image relative au cadre */
+    object-fit: cover; /* Maintient les proportions sans déformation */
+    object-position: center; /* Centre l'image dans le cadre */
+    display: block; /* Supprime les espaces blancs autour de l'image */
+}
+
 
 
 #account-form {
@@ -383,7 +394,7 @@ footer .footer-image img {
     align-self: center;
     width: 100px;
     height: 45px;
-    border: 5px solid rgb(119, 241, 190);
+    border: none;
     border-radius: 10px;
     background-color: rgb(119, 241, 190);
 }
@@ -403,4 +414,31 @@ form select {
     border: 5px solid rgb(119, 241, 190);
     border-radius: 10px;
     background-color: rgb(119, 241, 190);
+}
+
+
+#account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+
+#account-info button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    width: 125px;
+    height: 50px;
+    background-color:  rgb(91, 101, 234);
+    border-radius: 10px;
+    border: none;
+
+}
+
+#account-info button img {
+    width: 35px;
+    height: 35px;
 }
