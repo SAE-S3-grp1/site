@@ -103,18 +103,11 @@ function update_grade($DB){
     $price = $DB->clean($data['price']);
     $reduction = $DB->clean($data['reduction']);
 
-    $result = $DB->query("UPDATE GRADE SET nom_grade = ?, description_grade = ?, prix_grade = ?, reduction_grade = ? WHERE id_grade = ?",
+    $DB->query("UPDATE GRADE SET nom_grade = ?, description_grade = ?, prix_grade = ?, reduction_grade = ? WHERE id_grade = ?",
                 "ssddi", [$name, $description, $price, $reduction, $id]);
-
-    if ($result === 0) {
-        http_response_code(404);
-        echo json_encode(['error' => 'Grade not found']);
-        return;
-    }
 
     http_response_code(204);
     echo json_encode(['id' => $id, 'name' => $name, 'description' => $description, 'price' => $price, 'reduction' => $reduction]);
-
 
 }
 
