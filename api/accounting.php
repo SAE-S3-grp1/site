@@ -72,7 +72,7 @@ function create_accounting($DB)
     if ($file) {
         $DB = new DB();
 
-        $DB->insert("INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre)
+        $DB->query("INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre)
                      VALUES (?, ?, ?, ?)", "sssi", [$_POST['date_comptabilite'], $_POST['nom_comptabilite'], $file, $_POST['id_membre']]);
 
         http_response_code(201);
