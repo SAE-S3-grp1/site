@@ -18,8 +18,11 @@ switch ($methode) {
     case 'POST':                     # CREATE
         create_user($DB);
         break;
-    case 'PUT':                      # UPDATE
+    case 'PUT':                      # UPDATE (données seulement)
         update_user($DB);
+        break;
+    case 'PATCH':                    # UPDATE (image seulement)
+        update_image($DB);
         break;
     case 'DELETE':                   # DELETE
         delete_user($DB);
@@ -62,10 +65,8 @@ function get_users($DB) {
     echo json_encode($data);
 }
 
-function create_user($DB): void
+function create_user($DB)
 {
-
-
     if (!isset($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['tp'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
@@ -85,3 +86,96 @@ function create_user($DB): void
     http_response_code(201);
     echo json_encode(["id" => $id]);
 }
+
+function update_user($DB)
+{
+
+    $_PUT =  json_decode(file_get_contents('php://input'),true);
+    if (!isset($_PUT['name'], $_PUT['surname'], $_PUT['email'], $_PUT['tp'])) {
+        http_response_code(400);
+        echo json_encode(["message" => "Missing parameters"]);
+        return;
+    }
+
+    $id = $DB->clean($_PUT['id']);
+    $name = $DB->clean($_PUT['name']);
+    $surname = $DB->clean($_PUT['surname']);
+    $email = $DB->clean($_PUT['email']);
+    $tp = $DB->clean($_PUT['tp']);
+
+    $DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, tp_membre = ? WHERE id_membre = ?", "ssssi", [$name, $surname, $email, $tp, $id]);
+
+    $user = $DB->select("SELECT * FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+
+    if (count($user) == 1) {
+        $user = $user[0];
+    } else {
+        http_response_code(404);
+        echo json_encode(["message" => "User not found"]);
+        return;
+    }
+
+    http_response_code(200);
+    echo json_encode(
+        [
+            "id" => $user['id_membre'],
+            "name" => $user['nom_membre'],
+            "surname" => $user['prenom_membre'],
+            "email" => $user['email_membre'],
+            "tp" => $user['tp_membre']
+        ]
+    );
+}
+
+function update_image($DB)
+{
+    $_PATCH =  json_decode(file_get_contents('php://input'),true);
+    $id = $DB->clean($_PATCH['id']);
+
+    $user = $DB->select("SELECT pp_membre FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+
+    if (count($user) == 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "User not found"]);
+        return;
+    }
+
+    $imagename = tools::saveImage();
+
+    if (!$imagename) {
+        http_response_code(415);
+        echo json_encode(["message" => "Image could not be processed"]);
+        return;
+    }
+
+    tools::deleteFile($user[0]['pp_membre']);
+
+    $DB->query("UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?", "si", [$imagename, $id]);
+
+    $user[0]['pp_membre'] = $imagename;
+
+    http_response_code(200);
+    echo json_encode($user[0]);
+}
+
+function delete_user($DB)
+{
+    $_DELETE =  json_decode(file_get_contents('php://input'),true);
+    $id = $DB->clean($_DELETE['id']);
+
+    $user = $DB->select("SELECT pp_membre FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+
+    if (count($user) == 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "User not found"]);
+        return;
+    }
+
+    tools::deleteFile($user[0]['pp_membre']);
+
+    $DB->query("DELETE FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+
+    http_response_code(204);
+}
+
+
