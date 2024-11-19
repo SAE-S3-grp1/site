@@ -23,7 +23,7 @@
             <input type="email" id="mail" name="mail" required>
 
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password">
 
             <button type="submit">Se connecter</button>
         </form>
