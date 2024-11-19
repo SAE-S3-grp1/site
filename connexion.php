@@ -37,17 +37,17 @@
                 $password = htmlspecialchars(trim($_POST['password']));
                 //Injections SQL ? :
 
-                $db_mail = executeSelectQuery(
+
+                $selection_db = executeSelectQuery(
                     $db,
-                    "SELECT email_membre FROM MEMBRE WHERE email_membre = ?",
-                    [$mail]
-                )[0]["email_membre"];
+                    "SELECT id_membre, email_membre, password_membre FROM MEMBRE WHERE email_membre = ?",
+                    [$mail]);
+
+                $db_mail = $selection_db[0]["email_membre"];
                 
-                $db_password = executeSelectQuery(
-                    $db,
-                    "SELECT password_membre FROM MEMBRE WHERE email_membre = ?",
-                    [$mail]
-                )[0]["password_membre"];
+                $db_password = $selection_db[0]["password_membre"];
+
+                $db_id = $selection_db[0]["id_membre"];
     
                 $mail_ok = ($db_mail == $mail);
 
@@ -55,7 +55,15 @@
 
                 if($mail_ok && $password_ok){
                     $_SESSION['user'] = $mail;
-                    //check if perm -> admin ok
+                    
+                    //check if perm -> panel admin ok
+                    if(executeSelectQuery($db,
+                    "SELECT COUNT(*) as nb_roles FROM ASSIGNATION WHERE id_membre = ? ;",
+                    [$db_id])[0]["nb_roles"] > 0){
+                        $_SESSION["isAdmin"] = true;
+                    }
+
+                    $db->close();
 
                     header("Location: index.php");
                     exit;
@@ -65,7 +73,6 @@
 
 
             }
-
         ?>
     </body>
 </html>
