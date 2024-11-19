@@ -47,7 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p>Grade diamant</p>
                     
                 </div>
-                <button type="button"> <img src="assets/logo_discord.png" alt="Logo de Discord"/>Associer à Discord</button>
+
+
+                <button type="button">
+                    <a href="https://discord.com" target="_blank">
+                    <img src="assets/logo_discord.png" alt="Logo de Discord">
+                    Associer à Discord
+                    </a>
+                </button>
         </div>
 
         <form method="POST" action="" id="account-form">
