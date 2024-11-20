@@ -2,6 +2,9 @@
 
 namespace model;
 
+require_once __DIR__ . '/BaseModel.php';
+
+
 class Role extends BaseModel
 {
     public static function create(string $name, bool $p_log, bool $p_boutique, bool $p_reunion, bool $p_utilisateur,

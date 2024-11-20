@@ -1,11 +1,8 @@
 <?php
 namespace model;
 
-require_once "../DB.php";
+require_once __DIR__ . '/BaseModel.php';
 
-require_once "BaseModel.php";
-require_once "Role.php";
-require_once "../DB.php";
 
 class Member extends BaseModel
 {
@@ -16,14 +13,14 @@ class Member extends BaseModel
     }
 
     // TODO: Create an Image type ($pp)
-    public function update(string $nom, string $prenom, string $email, string $pp, string $tp) : Member
+    public function update(string $nom, string $prenom, string $email, File $pp, string $tp) : Member
     {
         $this->DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, pp_membre = ?, tp_membre = ? WHERE id_membre = ?", "sssssi", [$nom, $prenom, $email, $pp, $tp, $this->id]);
 
         return $this;
     }
 
-    public static function create(string $nom, string $prenom, string $email, string $pp, string $tp) : Member
+    public static function create(string $nom, string $prenom, string $email, File $pp, string $tp) : Member
     {
         $DB = new \DB();
 
@@ -34,7 +31,8 @@ class Member extends BaseModel
 
     public function toJson(): array
     {
-        return $this->DB->select("SELECT * FROM MEMBRE WHERE id_membre = ?", "i", [$this->id]);
+        return $this->DB->select("SELECT id_membre, nom_membre, prenom_membre, email_membre, xp_membre, discord_token_membre, pp_membre, tp_membre, (SELECT COUNT(*) FROM ASSIGNATION WHERE MEMBRE.id_membre = ASSIGNATION.id_membre) as nb_roles
+                                      FROM MEMBRE WHERE id_membre = ?", "i", [$this->id]);
     }
 
     public static function getInstance($id) : ?Member
