@@ -45,7 +45,7 @@ function get_role($DB)
 {
 
     if (isset($_GET['id'])) {
-        $data = $DB->select('SELECT * FROM ROLE WHERE id_role = ?', 's', $_GET['id']);
+        $data = $DB->select('SELECT * FROM ROLE WHERE id_role = ?', 's', [$_GET['id']]);
 
         if (count($data) == 1) {
             $data = $data[0];
