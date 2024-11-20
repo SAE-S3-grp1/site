@@ -1,4 +1,9 @@
 <?php
+
+use model\Member;
+
+require_once 'models/Member.php';
+
 require_once 'DB.php';
 require_once 'tools.php';
 
@@ -51,17 +56,11 @@ function get_users($DB) {
         // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
         $id = $_GET['id'];
 
-        $data = $DB->select("SELECT id_membre, nom_membre, prenom_membre, email_membre, xp_membre, pp_membre, tp_membre 
-                             FROM MEMBRE 
-                             WHERE MEMBRE.id_membre = ?", "i", [$id]);
+        $data = Member::getInstance($id);
 
-        if (count($data) == 1) {
-            $data = $data[0];
-            $data['roles'] = $DB->select("SELECT ROLE.*
-                         FROM ROLE
-                         INNER JOIN ASSIGNATION
-                         ON ROLE.id_role = ASSIGNATION.id_role
-                         WHERE ASSIGNATION.id_membre = ?", "i", [$id]);
+        if ($data) {
+            $data = $data->toJsonWithRoles();
+
         } else {
             http_response_code(404);
             echo json_encode(["message" => "User not found"]);
@@ -70,8 +69,7 @@ function get_users($DB) {
 
     } else {
         // Sinon, on renvoie la liste de tous les utilisateurs. On va juste préciser si ils ont des rôles ou non
-        $data = $DB->select("SELECT id_membre, nom_membre, prenom_membre, email_membre, xp_membre, pp_membre, tp_membre, (SELECT COUNT(*) FROM ASSIGNATION WHERE MEMBRE.id_membre = ASSIGNATION.id_membre) as nb_roles
-                             FROM MEMBRE");
+        $data = Member::bulkFetch();
     }
 
     http_response_code(200);
