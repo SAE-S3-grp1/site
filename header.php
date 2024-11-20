@@ -13,13 +13,13 @@ $isUserLoggedIn = isset($_SESSION['userid']);
     <nav>
         <ul>
             <li>
-                <a href="./evenements.php">Événements</a>
+                <a href="./events.php">Événements</a>
             </li>
             <li>
-                <a href="./actualites.php">Actualités</a>
+                <a href="./news.php">Actualités</a>
             </li>
             <li>
-                <a href="./boutique.php">Boutique</a>
+                <a href="./shop.php">Boutique</a>
             </li>
             
             <?php if ($isUserLoggedIn): ?>
@@ -29,23 +29,23 @@ $isUserLoggedIn = isset($_SESSION['userid']);
             <?php endif; ?>
 
             <li>
-                <a href="./aPropos.php">À propos</a>
+                <a href="./about.php">À propos</a>
             </li>
 
             <?php if ($isUserLoggedIn): ?>
                 <li>
-                    <a href="./monCompte.php">Mon compte</a>
+                    <a href="./account.php">Mon compte</a>
                 </li>
 
                 <?php if ($isAdmin): ?>
                   <li>
-                      <a id="header_admin" href="./adminPanel.php">Panel Admin</a>
+                      <a id="header_admin" href="./panel.php">Panel Admin</a>
                   </li>
                 <?php endif; ?>
 
             <?php else: ?>
                 <li>
-                    <a href="./connexion.php">Se connecter</a>
+                    <a href="./login.php">Se connecter</a>
                 </li>
             <?php endif; ?>
 

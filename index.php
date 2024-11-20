@@ -54,7 +54,9 @@
                 $podium = $db->select(
                     "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
                 );
+               //TODO FACTORISATION POSSIBLE (FOR)
             ?>
+            
             <!--Deuxieme-->
             <div>
                 <h3>#02</h3>
@@ -86,6 +88,32 @@
     </section>
 
     <section>
+            <div class="events-display">
+                <?php
+                    $date = getdate();
+                    $sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
+                    $events_to_display = $db->select(
+                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement > ? ORDER BY date_evenement ASC LIMIT 2;",
+                        "s",
+                        [$sql_date]
+                    );
+
+                foreach ($events_to_display as $event):?>
+                    <div>
+                        <div>
+                            <h2><?php echo $event['nom_evenement'];?></h2>
+                            <?php echo $event['date_evenement'], $event['lieu_evenement'];?>
+                        </div>
+
+                        <h4>inscrit?</h4>
+
+                    </div>
+                    <hr>
+                <?php endforeach; ?>
+                <h3><a href="">Voir tous les événements</a></h3>
+
+            </div>
+            <h2 class="titre_vertical">EVENTS</h2>
 
     </section>
 </body>
