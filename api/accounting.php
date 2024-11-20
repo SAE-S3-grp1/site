@@ -37,7 +37,7 @@ switch ($methode) {
 
 function get_accounting($DB) {
     if (isset($_GET['id'])) {
-        // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
+        // Si un ID est précisé, on renvoie en plus les infos de l'utilisateur qui a crée le fichier
         $id = $_GET['id'];
 
         $data = $DB->select("SELECT *
