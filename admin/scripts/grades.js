@@ -1,5 +1,7 @@
 import { clearNavbar, addNavbarItem, selectFirstNavbarItem  } from "./navbar.js";
-import { requestGET } from './ajax.js';
+import { requestGET, requestPUT } from './ajax.js';
+import { showLoader, hideLoader } from "./loader.js";
+import { toast } from "./toaster.js";
 
 // Get inputs
 const prop_image_grade = document.getElementById('prop_image_grade');
@@ -10,8 +12,15 @@ const prop_reduction_grade = document.getElementById('prop_reduction_grade');
 const save_btn = document.getElementById('save_btn');
 
 // Add navbar items for each grade
+toast("hello world");
+showLoader();
 clearNavbar()
-const grades = await requestGET('/grade.php');
+const grades = [];
+try{
+    grades = await requestGET('/grade.php');
+} catch {
+    toast('Erreur lors du chargement des grades.', true);
+}
 for (let i = 0; i < grades.length; i++) {
     const grade = grades[i];
     addNavbarItem(grade.nom_grade, ()=>{
@@ -19,6 +28,7 @@ for (let i = 0; i < grades.length; i++) {
     });
 }
 selectFirstNavbarItem();
+hideLoader();
 
 /**
  * Saves the grade information.
@@ -29,9 +39,11 @@ selectFirstNavbarItem();
  */
 async function saveGrade(id_grade){
 
+    // Show loader
+    showLoader();
+
     // Create data
     const data = {
-        id: id_grade,
         name: prop_nom_grade.value,
         description: prop_description_grade_grade.value,
         price: prop_prix_grade.value,
@@ -39,12 +51,15 @@ async function saveGrade(id_grade){
     };
     // Send data
     try {
-        await requestPUT('/grade.php', data);
-        alert('Grade mis à jour avec succès.');
+        await requestPUT('/grade.php?id=' + id_grade.toString(), data);
+        toast('Grade mis à jour avec succès.');
         selectGrade(id_grade);
     } catch (error) {
-        alert('Erreur lors de la mise à jour du grade.');
+        toast('Erreur lors de la mise à jour du grade.', true);
     }
+
+    // Stop loader
+    hideLoader();
 
 }
 
@@ -67,8 +82,8 @@ async function selectGrade(id_grade){
     prop_reduction_grade.value = grade.reduction_grade;
 
     // Update save button
-    save_btn.addEventListener('click', ()=>{
+    save_btn.onclick = ()=>{
         saveGrade(id_grade);
-    });
+    };
     
 }

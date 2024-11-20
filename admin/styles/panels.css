@@ -245,3 +245,71 @@ textarea{
 .toggle-active::after{
     left: calc(100% - 25px);
 }
+
+/* LOADER */
+.loader-container{
+    position: fixed;
+    bottom: 25px;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transform: translateX(100%);
+    transition-duration: 0.2s;
+    border-radius: 15px 0 0 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.loader-container.showed{
+    transform: translateX(0);
+}
+.loader{
+    width: 25px;
+    height: 25px;
+    border: 3px solid black;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin{
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+       transform: rotate(720deg);
+    }
+    100%{
+        transform: rotate(1080deg);
+    }
+}
+
+/* TOAST */
+.toast-container{
+    position: fixed;
+    background-color: #63CA60;
+    bottom: 25px;
+    right: 0;
+    padding: 20px;
+    align-content: center;
+    z-index: 101;
+    transform: translateX(100%);
+    transition-duration: 0.2s;
+    border-radius: 15px 0 0 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.toast-container.showed{
+    transform: translateX(0);
+}
+.toast{
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+}
+.toast-container.error{
+    background-color: #C33838;
+}
