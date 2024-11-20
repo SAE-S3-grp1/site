@@ -80,7 +80,7 @@ function get_users($DB) {
 
 function create_user($DB)
 {
-    if (!isset($_POST['name'], $_POST['surname'], $_POST['email'], $_POST['tp'])) {
+    if (!isset($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
         return;
@@ -94,10 +94,12 @@ function create_user($DB)
         return;
     }
 
-    $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, tp_membre, pp_membre) VALUES (?, ?, ?, ?, ?)", "sssss", [$_POST['name'], $_POST['surname'], $_POST['email'], $_POST['tp'], $imagename]);
+    $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, tp_membre, pp_membre) VALUES (?, ?, ?, ?, ?)", "sssss", [$_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'], $imagename]);
+
+    $result = $DB->select("SELECT * FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
 
     http_response_code(201);
-    echo json_encode(["id" => $id]);
+    echo json_encode($result[0]);
 }
 
 function update_user($DB)
@@ -105,7 +107,7 @@ function update_user($DB)
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($data['name'], $data['surname'], $data['email'], $data['tp'], $_GET['id'])) {
+    if (!isset($data['name'], $data['firstname'], $data['email'], $data['tp'], $_GET['id'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
         return;
@@ -113,7 +115,7 @@ function update_user($DB)
 
     $id = $DB->clean($_GET['id']);
     $name = $DB->clean($data['name']);
-    $surname = $DB->clean($data['surname']);
+    $surname = $DB->clean($data['firstname']);
     $email = $DB->clean($data['email']);
     $tp = $DB->clean($data['tp']);
 
@@ -123,6 +125,12 @@ function update_user($DB)
 
     if (count($user) == 1) {
         $user = $user[0];
+        $user['roles'] = $DB->select("SELECT ROLE.*
+                         FROM ROLE
+                         INNER JOIN ASSIGNATION
+                         ON ROLE.id_role = ASSIGNATION.id_role
+                         WHERE ASSIGNATION.id_membre = ?", "i", [$id]);
+
     } else {
         http_response_code(404);
         echo json_encode(["message" => "User not found"]);
@@ -130,15 +138,7 @@ function update_user($DB)
     }
 
     http_response_code(200);
-    echo json_encode(
-        [
-            "id" => $user['id_membre'],
-            "name" => $user['nom_membre'],
-            "surname" => $user['prenom_membre'],
-            "email" => $user['email_membre'],
-            "tp" => $user['tp_membre']
-        ]
-    );
+    echo json_encode($user);
 }
 
 function update_image($DB)
