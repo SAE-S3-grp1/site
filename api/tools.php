@@ -64,8 +64,10 @@ class tools
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 
         // Si le Content-Type de la requête est dans la liste des types acceptés, on retourne vrai
-        if (in_array($contentType, $acceptedContentType, true)) {
-            return true;
+        foreach ($acceptedContentType as $type) {
+            if (str_starts_with($contentType, $type)) {
+                return true;
+            }
         }
 
         // Erreur si le Content-Type n'est pas supporté
