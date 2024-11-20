@@ -11,7 +11,7 @@ const save_btn = document.getElementById('save_btn');
 
 // Add navbar items for each grade
 clearNavbar()
-const grades = await requestGET('/grades.php');
+const grades = await requestGET('/grade.php');
 for (let i = 0; i < grades.length; i++) {
     const grade = grades[i];
     addNavbarItem(grade.nom_grade, ()=>{
@@ -31,16 +31,17 @@ async function saveGrade(id_grade){
 
     // Create data
     const data = {
-        id_grade: id_grade,
-        nom_grade: prop_nom_grade.value,
-        description_grade: prop_description_grade_grade.value,
-        prix_grade: prop_prix_grade.value,
-        reduction_grade: prop_reduction_grade.value
+        id: id_grade,
+        name: prop_nom_grade.value,
+        description: prop_description_grade_grade.value,
+        price: prop_prix_grade.value,
+        reduction: prop_reduction_grade.value
     };
     // Send data
     try {
-        await requestPUT('/grades.php', data);
+        await requestPUT('/grade.php', data);
         alert('Grade mis à jour avec succès.');
+        selectGrade(id_grade);
     } catch (error) {
         alert('Erreur lors de la mise à jour du grade.');
     }
@@ -56,7 +57,7 @@ async function saveGrade(id_grade){
 async function selectGrade(id_grade){
 
     // Fetch grade information
-    const grade = await requestGET(`/grades.php?id=${id_grade}`);
+    const grade = await requestGET(`/grade.php?id=${id_grade}`);
 
     // Update displayed information
     prop_image_grade.src = grade.image_grade;
