@@ -1,0 +1,45 @@
+
+/*******************
+****** FOOTER ******
+********************/
+footer {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    background-color: #1E1E1E;
+    width: 100%;
+    height: 250px; 
+    padding: 35px; 
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    margin-top: auto;
+}
+
+footer .links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 100%;
+    text-align: left;
+}
+
+footer .links a {
+    text-decoration: none;
+    font-size: 30px; 
+    color: white; 
+    font-family: "Inter", sans-serif;
+    font-weight:500;
+    font-size: 25px;
+}
+
+footer .footer-image {
+    height: 100%;
+}
+
+footer .footer-image img {
+    width: auto; 
+    max-height: 100%;
+    max-width: 150px;
+}

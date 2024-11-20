@@ -4,6 +4,7 @@ $isUserLoggedIn = isset($_SESSION['userid']);
 @$isAdmin = $_SESSION['isAdmin']; // Vérifie si l'utilisateur est connecté
 ?>
 
+
 <!-- HEADER -->
 <header>
     <a id="accueil" href="./index.php">

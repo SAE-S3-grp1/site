@@ -7,7 +7,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title>Accueil</title>
-    <link rel="stylesheet" href="public_style.css">
+    
+    <link rel="stylesheet" href="styles/index_style.css">
+    <link rel="stylesheet" href="styles/general_style.css">
+    <link rel="stylesheet" href="styles/header_style.css">
+
+
 </head>
 <body id="index" class="body_margin">
     <?php
@@ -81,7 +86,7 @@
     </section>
 
     <section>
-        
+
     </section>
 </body>
 </html>
