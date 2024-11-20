@@ -15,7 +15,7 @@ class Member extends BaseModel
     // TODO: Create an Image type ($pp)
     public function update(string $nom, string $prenom, string $email, File $pp, string $tp) : Member
     {
-        $this->DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, pp_membre = ?, tp_membre = ? WHERE id_membre = ?", "sssssi", [$nom, $prenom, $email, $pp, $tp, $this->id]);
+        $this->DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, pp_membre = ?, tp_membre = ? WHERE id_membre = ?", "sssssi", [$nom, $prenom, $email, $pp->getFileName(), $tp, $this->id]);
 
         return $this;
     }
@@ -24,7 +24,7 @@ class Member extends BaseModel
     {
         $DB = new \DB();
 
-        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $pp, $tp]);
+        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $pp->getFileName(), $tp]);
 
         return new Member($id);
     }
