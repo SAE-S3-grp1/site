@@ -59,10 +59,10 @@ nav li::after{
     height: 24px;
     background: url('../ressources/arrow_right.svg');
 }
-nav li:hover{
+nav li:hover, nav li.active{
     color: black;
 }
-nav li:hover::after{
+nav li:hover::after, nav li.active::after{
     background: url('../ressources/arrow_right_selected.svg');
 }
 
