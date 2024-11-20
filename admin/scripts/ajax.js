@@ -31,8 +31,12 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         };
 
         // Ajouter le corps de la requête pour POST, PUT et PATCH
-        if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+        if (data) {
             options.body = JSON.stringify(data);
+        }
+
+        // Pour les PATCH (fichiers) mettre le Content-Type à multipart/form-data
+        if (method === 'PATCH') {
             options.headers['Content-Type'] = 'multipart/form-data';
         }
 
@@ -44,8 +48,12 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         }
 
         // Récupérer et retourner le résultat en JSON
-        const result = await response.json();
-        return result;
+        const text = await response.text();
+        if (text) {
+            return JSON.parse(text);
+        } else {
+            return null;
+        }
     } catch (error) {
         console.error('Erreur lors de la requête AJAX:', error);
         throw error;

@@ -5,10 +5,11 @@ listItems.forEach(item => {
     item.addEventListener('click', () => {
         // Supprime la classe 'selected' de tous les éléments
         listItems.forEach(li => li.classList.remove('selected'));
-        
+
         // Ajoute la classe 'selected' à l'élément cliqué
         item.classList.add('selected');
         content.src = './panels/' + item.getAttribute('perm') + '.html';
+        
         
     });
 });
