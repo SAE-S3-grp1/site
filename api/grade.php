@@ -49,6 +49,7 @@ function get_grades($DB){
     {
         $id = $DB->clean($_GET['id']);
         $grades = $DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$id]);
+        $grades = $grades[0];
 
         if (count($grades) === 0) {
             http_response_code(404);
@@ -66,6 +67,7 @@ function get_grades($DB){
 
 function create_grade($DB)
 {
+
     if (!isset($_POST['name'], $_POST['description'], $_POST['price'], $_POST['reduction'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Incomplete data']);
@@ -100,6 +102,8 @@ function update_grade($DB){
 
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
+
+    echo json_encode($data);
 
     if (!isset($_GET['id'], $data['name'], $data['description'], $data['price'], $data['reduction'])) {
         http_response_code(400);
