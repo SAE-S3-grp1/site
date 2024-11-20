@@ -62,5 +62,4 @@ class DB
         return htmlspecialchars($input);
     }
 }
-
 ?>
