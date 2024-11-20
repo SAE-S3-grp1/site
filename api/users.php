@@ -1,8 +1,10 @@
 <?php
 
+use model\File;
 use model\Member;
 
 require_once 'models/Member.php';
+require_once 'models/File.php';
 
 require_once 'DB.php';
 require_once 'tools.php';
@@ -51,7 +53,7 @@ switch ($methode) {
         break;
 }
 
-function get_users($DB) {
+function get_users() {
     if (isset($_GET['id'])) {
         // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
         $id = $_GET['id'];
@@ -76,7 +78,7 @@ function get_users($DB) {
     echo json_encode($data);
 }
 
-function create_user($DB)
+function create_user()
 {
     if (!isset($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'])) {
         http_response_code(400);
@@ -84,20 +86,18 @@ function create_user($DB)
         return;
     }
 
-    $imagename = tools::saveImage();
+    $file = File::saveImage();
 
-    if (!$imagename) {
+    if (!$file) {
         http_response_code(415);
         echo json_encode(["message" => "Image could not be processed"]);
         return;
     }
 
-    $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, tp_membre, pp_membre) VALUES (?, ?, ?, ?, ?)", "sssss", [$_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'], $imagename]);
-
-    $result = $DB->select("SELECT * FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+    $user = Member::create($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'], $file);
 
     http_response_code(201);
-    echo json_encode($result[0]);
+    echo json_encode($user->toJsonWithRoles());
 }
 
 function update_user($DB)
