@@ -25,9 +25,6 @@
         <ul>
 
             <!-- AUTO GENERATED -->
-            <li>Fer</li>
-            <li>Or</li>
-            <li>Diamand</li>
 
         </ul>
 
@@ -41,10 +38,10 @@
         <div class="propertie">
             <div>
                 <p>Image de présentation</p>
-                <p>Mettre à jour l’image de présentation du produit.</p>
+                <p>Mettre à jour l'image de présentation du produit.</p>
             </div>
             <div>
-                <img src="https://fr.minecraft.wiki/images/Lingot_d%27or.png?1ebba" alt="Image du grade">
+                <img src="https://fr.minecraft.wiki/images/Lingot_d%27or.png?1ebba" alt="Image du grade" id="prop_image_grade">
                 <img src="../ressources/edit.svg" alt="Charger une nouvelle image">
             </div>
         </div>
@@ -55,17 +52,27 @@
                 <p>Nom affiché sur le profil et dans la boutique.</p>
             </div>
             <div>
-                <input type="text" placeholder="Or">
+                <input type="text" placeholder="Or" id="prop_nom_grade">
             </div>
         </div>
 
         <div class="propertie">
             <div>
-                <p>Prix d’achat</p>
+                <p>Description affiché</p>
+                <p>Description affiché dans la boutique.</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Or" id="description_grade_grade">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Prix d'achat</p>
                 <p>Prix à débourser pour obtenir le grade.</p>
             </div>
             <div>
-                <input type="number" placeholder="13" min="0">
+                <input type="number" placeholder="13" min="0" id="prop_prix_grade">
             </div>
         </div>
 
@@ -75,7 +82,7 @@
                 <p>Taux de réduction (en pourcentage) à appliquer à tous les achats éligibles sur la boutique. 0 pour désactiver.</p>
             </div>
             <div>
-                <input type="number" placeholder="5" min="0">
+                <input type="number" placeholder="5" min="0" id="prop_reduction_grade">
             </div>
         </div>
 

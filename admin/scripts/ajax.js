@@ -2,7 +2,7 @@
  * The base URL for the server API.
  * @constant {string}
  */
-const SERVER_API_URL = 'https://bdeinfo.fr/api';
+const SERVER_API_URL = '/api';
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
