@@ -11,24 +11,39 @@ const prop_prix_grade = document.getElementById('prop_prix_grade');
 const prop_reduction_grade = document.getElementById('prop_reduction_grade');
 const save_btn = document.getElementById('save_btn');
 
-// Add navbar items for each grade
-toast("hello world");
-showLoader();
-clearNavbar()
-const grades = [];
-try{
-    grades = await requestGET('/grade.php');
-} catch {
-    toast('Erreur lors du chargement des grades.', true);
+/**
+ * Reloads the navigation bar with grade items.
+ */
+async function reloadNavbar(){
+
+    // Show loader
+    showLoader();
+
+    // Fetch data
+    let grades = [];
+    try{
+        grades = await requestGET('/grade.php');
+    } catch (error) {
+        toast('Erreur lors du chargement des grades.', true);
+    }
+
+    // Update navbar
+    clearNavbar();
+    for (let i = 0; i < grades.length; i++) {
+        const grade = grades[i];
+        addNavbarItem(grade.nom_grade, (li)=>{
+            selectGrade(grade.id_grade, li);
+        });
+    }
+
+    // Select first item
+    selectFirstNavbarItem()
+
+    // Hide loader 
+    hideLoader();
+
 }
-for (let i = 0; i < grades.length; i++) {
-    const grade = grades[i];
-    addNavbarItem(grade.nom_grade, ()=>{
-        selectGrade(grade.id_grade)
-    });
-}
-selectFirstNavbarItem();
-hideLoader();
+reloadNavbar();
 
 /**
  * Saves the grade information.
@@ -49,6 +64,7 @@ async function saveGrade(id_grade){
         price: prop_prix_grade.value,
         reduction: prop_reduction_grade.value
     };
+
     // Send data
     try {
         await requestPUT('/grade.php?id=' + id_grade.toString(), data);
@@ -69,7 +85,10 @@ async function saveGrade(id_grade){
  * @param {number} id_grade - The ID of the grade to be selected.
  * @returns {Promise<void>} A promise that resolves when the grade information has been fetched and displayed.
  */
-async function selectGrade(id_grade){
+async function selectGrade(id_grade, li){
+
+    // Show loader
+    showLoader();
 
     // Fetch grade information
     const grade = await requestGET(`/grade.php?id=${id_grade}`);
@@ -85,5 +104,13 @@ async function selectGrade(id_grade){
     save_btn.onclick = ()=>{
         saveGrade(id_grade);
     };
+
+    // Update name
+    prop_nom_grade.onkeyup = ()=>{
+        li.textContent = prop_nom_grade.value;
+    };
+
+    // Hide loader
+    hideLoader();
     
 }

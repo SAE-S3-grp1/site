@@ -23,7 +23,7 @@ export function addNavbarItem(name, callback){
     li.textContent = name;
     li.onclick = () => {
         updateSelectedNavbarItem(li);
-        callback();
+        callback(li);
     }
     navbar.appendChild(li);
 }

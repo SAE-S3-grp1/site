@@ -32,7 +32,7 @@ export function toast(text, error = false){
     // Start toaster animation
     setTimeout(() => {
         toaster.classList.add('showed');
-    }, 1);
+    }, 10);
 }
 
 /**

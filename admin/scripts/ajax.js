@@ -55,7 +55,6 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
             return null;
         }
     } catch (error) {
-        console.error('Erreur lors de la requête AJAX:', error);
         throw error;
     }
 }

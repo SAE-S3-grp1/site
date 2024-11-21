@@ -56,6 +56,8 @@ function get_grades($DB){
             return;
         }
 
+        $grades = $grades[0];
+
     } else {
         $grades = $DB->select("SELECT * FROM GRADE");
     }
