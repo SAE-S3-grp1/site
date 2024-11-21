@@ -1,5 +1,13 @@
 <?php
 
+use model\File;
+use model\Meeting;
+use model\Member;
+
+require_once 'filter.php';
+require_once 'models/File.php';
+require_once 'models/Meeting.php';
+require_once 'models/Member.php';
 require_once 'DB.php';
 require_once 'tools.php';
 
@@ -35,88 +43,71 @@ switch ($methode) {
 }
 
 function get_meetings($DB) {
-    // Si un ID est précisé, on renvoie en plus les infos de l'utilisateur qui a crée le fichier
     if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+        $id = filter::int($_GET['id']);
+        $meeting = Meeting::getInstance($id);
 
-        $data = $DB->select("SELECT *
-                             FROM REUNION
-                             WHERE REUNION.id_reunion = ?", "i", [$id]);
-
-        if (count($data) == 1) {
-            $data = $data[0];
-
-
-            $user = $DB->select("SELECT id_membre, nom_membre, prenom_membre, pp_membre
-                                 FROM MEMBRE
-                                 WHERE MEMBRE.id_membre = ?", "i", [$data['id_membre']]);
-
-            $data['user'] = $user[0];
-            unset($data['id_membre']);
-
+        if ($meeting) {
+            http_response_code(200);
+            echo json_encode($meeting);
         } else {
             http_response_code(404);
-            echo json_encode(["message" => "Meeting file not found"]);
-            return;
+            echo json_encode(["message" => "Meeting not found"]);
         }
-
     } else {
-        // Sinon, on renvoie la liste de tous les utilisateurs. On va juste préciser si ils ont des rôles ou non
-        $data = $DB->select("SELECT id_reunion, date_reunion, fichier_reunion
-                             FROM REUNION");
-    }
+        $meetings = Meeting::bulkFetch();
 
-    echo json_encode($data);
+        http_response_code(200);
+        echo json_encode($meetings);
+    }
 }
 
 
-function create_meeting($DB)
+function create_meeting() : void
 {
     // TODO : Récupérer l'ID de membre grace au token PHP
 
-    $file = tools::saveFile();
+    if (isset($_POST['date'], $_POST['user'])) {
 
-    if ($file) {
-        $DB->query("INSERT INTO REUNION (date_reunion, fichier_reunion, id_membre)
-                     VALUES (?, ?, ?)", "ssi", [$_POST['date_reunion'], $file, $_POST['id_membre']]);
+        $date = filter::string($_POST['date']);
+        $user = Member::getInstance(filter::int($_POST['user']));
 
-        http_response_code(201);
-        echo json_encode(["message" => "Meeting  file created"]);
+        $file = File::saveFile();
+
+        if ($file && $user) {
+            $meeting = Meeting::create($date, $file, $user);
+            http_response_code(201);
+            echo json_encode($meeting);
+        } else if (!$file) {
+            http_response_code(500);
+            echo json_encode(["message" => "Error while saving file"]);
+        } else {
+            http_response_code(404);
+            echo json_encode(["message" => "User not found"]);
+        }
     } else {
         http_response_code(400);
-        echo json_encode(["message" => "Meeting file not created"]);
+        echo json_encode(["message" => "Missing parameters"]);
     }
 
 }
 
 
-function delete_meeting($DB)
+function delete_meeting() : void
 {
-    if (!isset($_GET['id'])) {
-        http_response_code(400);
-        echo json_encode(["message" => "Missing parameters"]);
-        return;
-    }
+    if (isset($_GET['id'])) {
+        $id = filter::int($_GET['id']);
 
-    $data = $DB->select("SELECT fichier_reunion
-                         FROM REUNION
-                         WHERE REUNION.id_reunion = ?", "i", [$_GET['id']]);
+        $meeting = Meeting::getInstance($id);
 
-    if (count($data) == 1) {
-        $data = $data[0];
-
-        if (tools::deleteFile($data['fichier_reunion'])) {
-            $DB->delete("DELETE FROM REUNION WHERE id_reunion = ?", "i", [$_GET['id']]);
-
+        if ($meeting) {
+            $meeting->delete();
             http_response_code(200);
             echo json_encode(["message" => "Meeting file deleted"]);
         } else {
-            http_response_code(400);
-            echo json_encode(["message" => "Meeting file could not deleted"]);
+            http_response_code(404);
+            echo json_encode(["message" => "Meeting file not found"]);
         }
-    } else {
-        http_response_code(404);
-        echo json_encode(["message" => "Meeting file not found"]);
     }
 }
 
