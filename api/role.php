@@ -1,5 +1,9 @@
 <?php
 
+use model\Role;
+
+require_once 'filter.php';
+require_once 'models/Role.php';
 require_once 'DB.php';
 require_once 'tools.php';
 
@@ -16,7 +20,7 @@ $methode = $_SERVER['REQUEST_METHOD'];
 switch ($methode) {
     case 'GET':                      # READ
         if (tools::methodAccepted('application/json')) {
-            get_role($DB);
+            get_role();
         }
         break;
     case 'POST':                     # CREATE
@@ -41,51 +45,51 @@ switch ($methode) {
         break;
 }
 
-function get_role($DB)
+function get_role() : void
 {
-
     if (isset($_GET['id'])) {
-        $data = $DB->select('SELECT * FROM ROLE WHERE id_role = ?', 's', [$_GET['id']]);
+        // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
+        $id = filter::int($_GET['id']);
 
-        if (count($data) == 1) {
-            $data = $data[0];
-        } else {
+        $data = Role::getInstance($id);
+
+        if (!$data) {
             http_response_code(404);
-            echo json_encode(['message' => 'Role not found']);
+            echo json_encode(["message" => "User not found"]);
             return;
         }
 
     } else {
-        $data = $DB->select('SELECT * FROM ROLE');
+        // Sinon, on renvoie la liste de tous les utilisateurs. On va juste préciser si ils ont des rôles ou non
+        $data = Role::bulkFetch();
     }
+
     http_response_code(200);
     echo json_encode($data);
 }
 
-function create_role($DB)
+function create_role()
 {
     $data = json_decode(file_get_contents('php://input'), true);
     if (isset($data['name'], $data['permissions'])) {
 
-        $p_log = $data['permissions']['p_log'] ?? false;
-        $p_boutique = $data['permissions']['p_boutique'] ?? false;
-        $p_reunion = $data['permissions']['p_membres'] ?? false;
-        $p_utilisateur = $data['permissions']['p_utilisateur'] ?? false;
-        $p_grade = $data['permissions']['p_grade'] ?? false;
-        $p_role = $data['permissions']['p_role'] ?? false;
-        $p_actualite = $data['permissions']['p_actualite'] ?? false;
-        $p_evenement = $data['permissions']['p_evenement'] ?? false;
-        $p_comptabilite = $data['permissions']['p_comptabilite'] ?? false;
-        $p_achat = $data['permissions']['p_achat'] ?? false;
-        $p_moderation = $data['permissions']['p_moderation'] ?? false;
+        $name = filter::string($data['name']);
+        $p_log = filter::bool($data['permissions']['p_log'] ?? false);
+        $p_boutique = filter::bool($data['permissions']['p_boutique'] ?? false);
+        $p_reunion = filter::bool($data['permissions']['p_reunion'] ?? false);
+        $p_utilisateur = filter::bool($data['permissions']['p_utilisateur'] ?? false);
+        $p_grade = filter::bool($data['permissions']['p_grade'] ?? false);
+        $p_role = filter::bool($data['permissions']['p_role'] ?? false);
+        $p_actualite = filter::bool($data['permissions']['p_actualite'] ?? false);
+        $p_evenement = filter::bool($data['permissions']['p_evenement'] ?? false);
+        $p_comptabilite = filter::bool($data['permissions']['p_comptabilite'] ?? false);
+        $p_achat = filter::bool($data['permissions']['p_achat'] ?? false);
+        $p_moderation = filter::bool($data['permissions']['p_moderation'] ?? false);
 
-        $id = $DB->query('INSERT INTO ROLE (nom_role, p_log, p_boutique, p_reunion, p_utilisateur, p_grade, p_role, p_actualite, p_evenement, p_comptabilite, p_achat, p_moderation)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 'siiiiiiiiiii'
-                     , [$data['name'], $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation]);
+        $role = Role::create($name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation);
 
-        $inserted = $DB->select('SELECT * FROM ROLE WHERE id_role = ?', 's', [$id]);
         http_response_code(201);
-        echo json_encode($inserted);
+        echo json_encode($role);
 
     } else {
         http_response_code(400);
@@ -93,9 +97,8 @@ function create_role($DB)
     }
 }
 
-function update_role($DB)
+function update_role() : void
 {
-
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (!isset($data['name'], $data['permissions'], $_GET['id'])) {
@@ -104,57 +107,57 @@ function update_role($DB)
         return;
     }
 
-    $id = $DB->clean($_GET['id']);
-    $name = $DB->clean($data['name']);
-    $p_log = $data['permissions']['p_log'] ?? false;
-    $p_boutique = $data['permissions']['p_boutique'] ?? false;
-    $p_reunion = $data['permissions']['p_membres'] ?? false;
-    $p_utilisateur = $data['permissions']['p_utilisateur'] ?? false;
-    $p_grade = $data['permissions']['p_grade'] ?? false;
-    $p_role = $data['permissions']['p_role'] ?? false;
-    $p_actualite = $data['permissions']['p_actualite'] ?? false;
-    $p_evenement = $data['permissions']['p_evenement'] ?? false;
-    $p_comptabilite = $data['permissions']['p_comptabilite'] ?? false;
-    $p_achat = $data['permissions']['p_achat'] ?? false;
-    $p_moderation = $data['permissions']['p_moderation'] ?? false;
+    $id = filter::int($_GET['id']);
+    $name = filter::string($data['name']);
+    $p_log = filter::bool($data['permissions']['p_log'] ?? false);
+    $p_boutique = filter::bool($data['permissions']['p_boutique'] ?? false);
+    $p_reunion = filter::bool($data['permissions']['p_reunion'] ?? false);
+    $p_utilisateur = filter::bool($data['permissions']['p_utilisateur'] ?? false);
+    $p_grade = filter::bool($data['permissions']['p_grade'] ?? false);
+    $p_role = filter::bool($data['permissions']['p_role'] ?? false);
+    $p_actualite = filter::bool($data['permissions']['p_actualite'] ?? false);
+    $p_evenement = filter::bool($data['permissions']['p_evenement'] ?? false);
+    $p_comptabilite = filter::bool($data['permissions']['p_comptabilite'] ?? false);
+    $p_achat = filter::bool($data['permissions']['p_achat'] ?? false);
+    $p_moderation = filter::bool($data['permissions']['p_moderation'] ?? false);
 
-    $DB->query('UPDATE ROLE SET nom_role = ?, p_log = ?, p_boutique = ?, p_reunion = ?, p_utilisateur = ?, p_grade = ?, p_role = ?, p_actualite = ?, p_evenement = ?, p_comptabilite = ?, p_achat = ?, p_moderation = ? WHERE id_role = ?',
-        'siiiiiiiiiiii', [$name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation, $id]);
+    $role = Role::getInstance($id);
 
-    $role = $DB->select('SELECT * FROM ROLE WHERE id_role = ?', 's', [$id]);
-
-    if (count($role) == 1) {
-        $role = $role[0];
-
-        http_response_code(200);
-        echo json_encode($role);
-
-    } else {
+    if (!$role) {
         http_response_code(404);
         echo json_encode(['message' => 'Role not found']);
+        return;
     }
+
+    $role->update($name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation);
+
+    http_response_code(200);
+    echo json_encode($role);
+
+
 }
 
-function delete_role($DB)
+function delete_role() : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
-        echo json_encode(['message' => 'Please provide an id']);
+        echo json_encode(['message' => 'Missing parameters']);
         return;
     }
 
-    $id = $DB->clean($_GET['id']);
+    $id = filter::int($_GET['id']);
 
-    $role = $DB->select('SELECT * FROM ROLE WHERE id_role = ?', 's', [$id]);
+    $role = Role::getInstance($id);
 
-    if (count($role) == 0) {
+    if (!$role) {
         http_response_code(404);
         echo json_encode(['message' => 'Role not found']);
         return;
     }
 
-    $DB->query('DELETE FROM ROLE WHERE id_role = ?', 's', [$id]);
+    $role->delete();
 
     http_response_code(204);
+    echo json_encode(['message' => 'Role deleted']);
 }
 
