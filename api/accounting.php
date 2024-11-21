@@ -34,9 +34,10 @@ switch ($methode) {
         break;
 }
 
+
 function get_accounting($DB) {
     if (isset($_GET['id'])) {
-        // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
+        // Si un ID est précisé, on renvoie en plus les infos de l'utilisateur qui a crée le fichier
         $id = $_GET['id'];
 
         $data = $DB->select("SELECT *
@@ -76,7 +77,6 @@ function create_accounting($DB)
     $file = tools::saveFile();
 
     if ($file) {
-        $DB = new DB();
 
         $DB->query("INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre)
                      VALUES (?, ?, ?, ?)", "sssi", [$_POST['date_comptabilite'], $_POST['nom_comptabilite'], $file, $_POST['id_membre']]);
