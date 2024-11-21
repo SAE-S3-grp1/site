@@ -29,11 +29,11 @@ class Member extends BaseModel implements JsonSerializable
         return $this;
     }
 
-    public static function create(string $nom, string $prenom, string $email, File $pp, string $tp) : Member
+    public static function create(string $nom, string $prenom, string $email, File | null $pp, string $tp) : Member
     {
         $DB = new \DB();
 
-        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $pp->getFileName(), $tp]);
+        $id = $DB->query("INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, pp_membre, tp_membre) VALUES (?,?,?,?,?)", "sssss", [$nom, $prenom, $email, $pp, $tp]);
 
         return new Member($id);
     }
