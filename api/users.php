@@ -17,35 +17,33 @@ header('Content-Type: application/json');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 
-$DB = new DB();
-
 
 # On accepte le format multipart/form-data UNIQUEMENT sur les requetes POST et PATCH
 # Sinon, il faudrait coder un parser de multipart/form-data
 switch ($methode) {
     case 'GET':                      # READ
         if (tools::methodAccepted('application/json')) {
-            get_users($DB);
+            get_users();
         }
         break;
     case 'POST':                     # CREATE
         if (tools::methodAccepted('multipart/form-data')) {
-            create_user($DB);
+            create_user();
         }
         break;
     case 'PUT':                      # UPDATE (données seulement)
         if (tools::methodAccepted('application/json')) {
-            update_user($DB);
+            update_user();
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
         if (tools::methodAccepted('multipart/form-data')) {
-            update_image($DB);
+            update_image();
         }
         break;
     case 'DELETE':                   # DELETE
         if (tools::methodAccepted('application/json')) {
-            delete_user($DB);
+            delete_user();
         }
         break;
     default:
@@ -54,7 +52,7 @@ switch ($methode) {
         break;
 }
 
-function get_users() {
+function get_users() : void {
     if (isset($_GET['id']) && filter::int($_GET['id'])) {
         // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
         $id = filter::int($_GET['id']);
@@ -79,7 +77,7 @@ function get_users() {
     echo json_encode($data);
 }
 
-function create_user()
+function create_user() : void
 {
     if (!isset($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'])) {
         http_response_code(400);
@@ -103,7 +101,7 @@ function create_user()
     echo json_encode($user->toJsonWithRoles());
 }
 
-function update_user($DB)
+function update_user() : void
 {
 
     $data = json_decode(file_get_contents('php://input'), true);
@@ -135,7 +133,8 @@ function update_user($DB)
     }
 }
 
-function update_image($DB)
+
+function update_image(): void
 {
     $id = filter::int($_GET['id']);
 
@@ -164,7 +163,8 @@ function update_image($DB)
     echo json_encode($user->toJsonWithRoles());
 }
 
-function delete_user($DB)
+
+function delete_user() :void
 {
     $id = filter::int($_GET['id']);
 
