@@ -1,11 +1,9 @@
 <footer>
-    <div class="links">
+    <div>
         <a href="contact.php">Nous contacter</a>
-        <a href="aPropos.php">Nous rejoindre</a>
-        <a href="actualites.php">Le département</a>
-        <a href="mentionsLegales.php">Mentions légales</a>
+        <a href="about.php">Nous rejoindre</a>
+        <a href="news.php">Le département</a>
+        <a href="legal_mentions.php">Mentions légales</a>
     </div>
-    <div class="footer-image">
-        <img src="assets/logo_footer.png" alt="Logo vertical de l'ADIIL" />
-    </div>
+    <h2>ADIIL</h2>
 </footer>

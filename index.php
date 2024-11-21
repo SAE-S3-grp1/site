@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="styles/index_style.css">
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
+    <link rel="stylesheet" href="styles/footer_style.css">
+
 
 
 </head>
@@ -128,7 +130,7 @@
                                     //editable
                                     $event_subscription_color_class = "event-subscribed";
                                     $event_subscription_label = "Inscrit";
-                                    
+
                                 }else{
                                     $isPlaceDisponible = $db->select(
                                         "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
