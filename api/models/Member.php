@@ -10,6 +10,7 @@ class Member extends BaseModel implements JsonSerializable
 {
     public function delete() : void
     {
+        $this->getProfilePic()?->deleteFile();
         // /** @lang SQL */ permet d'afficher sur PHPStorm la coloration syntaxique SQL
         $this->DB->query(/** @lang SQL */"CALL suppressionCompte(?)", "i", [$this->id]);
     }
@@ -56,6 +57,11 @@ class Member extends BaseModel implements JsonSerializable
         }
 
         return new Member($id);
+    }
+
+    public function getProfilePic(): File | null
+    {
+        return File::getFile($this->toJson()["pp_membre"]);
     }
 
 

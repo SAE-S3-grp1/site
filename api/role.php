@@ -22,18 +22,16 @@ switch ($methode) {
         get_role();
         break;
     case 'POST':                     # CREATE
-        if (tools::methodAccepted('application/json')) {
-            create_role($DB);
-        }
+            create_role();
         break;
     case 'PUT':
         if (tools::methodAccepted('application/json')) {
-            update_role($DB);
+            update_role();
         }
         break;
 
     case 'DELETE':                   # DELETE
-        delete_role($DB);
+        delete_role();
         break;
     default:
         # 405 Method Not Allowed
@@ -64,33 +62,12 @@ function get_role() : void
     echo json_encode($data);
 }
 
-function create_role()
+function create_role(): void
 {
-    $data = json_decode(file_get_contents('php://input'), true);
-    if (isset($data['name'], $data['permissions'])) {
+    $role = Role::create("Nouveau role", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-        $name = filter::string($data['name']);
-        $p_log = filter::bool($data['permissions']['p_log'] ?? false);
-        $p_boutique = filter::bool($data['permissions']['p_boutique'] ?? false);
-        $p_reunion = filter::bool($data['permissions']['p_reunion'] ?? false);
-        $p_utilisateur = filter::bool($data['permissions']['p_utilisateur'] ?? false);
-        $p_grade = filter::bool($data['permissions']['p_grade'] ?? false);
-        $p_role = filter::bool($data['permissions']['p_role'] ?? false);
-        $p_actualite = filter::bool($data['permissions']['p_actualite'] ?? false);
-        $p_evenement = filter::bool($data['permissions']['p_evenement'] ?? false);
-        $p_comptabilite = filter::bool($data['permissions']['p_comptabilite'] ?? false);
-        $p_achat = filter::bool($data['permissions']['p_achat'] ?? false);
-        $p_moderation = filter::bool($data['permissions']['p_moderation'] ?? false);
-
-        $role = Role::create($name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation);
-
-        http_response_code(201);
-        echo json_encode($role);
-
-    } else {
-        http_response_code(400);
-        echo json_encode(['message' => 'Missing parameters']);
-    }
+    http_response_code(201);
+    echo json_encode($role);
 }
 
 function update_role() : void

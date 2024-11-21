@@ -145,7 +145,7 @@ function update_image(): void
     }
 
     $deleteFile = File::getFile($user->toJson()['pp_membre']);
-    if ($deleteFile) {tools::deleteFile($deleteFile);}
+    $deleteFile?->deleteFile();
 
     $user->updateProfilePic($newImage);
 

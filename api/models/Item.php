@@ -8,7 +8,7 @@ require_once __DIR__ . '/BaseModel.php';
 
 class Item extends BaseModel implements JsonSerializable
 {
-    public static function create(string $name, int $xp, int $stocks, float $reduction, float $price, string $image) : Item
+    public static function create(string $name, int $xp, int $stocks, float $reduction, float $price, File | null $image) : Item
     {
         $DB = new \DB();
 
@@ -25,6 +25,12 @@ class Item extends BaseModel implements JsonSerializable
         return $this;
     }
 
+    public function getImage() : File | null
+    {
+        $image = $this->DB->select("SELECT image_article FROM ARTICLE WHERE id_article = ?", "i", [$this->id])[0]['image_article'];
+        return File::getFile($image);
+    }
+
     public function updateImage(File $image) : Item
     {
         $this->DB->query("UPDATE ARTICLE SET image_article = ? WHERE id_article = ?", "si", [$image->getFileName(), $this->id]);
@@ -34,6 +40,7 @@ class Item extends BaseModel implements JsonSerializable
 
     public function delete() : void
     {
+        $this->getImage()?->deleteFile();
         $this->DB->query("DELETE FROM ARTICLE WHERE id_article = ?", "i", [$this->id]);
     }
 
