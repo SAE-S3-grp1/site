@@ -57,7 +57,7 @@
 }
 
 
-#podium > div{
+.podium_unit  {
     display: flex;
     flex-direction: column;
 
@@ -72,12 +72,12 @@
 
 }
 
-#podium > div h3{
+.podium_unit  h3{
     font-size: 70px;
 
     width: inherit;
 }
-#podium > div h4{
+.podium_unit  h4{
     font-weight: 500;
     font-size: 35px;
     margin-bottom: 4%;
@@ -85,7 +85,7 @@
     width: inherit;
 }
 
-#podium > div > div{
+.podium_unit  > div{
     padding-top: 35px;
     padding-bottom: 35px;
     background-color: #000000;
@@ -100,15 +100,15 @@
     width: inherit;
 }
 
-#podium > div:nth-child(1) > div{
+.podium_unit  :nth-child(1) > div{
     height: 380px;
 }
 
-#podium > div:nth-child(2) > div{
+.podium_unit  :nth-child(2) > div{
     height: 550px;
 }
 
-#podium > div:nth-child(3) > div{
+.podium_unit  :nth-child(3) > div{
     height: 305px;
 }
 

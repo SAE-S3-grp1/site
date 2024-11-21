@@ -57,36 +57,19 @@
                 $podium = $db->select(
                     "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
                 );
-               //TODO FACTORISATION POSSIBLE (FOR)
+
+               foreach ([2,1,3] as $member_number):
+                $pod = $podium[$member_number-1];
             ?>
-            
-            <!--Deuxieme-->
-            <div>
-                <h3>#02</h3>
-                <h4><?php echo $podium[1]['prenom_membre'];?></h4>
-                <div>
-                    <img src="/api/files/<?php echo $podium[1]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
-                    <?php echo $podium[1]['xp_membre'];?> px
+                <div class="podium_unit">
+                    <h3>#0<?php echo $member_number?></h3>
+                    <h4><?php echo $pod['prenom_membre'];?></h4>
+                    <div>
+                        <img src="/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                        <?php echo $pod['xp_membre'];?> px
+                    </div>
                 </div>
-            </div>
-            <!--Premier-->
-            <div>
-                <h3>#01</h3>
-                <h4><?php echo $podium[0]['prenom_membre'];?></h4>
-                <div>
-                    <img src="/api/files/<?php echo $podium[0]['pp_membre'];?>" alt="Profile Picture" class="profile_picture"> 
-                    <?php echo $podium[0]['xp_membre'];?> px
-                </div>
-            </div>
-            <!--Troiseme-->
-            <div>
-                <h3>#03</h3>
-                <h4><?php echo $podium[2]['prenom_membre'];?></h4>
-                <div>
-                    <img src="/api/files/<?php echo $podium[2]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
-                    <?php echo $podium[2]['xp_membre'];?> px
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
