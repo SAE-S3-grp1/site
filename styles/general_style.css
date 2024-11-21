@@ -10,7 +10,7 @@
     margin: 0;
 }
 
-#body_margin > *:not(:first-child){
+.body_margin > *:not(:first-child){
     margin-right: 4%;
     margin-left: 4%;
 }
