@@ -19,6 +19,7 @@
      require_once 'header.php';
      require_once 'database.php';
      $db = new DB();
+     $isLoggedIn = isset($_SESSION["userid"]);
     ?>
 
     <!--H1 A METTRE -->
@@ -102,15 +103,57 @@
                     <div>
                         <div>
                             <h2><?php echo $event['nom_evenement'];?></h2>
-                            <?php echo $event['date_evenement'], $event['lieu_evenement'];?>
+                            <?php
+                                setlocale(LC_TIME, 'fr_FR.UTF-8');
+                                $date = substr($event['date_evenement'], 0, 10);
+                                $date = new DateTime($date);
+                                
+                                echo ucwords(strftime('%d %B', $date->getTimestamp()).", ".$event["lieu_evenement"]);
+                            ?>
                         </div>
 
-                        <h4>inscrit?</h4>
+                        <h4
+                            <?php
+                            $eventid = $event["id_evenement"];
+
+                            $isPlaceDisponible = $db->select(
+                                "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
+                                "i",
+                                [$eventid])[0]['isPlaceDisponible'];
+                            
+                            if($isPlaceDisponible){
+
+                                $event_subscription_color_class = "event-not-subscribed hover_effect";
+                                $event_subscription_label = "<a href=\"event_details.php?id=$eventid\">S'inscrire</a>";
+
+                                if($isLoggedIn){
+                                    
+                                    $isSubscribed = !empty($db->select(
+                                    "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
+                                    "ii",
+                                    [$_SESSION['userid'], $event["id_evenement"]]
+                                    ));
+                                    
+                                    if($isSubscribed){
+                                        $event_subscription_color_class = "event-subscribed";
+                                        $event_subscription_label = "Inscrit";
+                                    }
+                                }
+
+                            }else{
+                                $event_subscription_color_class = "event-full";
+                                $event_subscription_label = "Plein";
+                            }
+                            echo "class=\"$event_subscription_color_class\"";
+                            ?>>
+                            <?php echo $event_subscription_label;?>
+
+                        </h4>
 
                     </div>
                     <hr>
                 <?php endforeach; ?>
-                <h3><a href="">Voir tous les événements</a></h3>
+                <h3><a href="events.php" class="hover_effect">Voir tous les événements</a></h3>
 
             </div>
             <h2 class="titre_vertical">EVENTS</h2>

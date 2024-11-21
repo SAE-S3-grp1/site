@@ -26,6 +26,16 @@ p {
     font-size: 25px;
 }
 
+a {
+    color: inherit; 
+    text-decoration: none; 
+}
+
 .underline {
     text-decoration: underline;
+}
+
+.hover_effect:hover{
+    background-color: rgb(119, 241, 190);
+    color: rgb(23, 23, 23);    
 }
