@@ -13,9 +13,16 @@ class Member extends BaseModel
     }
 
     // TODO: Create an Image type ($pp)
-    public function update(string $nom, string $prenom, string $email, File $pp, string $tp) : Member
+    public function update(string $nom, string $prenom, string $email, string $tp, int $xp) : Member
     {
-        $this->DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, pp_membre = ?, tp_membre = ? WHERE id_membre = ?", "sssssi", [$nom, $prenom, $email, $pp->getFileName(), $tp, $this->id]);
+        $this->DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, tp_membre = ?, xp_membre = ? WHERE id_membre = ?", "ssssii", [$nom, $prenom, $email, $tp, $xp, $this->id]);
+
+        return $this;
+    }
+
+    public function updateProfilePic(File $pp)
+    {
+        $this->DB->query("UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?", "si", [$pp->getFileName(), $this->id]);
 
         return $this;
     }
@@ -31,8 +38,10 @@ class Member extends BaseModel
 
     public function toJson(): array
     {
-        return $this->DB->select("SELECT id_membre, nom_membre, prenom_membre, email_membre, xp_membre, discord_token_membre, pp_membre, tp_membre, (SELECT COUNT(*) FROM ASSIGNATION WHERE MEMBRE.id_membre = ASSIGNATION.id_membre) as nb_roles
+        $result = $this->DB->select("SELECT id_membre, nom_membre, prenom_membre, email_membre, xp_membre, discord_token_membre, pp_membre, tp_membre, (SELECT COUNT(*) FROM ASSIGNATION WHERE MEMBRE.id_membre = ASSIGNATION.id_membre) as nb_roles
                                       FROM MEMBRE WHERE id_membre = ?", "i", [$this->id]);
+
+        return $result[0];
     }
 
     public static function getInstance($id) : ?Member
@@ -82,10 +91,10 @@ class Member extends BaseModel
         $data =  $this->toJson();
 
         // Pour chaque role, on applique la méthode get() pour obtenir le role sous forme de json
-        $data[0]["roles"] = [];
+        $data["roles"] = [];
 
         foreach ($this->getRoles() as $role) {
-            $data[0]["roles"][] = $role->toJson();
+            $data["roles"][] = $role->toJson();
         }
 
 

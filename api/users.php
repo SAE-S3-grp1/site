@@ -5,6 +5,7 @@ use model\Member;
 
 require_once 'models/Member.php';
 require_once 'models/File.php';
+require_once 'filter.php';
 
 require_once 'DB.php';
 require_once 'tools.php';
@@ -54,9 +55,9 @@ switch ($methode) {
 }
 
 function get_users() {
-    if (isset($_GET['id'])) {
+    if (isset($_GET['id']) && filter::int($_GET['id'])) {
         // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
-        $id = $_GET['id'];
+        $id = filter::int($_GET['id']);
 
         $data = Member::getInstance($id);
 
@@ -82,7 +83,7 @@ function create_user()
 {
     if (!isset($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'])) {
         http_response_code(400);
-        echo json_encode(["message" => "Missing parameters"]);
+        echo json_encode(["message" => "Missing or incorrect parameters"]);
         return;
     }
 
@@ -94,7 +95,9 @@ function create_user()
         return;
     }
 
-    $user = Member::create($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'], $file);
+    $user = Member::create(
+        filter::string($_POST['name'], maxLenght: 100), filter::string($_POST['firstname'],maxLenght: 100),
+        filter::email($_POST['email'], maxLenght: 100), $file, filter::string($_POST['tp'], maxLenght: 3));
 
     http_response_code(201);
     echo json_encode($user->toJsonWithRoles());
@@ -105,87 +108,78 @@ function update_user($DB)
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($data['name'], $data['firstname'], $data['email'], $data['tp'], $_GET['id'])) {
+    if (!isset($data['name'], $data['firstname'], $data['email'], $data['tp'], $data['xp'], $_GET['id'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
         return;
     }
 
-    $id = $DB->clean($_GET['id']);
-    $name = $DB->clean($data['name']);
-    $surname = $DB->clean($data['firstname']);
-    $email = $DB->clean($data['email']);
-    $tp = $DB->clean($data['tp']);
+    $id = filter::int($_GET['id']);
+    $name = filter::string($data['name'],maxLenght: 100);
+    $surname =  filter::string($data['firstname'], maxLenght: 100);
+    $email = filter::email($data['email'], maxLenght: 100);
+    $tp = filter::string($data['tp'], maxLenght: 3);
+    $xp = filter::int($data['xp']);
 
-    $DB->query("UPDATE MEMBRE SET nom_membre = ?, prenom_membre = ?, email_membre = ?, tp_membre = ? WHERE id_membre = ?", "ssssi", [$name, $surname, $email, $tp, $id]);
+    $user = Member::getInstance($id);
 
-    $user = $DB->select("SELECT * FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+    if ($user) {
+        $user->update($name, $surname, $email, $tp, $xp);
 
-    if (count($user) == 1) {
-        $user = $user[0];
-        $user['roles'] = $DB->select("SELECT ROLE.*
-                         FROM ROLE
-                         INNER JOIN ASSIGNATION
-                         ON ROLE.id_role = ASSIGNATION.id_role
-                         WHERE ASSIGNATION.id_membre = ?", "i", [$id]);
+        http_response_code(200);
+        echo json_encode($user->toJsonWithRoles());
 
     } else {
         http_response_code(404);
         echo json_encode(["message" => "User not found"]);
-        return;
     }
-
-    http_response_code(200);
-    echo json_encode($user);
 }
 
 function update_image($DB)
 {
-    $id = $DB->clean($_GET['id']);
+    $id = filter::int($_GET['id']);
 
-    $user = $DB->select("SELECT pp_membre FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+    $user = Member::getInstance($id);
 
-    if (count($user) == 0) {
+    if (!$user) {
         http_response_code(404);
         echo json_encode(["message" => "User not found"]);
         return;
     }
 
-    $imagename = tools::saveImage();
+    $newImage = File::saveImage();
 
-    if (!$imagename) {
+    if (!$newImage) {
         http_response_code(415);
         echo json_encode(["message" => "Image could not be processed"]);
         return;
     }
 
-    tools::deleteFile($user[0]['pp_membre']);
+    $deleteFile = File::getFile($user->toJson()['pp_membre']);
+    if ($deleteFile) {tools::deleteFile($deleteFile);}
 
-    $DB->query("UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?", "si", [$imagename, $id]);
-
-    $user[0]['pp_membre'] = $imagename;
+    $user->updateProfilePic($newImage);
 
     http_response_code(200);
-    echo json_encode($user[0]);
+    echo json_encode($user->toJsonWithRoles());
 }
 
 function delete_user($DB)
 {
-    $id = $DB->clean($_GET['id']);
+    $id = filter::int($_GET['id']);
 
-    $user = $DB->select("SELECT pp_membre FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+    $user = Member::getInstance($id);
 
-    if (count($user) == 0) {
+    if (!$user) {
         http_response_code(404);
         echo json_encode(["message" => "User not found"]);
         return;
     }
 
-    tools::deleteFile($user[0]['pp_membre']);
-
-    $DB->query("DELETE FROM MEMBRE WHERE id_membre = ?", "i", [$id]);
+    $user->delete();
 
     http_response_code(204);
+    echo json_encode(["message" => "User deleted"]);
 }
 
 
