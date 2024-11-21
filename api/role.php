@@ -19,9 +19,7 @@ $methode = $_SERVER['REQUEST_METHOD'];
 
 switch ($methode) {
     case 'GET':                      # READ
-        if (tools::methodAccepted('application/json')) {
-            get_role();
-        }
+        get_role();
         break;
     case 'POST':                     # CREATE
         if (tools::methodAccepted('application/json')) {
@@ -35,9 +33,7 @@ switch ($methode) {
         break;
 
     case 'DELETE':                   # DELETE
-        if (tools::methodAccepted('application/json')) {
-            delete_role($DB);
-        }
+        delete_role($DB);
         break;
     default:
         # 405 Method Not Allowed

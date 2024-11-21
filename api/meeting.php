@@ -21,9 +21,7 @@ $methode = $_SERVER['REQUEST_METHOD'];
 
 switch ($methode) {
     case 'GET':                      # READ
-        if (tools::methodAccepted('application/json')) {
-            get_meetings();
-        }
+        get_meetings();
         break;
     case 'POST':                     # CREATE
         if (tools::methodAccepted('multipart/form-data')) {
@@ -31,9 +29,7 @@ switch ($methode) {
         }
         break;
     case 'DELETE':                   # DELETE
-        if (tools::methodAccepted('application/json')) {
-            delete_meeting();
-        }
+        delete_meeting();
         break;
     default:
         # 405 Method Not Allowed

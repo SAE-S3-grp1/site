@@ -22,14 +22,10 @@ $methode = $_SERVER['REQUEST_METHOD'];
 # Sinon, il faudrait coder un parser de multipart/form-data
 switch ($methode) {
     case 'GET':                      # READ
-        if (tools::methodAccepted('application/json')) {
-            get_users();
-        }
+        get_users();
         break;
     case 'POST':                     # CREATE
-        if (tools::methodAccepted('multipart/form-data')) {
-            create_user();
-        }
+        create_user();
         break;
     case 'PUT':                      # UPDATE (données seulement)
         if (tools::methodAccepted('application/json')) {
@@ -42,9 +38,7 @@ switch ($methode) {
         }
         break;
     case 'DELETE':                   # DELETE
-        if (tools::methodAccepted('application/json')) {
-            delete_user();
-        }
+        delete_user();
         break;
     default:
         # 405 Method Not Allowed

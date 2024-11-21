@@ -12,9 +12,7 @@ $DB = new DB();
 
 switch ($methode) {
     case 'GET':                      # READ
-        if (tools::methodAccepted('application/json')) {
-            get_grades($DB);
-        }
+        get_grades($DB);
         break;
     case 'POST':                     # CREATE
         if (tools::methodAccepted('multipart/form-data')) {
@@ -32,10 +30,9 @@ switch ($methode) {
         }
         break;
     case 'DELETE':                   # DELETE
-        if (tools::methodAccepted('application/json')) {
-            delete_grade($DB);
-        }
+        delete_grade($DB);
         break;
+
     default:
         # 405 Method Not Allowed
         http_response_code(405);

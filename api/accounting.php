@@ -14,19 +14,16 @@ $methode = $_SERVER['REQUEST_METHOD'];
 
 switch ($methode) {
     case 'GET':                      # READ
-        if (tools::methodAccepted('application/json')) {
-            get_accounting($DB);
-        }
+        get_accounting($DB);
         break;
+
     case 'POST':                     # CREATE
         if (tools::methodAccepted('multipart/form-data')) {
             create_accounting($DB);
         }
         break;
     case 'DELETE':                   # DELETE
-        if (tools::methodAccepted('application/json')) {
             delete_accounting($DB);
-        }
         break;
     default:
         # 405 Method Not Allowed
