@@ -53,7 +53,7 @@ switch ($methode) {
 }
 
 function get_users() : void {
-    if (isset($_GET['id']) && filter::int($_GET['id'])) {
+    if (isset($_GET['id'])) {
         // Si un ID est précisé, on renvoie les infos de l'utilisateur correspondant avec ses rôles
         $id = filter::int($_GET['id']);
 
@@ -136,6 +136,12 @@ function update_user() : void
 
 function update_image(): void
 {
+    if (!isset($_GET['id'])) {
+        http_response_code(400);
+        echo json_encode(["message" => "Missing parameters"]);
+        return;
+    }
+
     $id = filter::int($_GET['id']);
 
     $user = Member::getInstance($id);
@@ -166,6 +172,12 @@ function update_image(): void
 
 function delete_user() :void
 {
+    if (!isset($_GET['id'])) {
+        http_response_code(400);
+        echo json_encode(["message" => "Missing parameters"]);
+        return;
+    }
+
     $id = filter::int($_GET['id']);
 
     $user = Member::getInstance($id);
