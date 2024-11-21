@@ -67,4 +67,16 @@ class Filter
 
         return $filtered;
     }
+
+    public static function bool(string $value) : bool
+    {
+        $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+
+        if ($filtered === null)
+        {
+            self::deny($value, "bool");
+        }
+
+        return $filtered;
+    }
 }
