@@ -49,13 +49,14 @@ function get_grades($DB){
     {
         $id = $DB->clean($_GET['id']);
         $grades = $DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$id]);
-        $grades = $grades[0];
 
         if (count($grades) === 0) {
             http_response_code(404);
             echo json_encode(['error' => 'Grade not found']);
             return;
         }
+
+        $grades = $grades[0];
 
     } else {
         $grades = $DB->select("SELECT * FROM GRADE");
