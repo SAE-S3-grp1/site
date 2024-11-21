@@ -25,6 +25,7 @@ header li {
     border-radius: 15px;
     margin-right: 20px;
     transition-duration: 0.2s;
+    padding: 10px
 }
 
 header li:hover{
@@ -32,7 +33,6 @@ header li:hover{
 }
 
 header a {
-    padding: 10px;
     font-family: 'Inter', serif;
     font-weight: bold;
     font-size: 1.5em;

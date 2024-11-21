@@ -116,37 +116,38 @@
 
                         <h4
                             <?php
-                            $isPlaceDisponible = $db->select(
-                                "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
-                                "i",
-                                [$eventid])[0]['isPlaceDisponible'];
-                            
-                            if($isPlaceDisponible){
+                            if($isLoggedIn){
+                                    
+                                $isSubscribed = !empty($db->select(
+                                "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
+                                "ii",
+                                [$_SESSION['userid'], $event["id_evenement"]]
+                                ));
                                 
-                                //editable
-                                $event_subscription_color_class = "event-not-subscribed hover_effect";
-                                $event_subscription_label = "S'inscrire";
-
-                                if($isLoggedIn){
+                                if($isSubscribed){
+                                    //editable
+                                    $event_subscription_color_class = "event-subscribed";
+                                    $event_subscription_label = "Inscrit";
                                     
-                                    $isSubscribed = !empty($db->select(
-                                    "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
-                                    "ii",
-                                    [$_SESSION['userid'], $event["id_evenement"]]
-                                    ));
+                                }else{
+                                    $isPlaceDisponible = $db->select(
+                                        "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
+                                        "i",
+                                        [$eventid])[0]['isPlaceDisponible'];
                                     
-                                    if($isSubscribed){
+                                    if($isPlaceDisponible){
                                         //editable
-                                        $event_subscription_color_class = "event-subscribed";
-                                        $event_subscription_label = "Inscrit";
+                                        $event_subscription_color_class = "event-not-subscribed hover_effect";
+                                        $event_subscription_label = "S'inscrire";
+        
+                                    }else{
+                                        //editable
+                                        $event_subscription_color_class = "event-full";
+                                        $event_subscription_label = "Complet";
                                     }
                                 }
-
-                            }else{
-                                //editable
-                                $event_subscription_color_class = "event-full";
-                                $event_subscription_label = "Complet";
                             }
+
                             echo "class=\"$event_subscription_color_class\"";
                             ?>>
                             <?php echo $event_subscription_label;?>
