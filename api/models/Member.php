@@ -11,6 +11,10 @@ class Member extends BaseModel implements JsonSerializable
     public function delete() : void
     {
         $this->getProfilePic()?->deleteFile();
+
+        // On supprime tous les roles de l'utilisateur
+        $this->DB->query("DELETE FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
+
         // /** @lang SQL */ permet d'afficher sur PHPStorm la coloration syntaxique SQL
         $this->DB->query(/** @lang SQL */"CALL suppressionCompte(?)", "i", [$this->id]);
     }
