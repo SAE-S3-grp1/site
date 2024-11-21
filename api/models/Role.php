@@ -2,10 +2,12 @@
 
 namespace model;
 
+use JsonSerializable;
+
 require_once __DIR__ . '/BaseModel.php';
 
 
-class Role extends BaseModel
+class Role extends BaseModel implements JsonSerializable
 {
     public static function create(string $name, bool $p_log, bool $p_boutique, bool $p_reunion, bool $p_utilisateur,
                                   bool $p_grade, bool $p_role, bool $p_actualite, bool $p_evenement, bool $p_comptabilite,
@@ -75,13 +77,32 @@ class Role extends BaseModel
         return $data[0];
     }
 
+    public static function bulkFetch()
+    {
+        $DB = new \DB();
+        $result = $DB->select("SELECT * FROM ROLE");
+
+        return $result;
+    }
+
     public function addMember(Member $member) : void
     {
         $this->DB->query("INSERT INTO ASSIGNATION (id_membre, id_role) VALUES (?, ?)", "ii", [$member->id, $this->id]);
     }
 
+    public function __jsonSerialize(): array
+    {
+        return $this->toJson();
+    }
+
     public function __toString()
     {
         return json_encode($this->toJson());
+    }
+
+    // Permet de sérialiser l'objet en JSON
+    public function jsonSerialize(): array
+    {
+        return $this->toJson();
     }
 }

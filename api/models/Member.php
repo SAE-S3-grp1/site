@@ -1,10 +1,12 @@
 <?php
 namespace model;
 
+use JsonSerializable;
+
 require_once __DIR__ . '/BaseModel.php';
 
 
-class Member extends BaseModel
+class Member extends BaseModel implements JsonSerializable
 {
     public function delete() : void
     {
@@ -104,6 +106,11 @@ class Member extends BaseModel
     public function __toString()
     {
         return json_encode($this->toJsonWithRoles());
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->toJsonWithRoles();
     }
 }
 

@@ -5,9 +5,10 @@ namespace model;
 require_once __DIR__ . '/BaseModel.php';
 
 use finfo;
+use JsonSerializable;
 use tools;
 
-class File
+class File implements JsonSerializable
 {
     private string $fileName;
 
@@ -83,4 +84,9 @@ class File
         return $this->fileName;
     }
 
+
+    public function jsonSerialize(): string
+    {
+        return $this->fileName;
+    }
 }
