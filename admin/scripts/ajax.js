@@ -36,7 +36,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         }
 
         // Pour les PATCH (fichiers) mettre le Content-Type à multipart/form-data
-        if (method === 'PATCH') {
+        if (data instanceof FormData) {
             options.headers['Content-Type'] = 'multipart/form-data';
         }
 

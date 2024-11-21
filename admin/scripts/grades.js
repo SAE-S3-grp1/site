@@ -1,5 +1,5 @@
-import { clearNavbar, addNavbarItem, selectFirstNavbarItem  } from "./navbar.js";
-import { requestGET, requestPUT } from './ajax.js';
+import { clearNavbar, addNavbarItem, selectNavbarItem  } from "./navbar.js";
+import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from './ajax.js';
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 
@@ -10,11 +10,13 @@ const prop_description_grade_grade = document.getElementById('prop_description_g
 const prop_prix_grade = document.getElementById('prop_prix_grade');
 const prop_reduction_grade = document.getElementById('prop_reduction_grade');
 const save_btn = document.getElementById('save_btn');
+const delete_btn = document.getElementById('delete_btn');
+const new_btn = document.getElementById('new_btn');
 
 /**
  * Reloads the navigation bar with grade items.
  */
-async function reloadNavbar(){
+async function reloadNavbar(id_grade = null) {
 
     // Show loader
     showLoader();
@@ -29,15 +31,17 @@ async function reloadNavbar(){
 
     // Update navbar
     clearNavbar();
-    for (let i = 0; i < grades.length; i++) {
-        const grade = grades[i];
-        addNavbarItem(grade.nom_grade, (li)=>{
-            selectGrade(grade.id_grade, li);
-        });
+    for (const grade of grades) {
+        addNavbarItem(grade.nom_grade, li => selectGrade(grade.id_grade, li));
     }
 
-    // Select first item
-    selectFirstNavbarItem()
+    // Select id_grade item
+    const selectedGrade = grades.find(grade => grade.id_grade === id_grade);
+    if (selectedGrade) {
+        selectNavbarItem(selectedGrade.nom_grade);
+    } else {
+        selectNavbarItem(grades[0].nom_grade); //TODO: if there is no grade
+    }
 
     // Hide loader 
     hideLoader();
@@ -80,6 +84,25 @@ async function saveGrade(id_grade){
 }
 
 /**
+ * Deletes the grade from the DB.
+*/
+async function deleteGrade(id_grade){
+
+    // Show loader
+    showLoader();
+
+    // Send request
+    await requestDELETE(`/grade.php?id=${id_grade}`);
+    
+    /// Update navbar
+    reloadNavbar(); // Will hide loader
+
+    // Deleted message
+    toast('Grade supprimé avec succès.');
+
+}
+
+/**
  * Loads and displays grade information based on the provided grade ID.
  *
  * @param {number} id_grade - The ID of the grade to be selected.
@@ -105,6 +128,22 @@ async function selectGrade(id_grade, li){
         saveGrade(id_grade);
     };
 
+    // Delete button
+    delete_btn.onclick = ()=>{
+        swal({
+            title: "Êtes vous sûr ?",
+            text: "Cette action est définitive",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                deleteGrade(id_grade);
+            }
+          });
+    };
+
     // Update name
     prop_nom_grade.onkeyup = ()=>{
         li.textContent = prop_nom_grade.value;
@@ -114,3 +153,28 @@ async function selectGrade(id_grade, li){
     hideLoader();
     
 }
+
+// Handle new grade
+new_btn.onclick = async ()=>{
+
+    // Show loader
+    showLoader();
+
+    // Data
+    const data = {
+        name: 'Nouveau grade',
+        description: 'Description du grade',
+        price: 0,
+        reduction: 0
+    };
+
+    // Create new grade
+    try {
+        const id = await requestPOST('/grade.php', data);
+        reloadNavbar(id);
+    } catch (error) {
+        toast('Erreur lors de la création du grade.', true);
+        hideLoader();
+    }
+
+};

@@ -45,7 +45,11 @@ function updateSelectedNavbarItem(elm){
 /**
  * Selects and clicks the first item in the navbar.
  */
-export function selectFirstNavbarItem(){
-    if (navbar.children.length > 0) 
-        navbar.children[0].click();
+export function selectNavbarItem(name){
+    for (const li of navbar.children){
+        if (li.textContent === name){
+            li.click();
+            break;
+        }
+    }
 }
