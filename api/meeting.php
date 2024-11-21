@@ -16,24 +16,23 @@ ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
-$DB = new DB();
 
 $methode = $_SERVER['REQUEST_METHOD'];
 
 switch ($methode) {
     case 'GET':                      # READ
         if (tools::methodAccepted('application/json')) {
-            get_meetings($DB);
+            get_meetings();
         }
         break;
     case 'POST':                     # CREATE
         if (tools::methodAccepted('multipart/form-data')) {
-            create_meeting($DB);
+            create_meeting();
         }
         break;
     case 'DELETE':                   # DELETE
         if (tools::methodAccepted('application/json')) {
-            delete_meeting($DB);
+            delete_meeting();
         }
         break;
     default:
@@ -42,7 +41,7 @@ switch ($methode) {
         break;
 }
 
-function get_meetings($DB) {
+function get_meetings() : void {
     if (isset($_GET['id'])) {
         $id = filter::int($_GET['id']);
         $meeting = Meeting::getInstance($id);
