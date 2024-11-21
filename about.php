@@ -15,9 +15,8 @@
 </head>
 
 
-<body>
+<body class="body_margin">
 
-<!-- HEADER -->
 <?php require_once "header.php" ?>
 
 <!-- CORPS DE LA PRESENTATION -->

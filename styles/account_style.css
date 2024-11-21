@@ -2,4 +2,58 @@
 ****** MON COMPTE ******
 ************************/
 
+H2 {
+    font-size: 60px;
+}
 
+
+#account-generalInfo {
+    /*border: 2px solid rgb(23, 23, 23);*/
+    /*box-shadow: 1px 1px 5px 5px black;*/
+    border-radius: 10px;
+    width: 60%;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    padding: 2vh;
+    align-self: center;
+    margin: auto;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(23, 23, 23);
+    margin-top: 80px;/*A supprimer */
+    margin-bottom: 100px; /*A supprimer */
+}
+
+#cadre-photo {
+    width: 13vh;
+    height: 13vh;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+#cadre-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#account-generalInfo div:first-of-type{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#account-generalInfo div:first-of-type p:nth-child(1){
+    font-size: 75px;
+}
+
+#account-generalInfo div:first-of-type p:nth-child(2){
+    font-size: 35px;
+}
+
+#account-generalInfo div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

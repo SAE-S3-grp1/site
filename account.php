@@ -17,23 +17,6 @@
 
 <?php require_once "header.php" ?>
 
-<form action="" method="post">
-    <input type="hidden" name="deconnexion" value="true">
-    <button type="submit">Déconnexion</button>
-</form>
-
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //
-    if($_POST['deconnexion']){
-        unset($_SESSION['userid']);
-        $message = "Vous avez été déconnecté.";
-    }
-    echo $message;
-}
-
-?>
-
 <!-- PARTIE MON COMPTE -->
 
 <H2>MON COMPTE</H2>
@@ -73,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="32C">TP 32 C</option>
             <option value="32D">TP 32 D</option>
         </select>
-    </div>
+    </form>
     
     <form method="POST" action="" id="account-loginInfo-form">
         <input type="email" id="mail" name="mail" placeholder="Adresse mail" required>
@@ -83,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" id="newMdp" name="newMdp" placeholder="Nouveau mot de passe" required>
             <input type="password" id="newMdp" name="newMdp" placeholder="Confirmation du nouveau mot de passe" required>
         </div>
-    </div>
+    </form>
 
 <section> <!-- Ensemble des différents boutons du compte -->
     
