@@ -24,7 +24,7 @@
 
     <!--H1 A METTRE -->
     <section>
-        <h2 class="titre_vertical">ADIIL</h2>
+        <h2 class="titre_vertical"> ADIIL</h2>
         <div id="index_carrousel">
             <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
         </div>
@@ -94,13 +94,15 @@
                     $date = getdate();
                     $sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
                     $events_to_display = $db->select(
-                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement > ? ORDER BY date_evenement ASC LIMIT 2;",
+                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement >= ? ORDER BY date_evenement ASC LIMIT 2;",
                         "s",
                         [$sql_date]
                     );
 
-                foreach ($events_to_display as $event):?>
-                    <div>
+                foreach ($events_to_display as $event):
+                    $eventid = $event["id_evenement"];?>
+
+                    <div class="event" event-id="<?php echo $eventid;?>">
                         <div>
                             <h2><?php echo $event['nom_evenement'];?></h2>
                             <?php
@@ -114,17 +116,16 @@
 
                         <h4
                             <?php
-                            $eventid = $event["id_evenement"];
-
                             $isPlaceDisponible = $db->select(
                                 "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
                                 "i",
                                 [$eventid])[0]['isPlaceDisponible'];
                             
                             if($isPlaceDisponible){
-
+                                
+                                //editable
                                 $event_subscription_color_class = "event-not-subscribed hover_effect";
-                                $event_subscription_label = "<a href=\"event_details.php?id=$eventid\">S'inscrire</a>";
+                                $event_subscription_label = "S'inscrire";
 
                                 if($isLoggedIn){
                                     
@@ -135,29 +136,32 @@
                                     ));
                                     
                                     if($isSubscribed){
+                                        //editable
                                         $event_subscription_color_class = "event-subscribed";
                                         $event_subscription_label = "Inscrit";
                                     }
                                 }
 
                             }else{
+                                //editable
                                 $event_subscription_color_class = "event-full";
-                                $event_subscription_label = "Plein";
+                                $event_subscription_label = "Complet";
                             }
                             echo "class=\"$event_subscription_color_class\"";
                             ?>>
                             <?php echo $event_subscription_label;?>
 
                         </h4>
-
                     </div>
-                    <hr>
                 <?php endforeach; ?>
-                <h3><a href="events.php" class="hover_effect">Voir tous les événements</a></h3>
-
+                <h3><a href="events.php">Voir tous les événements</a></h3>
             </div>
-            <h2 class="titre_vertical">EVENTS</h2>
+            <h2 class="titre_vertical">EVENT</h2>
 
     </section>
+
+    <?php require_once 'footer.php';?>
+
+    <script src="/scripts/event_details_redirect.js"></script>
 </body>
 </html>
