@@ -58,9 +58,7 @@ class Item extends BaseModel implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        $data = $this->DB->select("SELECT * FROM ARTICLE WHERE id_article = ?", "i", [$this->id])[0];
-
-        return $data;
+        return $this->DB->select("SELECT * FROM ARTICLE WHERE id_article = ?", "i", [$this->id])[0];
     }
 
     public static function bulkFetch() : array
