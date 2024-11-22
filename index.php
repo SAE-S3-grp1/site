@@ -91,18 +91,45 @@
                         <div>
                             <h2><?php echo $event['nom_evenement'];?></h2>
                             <?php
-                                setlocale(LC_TIME, 'fr_FR.UTF-8');
-                                $date = substr($event['date_evenement'], 0, 10);
-                                $date = new DateTime($date);
-                                
-                                echo ucwords(strftime('%d %B', $date->getTimestamp()).", ".$event["lieu_evenement"]);
+                                $moisFr = [
+                                    'January'   => 'Janvier',
+                                    'February'  => 'Février',
+                                    'March'     => 'Mars',
+                                    'April'     => 'Avril',
+                                    'May'       => 'Mai',
+                                    'June'      => 'Juin',
+                                    'July'      => 'Juillet',
+                                    'August'    => 'Août',
+                                    'September' => 'Septembre',
+                                    'October'   => 'Octobre',
+                                    'November'  => 'Novembre',
+                                    'December'  => 'Décembre'
+                                ];
+
+                                $event_date = substr($event['date_evenement'], 0, 10);
+                                $event_date_info = getdate(strtotime($event_date));
+                                echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['month']].", ".$event["lieu_evenement"]);
                             ?>
                         </div>
 
                         <h4
                             <?php
+                            $isPlaceDisponible = $db->select(
+                                "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
+                                "i",
+                                [$eventid])[0]['isPlaceDisponible'];
+                            
+                            if($isPlaceDisponible){
+                                //editable
+                                $event_subscription_color_class = "event-not-subscribed hover_effect";
+                                $event_subscription_label = "S'inscrire";
+                            }else{
+                                //editable
+                                $event_subscription_color_class = "event-full";
+                                $event_subscription_label = "Complet";
+                            }
+
                             if($isLoggedIn){
-                                    
                                 $isSubscribed = !empty($db->select(
                                 "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
                                 "ii",
@@ -113,23 +140,6 @@
                                     //editable
                                     $event_subscription_color_class = "event-subscribed";
                                     $event_subscription_label = "Inscrit";
-
-                                }else{
-                                    $isPlaceDisponible = $db->select(
-                                        "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
-                                        "i",
-                                        [$eventid])[0]['isPlaceDisponible'];
-                                    
-                                    if($isPlaceDisponible){
-                                        //editable
-                                        $event_subscription_color_class = "event-not-subscribed hover_effect";
-                                        $event_subscription_label = "S'inscrire";
-        
-                                    }else{
-                                        //editable
-                                        $event_subscription_color_class = "event-full";
-                                        $event_subscription_label = "Complet";
-                                    }
                                 }
                             }
 

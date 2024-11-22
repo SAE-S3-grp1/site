@@ -100,15 +100,15 @@
     width: inherit;
 }
 
-.podium_unit  :nth-child(1) > div{
+.podium_unit:nth-child(1) > div{
     height: 380px;
 }
 
-.podium_unit  :nth-child(2) > div{
+.podium_unit:nth-child(2) > div{
     height: 550px;
 }
 
-.podium_unit  :nth-child(3) > div{
+.podium_unit:nth-child(3) > div{
     height: 305px;
 }
 

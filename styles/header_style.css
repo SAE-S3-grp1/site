@@ -22,31 +22,31 @@ nav {
 
 header li {
     display: inline-block;
-    border-radius: 15px;
-    margin-right: 20px;
-    transition-duration: 0.2s;
-    padding: 10px
 }
 
-header li:hover{
-    background-color: rgb(119, 241, 190);
-}
 
-header a {
+header a:not(#accueil){
     font-family: 'Inter', serif;
     font-weight: bold;
     font-size: 1.5em;
+
+    border-radius: 15px;
+    margin-right: 20px;
+    transition-duration: 0.2s;
+    padding: 10px;
+    text-align: center;
 }
 
 header a:hover:not(#accueil){
     color: rgb(23, 23, 23);    
-    margin-right: auto;
-    margin-left: auto;
+    background-color: rgb(119, 241, 190);
+
 }
 
 #accueil {
     display: flex;
     align-items: center;
+    padding-left: 1vw;
 }
 
 #accueil img {
