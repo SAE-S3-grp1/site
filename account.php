@@ -16,11 +16,20 @@
 </head>
 
 <body class="body_margin">
+    
+<?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['deconnexion']) && $_POST['deconnexion'] === 'true') {
+            session_destroy();
+            header("Location: index.php"); 
+            exit();
+        }
+    }
+?>
 
 <?php require_once "header.php" ?>
 
 <!-- PARTIE MON COMPTE -->
-
 <H2>MON COMPTE</H2>
 <section> <!-- Ensemble des différents formulaires du compte -->
     <div id="account-generalInfo">
@@ -100,23 +109,10 @@
         <form action="" method="post">
             <input type="hidden" name="deconnexion" value="true">
             <button type="submit">
-                <a href="http://localhost/index.php" target="">
                     <img src="assets/logOut_icon.png" alt="icone de deconnexion">
                     Déconnexion
-                </a>
             </button>
         </form>
-
-        <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            if($_POST['deconnexion']){
-            unset($_SESSION['userid']);
-            $message = "Vous avez été déconnecté.";
-            }
-            echo $message;
-        }
-        ?>
 
         <!--Supprimer son compte-->
         <button type="button">
@@ -126,8 +122,6 @@
             </a>
         </button>
     </div>
-
-
 
 <!-- FOOTER -->
 <?php require_once "footer.php" ?>

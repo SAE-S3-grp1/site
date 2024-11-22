@@ -1,7 +1,7 @@
 <?php
-session_start();
-$isUserLoggedIn = isset($_SESSION['userid']);
-$isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] ; // Vérifie si l'utilisateur est connecté
+    session_start();
+    $isUserLoggedIn = isset($_SESSION['userid']);
+    $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] ; // Vérifie si l'utilisateur est connecté
 ?>
 
 

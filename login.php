@@ -71,6 +71,7 @@
                             "i",
                             [$_SESSION['id']])[0]["nb_roles"] > 0){
                                 $_SESSION["isAdmin"] = true;
+                                var_dump($_SESSION['id']);
                             }
 
                         header("Location: index.php");
