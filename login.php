@@ -32,7 +32,7 @@
             <button type="submit">Se connecter</button>
         </form>
 
-        <form method="POST" action="signin.php" class="">
+        <form method="GET" action="signin.php" class="">
             <h2>Pas encore de compte ?</h2>
             <button type="submit">Créez en un</button>
         </form>
