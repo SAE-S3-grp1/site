@@ -17,18 +17,29 @@
             require_once 'header.php';
             require_once 'database.php';
             $db = new DB();
+
+            function format_input($text){
+                return htmlspecialchars(trim($text));
+            }
         ?>
 
         <form method="POST" action="" class="login-form">
             <h1>Rejoindre l'ADIIL</h1>
+
+            <label for="mail">Prénom :</label>
+            <input type="text" name="fname">
+
+            <label for="mail">Nom :</label>
+            <input type="text" name="lname">
+        
             <label for="mail">Adresse Mail :</label>
             <input type="email" name="mail" required>
 
             <label for="password">Mot de passe :</label>
-            <input type="password" name="password">
+            <input type="password" name="password" required>
 
             <label for="password">Confirmez le Mot de passe :</label>
-            <input type="password" name="password_verif">
+            <input type="password" name="password_verif" required>
 
             <button type="submit">Confirmer</button>
         </form>
@@ -37,47 +48,40 @@
         <?php
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            $login_error = "<h3 class=\"login-error\">Erreur dans les informations de connection.</h3>";
-            $mail = htmlspecialchars(trim($_POST['mail']));
-            $password = htmlspecialchars(trim($_POST['password']));
 
+            $mail = htmlspecialchars(trim($_POST['mail']));
 
             $selection_db = $db->select(
-                "SELECT id_membre, email_membre, password_membre FROM MEMBRE WHERE email_membre = ?",
+                "SELECT id_membre FROM MEMBRE WHERE email_membre = ?",
                 "s",
                 [$mail]
             );
-            if(!empty($selection_db)){
 
-                $db_mail = $selection_db[0]["email_membre"];
-                
-                $db_password = $selection_db[0]["password_membre"];
+            if(empty($selection_db)){
 
-                $mail_ok = ($db_mail == $mail);
+                $password = format_input($_POST['password']);
+                $password_verif = format_input($_POST['password_verif']);
 
-                $password_ok = password_verify($password, $db_password);
-
-                if($mail_ok && $password_ok){
-
-                    $_SESSION['userid'] = $selection_db[0]["id_membre"];
-
-                    //check if perm -> panel admin ok
-                    if($db->select(
-                        "SELECT COUNT(*) as nb_roles FROM ASSIGNATION WHERE id_membre = ? ;",
-                        "i",
-                        [$_SESSION['id']])[0]["nb_roles"] > 0){
-                        
-                            $_SESSION["isAdmin"] = true;
-                    }else{
-                        echo $login_error;
+                if($password == $password_verif){
+                    $fname = "";
+                    $lname = "";
+    
+                    if(isset($_POST['fname'])){
+                        $fname = format_input($_POST['fname']);
+                    }
+                    if(isset($_POST['lname'])){
+                        $lname = format_input($_POST['lname']);
                     }
 
-                    header("Location: index.php");
-                    exit;
+                    $db->query(
+                        "INSERT INTO `MEMBRE` (`id_membre`, `nom_membre`, `prenom_membre`, `email_membre`, `password_membre`, `xp_membre`, `discord_token_membre`, `pp_membre`, `tp_membre`) 
+                        VALUES (NULL, ?, ?, ?, ?, '0', NULL, NULL, NULL);",
+                        "ssss",
+                        [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT)]
+                    );
                 }
-            }else{
-                echo $login_error;
+                header("Location: login.php");
+                exit;
             }
         }
         ?>
