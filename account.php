@@ -20,8 +20,7 @@
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deconnexion']) && $_POST['deconnexion'] === 'true') {
-            unset($_SESSION['userid']);
-            unset($_SESSION['isAdmin']);
+            session_destroy();
             header("Location: index.php"); 
             exit();
         }
@@ -116,12 +115,14 @@
         </form>
 
         <!--Supprimer son compte-->
-        <button type="button">
-            <a href="supprimer_compte.php" target="_blank">
+
+        <form action="delete_account.php" method="post">
+            <input type="hidden" name="delete_account" value="true">
+            <button type="submit">
                 <img src="assets/delete_icon.png" alt="icone de suppression">
                 Supprimer mon compte
-            </a>
-        </button>
+            </button>
+        </form>
     </div>
 </section>
 
@@ -134,11 +135,7 @@
 
 
 
-
-
-
 <!-- FOOTER -->
 <?php require_once "footer.php" ?>
-
 </body>
 </html>
