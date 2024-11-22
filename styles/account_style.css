@@ -255,9 +255,10 @@ H2 {
     flex-direction: row;
     justify-content: space-around;
     width: 60%;
-    height: 15vh;
+    height: 6vh;
     align-self: center;
     margin: auto;
+    margin-bottom: 8vh;
 }
 
 #buttons-section button{
@@ -267,6 +268,9 @@ H2 {
     border-radius: 10px;
     border: none;
     font-size: 1em;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
 }
 
 
@@ -305,19 +309,9 @@ H2 {
     color: #1E1E1E;
 }
 
-#buttons-section form button a {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    color: inherit;
-    width: 100%;
-    height: 100%;
-}
-
 #buttons-section form button img {
     width: 30px;
     height: 30px;
-    margin: 0.5vh;
 }
 
 /*** ---> Supprimer mon compte***/

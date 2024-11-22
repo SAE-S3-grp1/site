@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <link rel="stylesheet" href="styles/general_style.css">
-    <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/account_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
@@ -95,6 +94,7 @@
 
         <button type="submit"><img src="assets/save_logo.png" alt="Logo editer la photo de profil"/></button>
     </form>
+</section>
 
 <section> <!-- Ensemble des différents boutons du compte -->
     <div id="buttons-section">
@@ -123,6 +123,17 @@
             </a>
         </button>
     </div>
+</section>
+
+
+
+<!-- PARTIE MES COMMANDES -->
+<H2>MES COMMANDES</H2>
+<section>
+</section>
+
+
+
 
 
 
