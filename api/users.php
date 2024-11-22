@@ -22,14 +22,10 @@ $methode = $_SERVER['REQUEST_METHOD'];
 # Sinon, il faudrait coder un parser de multipart/form-data
 switch ($methode) {
     case 'GET':                      # READ
-        if (tools::methodAccepted('application/json')) {
-            get_users();
-        }
+        get_users();
         break;
     case 'POST':                     # CREATE
-        if (tools::methodAccepted('multipart/form-data')) {
-            create_user();
-        }
+        create_user();
         break;
     case 'PUT':                      # UPDATE (données seulement)
         if (tools::methodAccepted('application/json')) {
@@ -42,9 +38,7 @@ switch ($methode) {
         }
         break;
     case 'DELETE':                   # DELETE
-        if (tools::methodAccepted('application/json')) {
-            delete_user();
-        }
+        delete_user();
         break;
     default:
         # 405 Method Not Allowed
@@ -79,23 +73,13 @@ function get_users() : void {
 
 function create_user() : void
 {
-    if (!isset($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['tp'])) {
-        http_response_code(400);
-        echo json_encode(["message" => "Missing or incorrect parameters"]);
-        return;
-    }
-
-    $file = File::saveImage();
-
-    if (!$file) {
-        http_response_code(415);
-        echo json_encode(["message" => "Image could not be processed"]);
-        return;
-    }
-
     $user = Member::create(
-        filter::string($_POST['name'], maxLenght: 100), filter::string($_POST['firstname'],maxLenght: 100),
-        filter::email($_POST['email'], maxLenght: 100), $file, filter::string($_POST['tp'], maxLenght: 3));
+        "Nom",
+        "Prenom",
+        "prenom.nom@univ-lemans.fr",
+        null,
+        "21a"
+    );
 
     http_response_code(201);
     echo json_encode($user->toJsonWithRoles());
@@ -161,7 +145,7 @@ function update_image(): void
     }
 
     $deleteFile = File::getFile($user->toJson()['pp_membre']);
-    if ($deleteFile) {tools::deleteFile($deleteFile);}
+    $deleteFile?->deleteFile();
 
     $user->updateProfilePic($newImage);
 

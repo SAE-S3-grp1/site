@@ -18,12 +18,12 @@ class File implements JsonSerializable
     }
 
 
-    public function __construct(string $fileName)
+    private function __construct(string $fileName)
     {
         $this->fileName = $fileName;
     }
 
-    public static function getFile(string $fileName): ?File
+    public static function getFile(string $fileName): File | null
     {
         if (file_exists('files/' . $fileName)) {
             return new File($fileName);
@@ -34,7 +34,7 @@ class File implements JsonSerializable
 
 
 
-    public static function saveFile() : ?File
+    public static function saveFile() : File | null
     {
         // Retourne le nom du fichier si l'enregistrement a réussi, faux sinon.
 
@@ -47,7 +47,7 @@ class File implements JsonSerializable
         return null;
     }
 
-    public static function saveImage() : ?File
+    public static function saveImage() : File | null
     {
         // Vérification des données de l'image, puis enregistrement.
         // Retourne Faux si l'image n'en est pas une, ou si elle n'a pas pu être enregistrée.

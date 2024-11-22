@@ -11,18 +11,17 @@ class Meeting extends BaseModel implements JsonSerializable
 
     public function delete() : void
     {
-        $file = $this->getFile();
-        $file->deleteFile();
+        $this->getFile()?->deleteFile();
         $this->DB->query("DELETE FROM REUNION WHERE id_reunion = ?", "i", [$this->id]);
     }
 
-    public function getFile() : File
+    public function getFile() : File | null
     {
         $data = $this->DB->select("SELECT fichier_reunion
                                  FROM REUNION
                                  WHERE id_reunion = ?", "i", [$this->id])[0];
 
-        return new File($data['fichier_reunion']);
+        return File::getFile($data['fichier_reunion']);
     }
 
     public function updateFile(File $file) : Meeting
