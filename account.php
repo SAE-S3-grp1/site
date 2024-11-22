@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/account_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
+    <link rel="stylesheet" href="styles/footer_style.css">
 
 </head>
 
@@ -127,8 +128,7 @@
 
 
 
-<!-- FOOTER -->
-<?php require_once "footer.php" ?>
+    <?php require_once 'footer.php';?>
 
 </body>
 </html>

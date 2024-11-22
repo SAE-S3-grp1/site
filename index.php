@@ -156,8 +156,8 @@
 
     </section>
 
-    <?php require_once 'footer.php';?>
-
     <script src="/scripts/event_details_redirect.js"></script>
+
+    <?php require_once 'footer.php';?>
 </body>
 </html>
