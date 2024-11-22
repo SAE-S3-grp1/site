@@ -69,9 +69,8 @@
                         if($db->select(
                             "SELECT COUNT(*) as nb_roles FROM ASSIGNATION WHERE id_membre = ? ;",
                             "i",
-                            [$_SESSION['id']])[0]["nb_roles"] > 0){
+                            [$selection_db[0]["id_membre"]])[0]["nb_roles"] > 0){
                                 $_SESSION["isAdmin"] = true;
-                                var_dump($_SESSION['id']);
                             }
 
                         header("Location: index.php");

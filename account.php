@@ -16,18 +16,19 @@
 </head>
 
 <body class="body_margin">
-    
+<?php require_once "header.php" ?>
+
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deconnexion']) && $_POST['deconnexion'] === 'true') {
-            session_destroy();
+            unset($_SESSION['userid']);
+            unset($_SESSION['isAdmin']);
             header("Location: index.php"); 
             exit();
         }
     }
 ?>
 
-<?php require_once "header.php" ?>
 
 <!-- PARTIE MON COMPTE -->
 <H2>MON COMPTE</H2>
