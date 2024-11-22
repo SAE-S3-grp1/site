@@ -74,6 +74,7 @@
 
 .podium_unit  h3{
     font-size: 70px;
+    color : rgb(119, 241, 190);
 
     width: inherit;
 }
@@ -113,9 +114,9 @@
 }
 
 .profile_picture{
-    border: 2px dotted white; /* --> a revoir */
-    width: 90px;
-    height: 90px;
+    /*border: 2px dotted white; /* --> a revoir */
+    width: 150px;
+    height: 150px;
 
     object-fit: cover;
     border-radius: 100%;
@@ -141,6 +142,7 @@
 
 .events-display{
     width: 100%;
+    transform: translateX(calc(163px/2));
 
     display: flex;
 
