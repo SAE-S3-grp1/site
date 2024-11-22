@@ -67,7 +67,7 @@
                     <h4><?php echo $pod['prenom_membre'];?></h4>
                     <div>
                         <img src="/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
-                        <?php echo $pod['xp_membre'];?> px
+                        <?php echo $pod['xp_membre'];?> xp
                     </div>
                 </div>
             <?php endforeach; ?>
