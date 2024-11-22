@@ -4,11 +4,14 @@
 .login-form {
     color: #613333;
     background-color: white;
+    
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
     padding: 30px;
     width: 350px;
-    margin: 65px auto;
+    margin: 8vh auto 30px auto;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,4 +59,8 @@
 
 .login-form button:hover {
     background-color: #0056b3;
+}
+
+.login-error{
+    text-align: center;
 }

@@ -22,8 +22,9 @@
      require_once 'database.php';
      $db = new DB();
      $isLoggedIn = isset($_SESSION["userid"]);
-    ?>
 
+    ?>
+    
     <!--H1 A METTRE -->
     <section>
         <h2 class="titre_vertical"> ADIIL</h2>
