@@ -3,20 +3,22 @@
 ****** FOOTER ******
 ********************/
 footer {
+    margin-top: 20vh;
     display: flex; 
     justify-content: space-between; 
     align-items: center;
+
     background-color: #1E1E1E;
-    width: 100%;
+
     height: 250px; 
     padding: 35px; 
+
     position: relative;
     bottom: 0px;
     left: 0px;
-    margin-top: auto;
 }
 
-footer .links {
+footer > div {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,21 +27,34 @@ footer .links {
     text-align: left;
 }
 
-footer .links a {
+footer > div  a {
+    width: fit-content;
     text-decoration: none;
     font-size: 30px; 
     color: white; 
     font-family: "Inter", sans-serif;
     font-weight:500;
     font-size: 25px;
+    opacity: 80%;
 }
 
-footer .footer-image {
-    height: 100%;
+footer > div  a:hover{
+    opacity: 100%;
 }
 
-footer .footer-image img {
-    width: auto; 
-    max-height: 100%;
-    max-width: 150px;
+footer > h2{
+    font-family: "Koulen","Inter", sans-serif;
+    width: fit-content;
+    text-align: end;
+
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+
+    letter-spacing: -10px;
+
+
+    font-weight: 200;
+
+    font-size: 2em;
+    text-align: center;
 }

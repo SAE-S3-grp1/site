@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="styles/index_style.css">
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
+    <link rel="stylesheet" href="styles/footer_style.css">
+
 
 
 </head>
@@ -24,7 +26,7 @@
 
     <!--H1 A METTRE -->
     <section>
-        <h2 class="titre_vertical">ADIIL</h2>
+        <h2 class="titre_vertical"> ADIIL</h2>
         <div id="index_carrousel">
             <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
         </div>
@@ -55,36 +57,19 @@
                 $podium = $db->select(
                     "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
                 );
-               //TODO FACTORISATION POSSIBLE (FOR)
+
+               foreach ([2,1,3] as $member_number):
+                $pod = $podium[$member_number-1];
             ?>
-            
-            <!--Deuxieme-->
-            <div>
-                <h3>#02</h3>
-                <h4><?php echo $podium[1]['prenom_membre'];?></h4>
-                <div>
-                    <img src="/api/files/<?php echo $podium[1]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
-                    <?php echo $podium[1]['xp_membre'];?> px
+                <div class="podium_unit">
+                    <h3>#0<?php echo $member_number?></h3>
+                    <h4><?php echo $pod['prenom_membre'];?></h4>
+                    <div>
+                        <img src="/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                        <?php echo $pod['xp_membre'];?> px
+                    </div>
                 </div>
-            </div>
-            <!--Premier-->
-            <div>
-                <h3>#01</h3>
-                <h4><?php echo $podium[0]['prenom_membre'];?></h4>
-                <div>
-                    <img src="/api/files/<?php echo $podium[0]['pp_membre'];?>" alt="Profile Picture" class="profile_picture"> 
-                    <?php echo $podium[0]['xp_membre'];?> px
-                </div>
-            </div>
-            <!--Troiseme-->
-            <div>
-                <h3>#03</h3>
-                <h4><?php echo $podium[2]['prenom_membre'];?></h4>
-                <div>
-                    <img src="/api/files/<?php echo $podium[2]['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
-                    <?php echo $podium[2]['xp_membre'];?> px
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
@@ -94,70 +79,85 @@
                     $date = getdate();
                     $sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
                     $events_to_display = $db->select(
-                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement > ? ORDER BY date_evenement ASC LIMIT 2;",
+                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement >= ? ORDER BY date_evenement ASC LIMIT 2;",
                         "s",
                         [$sql_date]
                     );
 
-                foreach ($events_to_display as $event):?>
-                    <div>
+                foreach ($events_to_display as $event):
+                    $eventid = $event["id_evenement"];?>
+
+                    <div class="event" event-id="<?php echo $eventid;?>">
                         <div>
                             <h2><?php echo $event['nom_evenement'];?></h2>
                             <?php
-                                setlocale(LC_TIME, 'fr_FR.UTF-8');
-                                $date = substr($event['date_evenement'], 0, 10);
-                                $date = new DateTime($date);
-                                
-                                echo ucwords(strftime('%d %B', $date->getTimestamp()).", ".$event["lieu_evenement"]);
+                                $moisFr = [
+                                    'January'   => 'Janvier',
+                                    'February'  => 'Février',
+                                    'March'     => 'Mars',
+                                    'April'     => 'Avril',
+                                    'May'       => 'Mai',
+                                    'June'      => 'Juin',
+                                    'July'      => 'Juillet',
+                                    'August'    => 'Août',
+                                    'September' => 'Septembre',
+                                    'October'   => 'Octobre',
+                                    'November'  => 'Novembre',
+                                    'December'  => 'Décembre'
+                                ];
+
+                                $event_date = substr($event['date_evenement'], 0, 10);
+                                $event_date_info = getdate(strtotime($event_date));
+                                echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['month']].", ".$event["lieu_evenement"]);
                             ?>
                         </div>
 
                         <h4
                             <?php
-                            $eventid = $event["id_evenement"];
-
                             $isPlaceDisponible = $db->select(
                                 "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
                                 "i",
                                 [$eventid])[0]['isPlaceDisponible'];
                             
                             if($isPlaceDisponible){
-
+                                //editable
                                 $event_subscription_color_class = "event-not-subscribed hover_effect";
-                                $event_subscription_label = "<a href=\"event_details.php?id=$eventid\">S'inscrire</a>";
-
-                                if($isLoggedIn){
-                                    
-                                    $isSubscribed = !empty($db->select(
-                                    "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
-                                    "ii",
-                                    [$_SESSION['userid'], $event["id_evenement"]]
-                                    ));
-                                    
-                                    if($isSubscribed){
-                                        $event_subscription_color_class = "event-subscribed";
-                                        $event_subscription_label = "Inscrit";
-                                    }
-                                }
-
+                                $event_subscription_label = "S'inscrire";
                             }else{
+                                //editable
                                 $event_subscription_color_class = "event-full";
-                                $event_subscription_label = "Plein";
+                                $event_subscription_label = "Complet";
                             }
+
+                            if($isLoggedIn){
+                                $isSubscribed = !empty($db->select(
+                                "SELECT MEMBRE.id_membre FROM MEMBRE JOIN INSCRIPTION on MEMBRE.id_membre = INSCRIPTION.id_membre WHERE MEMBRE.id_membre = ? AND INSCRIPTION.id_evenement = ? ;",
+                                "ii",
+                                [$_SESSION['userid'], $event["id_evenement"]]
+                                ));
+                                
+                                if($isSubscribed){
+                                    //editable
+                                    $event_subscription_color_class = "event-subscribed";
+                                    $event_subscription_label = "Inscrit";
+                                }
+                            }
+
                             echo "class=\"$event_subscription_color_class\"";
                             ?>>
                             <?php echo $event_subscription_label;?>
 
                         </h4>
-
                     </div>
-                    <hr>
                 <?php endforeach; ?>
-                <h3><a href="events.php" class="hover_effect">Voir tous les événements</a></h3>
-
+                <h3><a href="events.php">Voir tous les événements</a></h3>
             </div>
-            <h2 class="titre_vertical">EVENTS</h2>
+            <h2 class="titre_vertical">EVENT</h2>
 
     </section>
+
+    <?php require_once 'footer.php';?>
+
+    <script src="/scripts/event_details_redirect.js"></script>
 </body>
 </html>

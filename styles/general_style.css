@@ -11,19 +11,19 @@
 }
 
 .body_margin > *:not(:first-child){
-    margin-right: 4%;
-    margin-left: 4%;
+    margin-right: 2vw;
+    margin-left: 2vw;
 }
 
 html{
     font-family: "Inter", sans-serif;
     color: white;
     background-color: #1E1E1E;
-    margin-top: 140px;
+    margin-top: 20vh;
 }
 
 p {
-    font-size: 25px;
+    font-size: 1.5em;
 }
 
 a {
