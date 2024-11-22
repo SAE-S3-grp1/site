@@ -8,8 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <link rel="stylesheet" href="styles/general_style.css">
-    <link rel="stylesheet" href="styles/account_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
+    <link rel="stylesheet" href="styles/account_style.css">
+    <link rel="stylesheet" href="styles/footer_style.css">
+
 
 </head>
 
@@ -77,7 +79,7 @@
             </div>
             <div>
                 <input type="password" id="newMdp" name="newMdp" placeholder="Nouveau mot de passe" required>
-                <input type="password" id="newMdp" name="newMdp" placeholder="Confirmation du nouveau mot de passe" required>
+                <input type="password" id="newMdpVerif" name="newMdpVerif" placeholder="Confirmation du nouveau mot de passe" required>
             </div>
         </div>
 
