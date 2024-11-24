@@ -38,13 +38,9 @@ class Filter
 
     public static function int(string $value, int $min=0, int $max=PHP_INT_MAX) : int | bool
     {
-        $filtered = filter_var($value, FILTER_VALIDATE_INT, ['options' => [
-                'min_range' => $min,
-                'max_range' => $max
-            ]
-        ]);
+        $filtered = filter_var($value, FILTER_VALIDATE_INT);
 
-        if (!$filtered)
+        if (!$filtered || $filtered < $min || $filtered > $max)
         {
             self::deny($value, "int");
         }
@@ -78,5 +74,17 @@ class Filter
         }
 
         return $filtered;
+    }
+
+    public static function date(string $value) : string
+    {
+       $exp = '/^(\d{4})-(\d{2})-(\d{2})$/';
+
+        if (!preg_match($exp, $value))
+        {
+            self::deny($value, "date");
+        }
+
+        return $value;
     }
 }
