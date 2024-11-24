@@ -87,4 +87,16 @@ class Filter
 
         return $value;
     }
+
+    public static function json(string $value) : array
+    {
+        $filtered = json_decode($value, true);
+
+        if ($filtered === null)
+        {
+            self::deny($value, "json");
+        }
+
+        return $filtered;
+    }
 }

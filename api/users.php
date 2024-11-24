@@ -90,7 +90,7 @@ function update_user() : void
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($data['name'], $data['firstname'], $data['email'], $data['tp'], $data['xp'], $_GET['id'])) {
+    if (!isset($data['name'], $data['firstname'], $data['email'], $data['tp'], $data['xp'], $_GET['id'], $data['roles'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
         return;
@@ -102,14 +102,22 @@ function update_user() : void
     $email = filter::email($data['email'], maxLenght: 100);
     $tp = filter::string($data['tp'], maxLenght: 3);
     $xp = filter::int($data['xp']);
+    $roles = filter::json($data['roles']);
 
     $user = Member::getInstance($id);
 
     if ($user) {
         $user->update($name, $surname, $email, $tp, $xp);
 
-        http_response_code(200);
-        echo json_encode($user->toJsonWithRoles());
+         $sucess = $user->setRoles($roles);
+
+        if ($sucess) {
+            http_response_code(200);
+            echo json_encode($user->toJsonWithRoles());
+        } else {
+            http_response_code(207);
+            echo json_encode(["message" => "User updated but some roles could not be set"]);
+        }
 
     } else {
         http_response_code(404);
