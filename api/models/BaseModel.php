@@ -9,7 +9,8 @@ require_once __DIR__ . '/Role.php';
 require_once __DIR__ . '/Member.php';
 require_once __DIR__ . '/Grade.php';
 require_once __DIR__ . '/Item.php';
-
+require_once __DIR__ . '/Meeting.php';
+require_once __DIR__ . '/Accounting.php';
 
 class BaseModel
 {
