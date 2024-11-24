@@ -23,9 +23,9 @@ class File implements JsonSerializable
         $this->fileName = $fileName;
     }
 
-    public static function getFile(string $fileName): File | null
+    public static function getFile(string | null $fileName): File | null
     {
-        if (file_exists('files/' . $fileName)) {
+        if (!is_null($fileName) && file_exists('files/' . $fileName)) {
             return new File($fileName);
         }
 
@@ -69,7 +69,7 @@ class File implements JsonSerializable
     }
 
 
-    public function deleteFile()
+    public function deleteFile() : bool
     {
             if (file_exists('files/' . $this->fileName)) {
                 unlink('files/' . $this->fileName);
