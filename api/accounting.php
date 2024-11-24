@@ -1,7 +1,13 @@
 <?php
 
+use model\Accounting;
+use model\File;
+
 require_once 'DB.php';
 require_once 'tools.php';
+require_once 
+
+require_once 'models/Accounting.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -32,46 +38,40 @@ switch ($methode) {
 }
 
 
-function get_accounting($DB) {
+function get_accounting(): void
+{
     if (isset($_GET['id'])) {
         // Si un ID est précisé, on renvoie en plus les infos de l'utilisateur qui a crée le fichier
         $id = $_GET['id'];
 
-        $data = $DB->select("SELECT *
-                             FROM COMPTABILITE
-                             WHERE COMPTABILITE.id_comptabilite = ?", "i", [$id]);
+        $data = Accounting::getInstance($id);
 
-        if (count($data) == 1) {
-            $data = $data[0];
-
-
-            $user = $DB->select("SELECT id_membre, nom_membre, prenom_membre, pp_membre
-                                 FROM MEMBRE
-                                 WHERE MEMBRE.id_membre = ?", "i", [$data['id_membre']]);
-
-            $data['user'] = $user[0];
-            unset($data['id_membre']);
-
-        } else {
+        if ($data == null) {
             http_response_code(404);
             echo json_encode(["message" => "Accounting file not found"]);
             return;
         }
 
     } else {
-        // Sinon, on renvoie la liste de tous les utilisateurs. On va juste préciser si ils ont des rôles ou non
-        $data = $DB->select("SELECT id_comptabilite, date_comptabilite, nom_comptabilite, url_comptabilite
-                             FROM COMPTABILITE");
+
+        $data = Accounting::bulkFetch();
     }
 
     echo json_encode($data);
 }
 
-function create_accounting($DB)
+
+function create_accounting($DB): void
 {
     // TODO : Récupérer l'ID de membre grace au token PHP
 
-    $file = tools::saveFile();
+    $file = File::saveFile();
+
+    if ($file == null) {
+        http_response_code(400);
+        echo json_encode(["message" => "Accounting file not created"]);
+        return;
+    }
 
     if ($file) {
 
