@@ -24,13 +24,6 @@ class Meeting extends BaseModel implements JsonSerializable
         return File::getFile($data['fichier_reunion']);
     }
 
-    public function updateFile(File $file) : Meeting
-    {
-        $this->DB->query("UPDATE REUNION SET fichier_reunion = ? WHERE id_reunion = ?", "si", [$file->getFileName(), $this->id]);
-
-        return $this;
-    }
-
     public function getUser() : Member
     {
         $data = $this->DB->select("SELECT id_membre
