@@ -302,28 +302,28 @@ H2 {
 
 /*** ---> Déconnexion***/
 
-#buttons-section form button {
+#buttons-section form:first-of-type button {
     width: 18vh;
     height: 6vh;
     background-color:  rgb(119, 241, 190);
     color: #1E1E1E;
 }
 
-#buttons-section form button img {
+#buttons-section form:first-of-type button img {
     width: 30px;
     height: 30px;
 }
 
 /*** ---> Supprimer mon compte***/
 
-#buttons-section > button:nth-of-type(2) {
+#buttons-section form:nth-of-type(2) button {
     width: 23vh;
     height: 6vh;
     background-color:  rgb(234, 91, 91);
     color: white;
 }
 
-#buttons-section > button:nth-of-type(2) a {
+#buttons-section form:nth-of-type(2) button {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -332,7 +332,7 @@ H2 {
     height: 100%;
 }
 
-#buttons-section > button:nth-of-type(2) img {
+#buttons-section form:nth-of-type(2) button img {
     width: 30px;
     height: 30px;
     margin: 0.5vh;
