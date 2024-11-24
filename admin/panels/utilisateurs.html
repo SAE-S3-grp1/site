@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/general.css">
+    <link rel="stylesheet" href="../styles/panels.css">
+
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>Utilisateurs</h1>
+    </header>
+
+    <!-- NAVIGUATION -->
+    <nav>
+        <ul>
+
+            <!-- AUTO GENERATED -->
+            <li>Nathalie VIEILLARD</li>
+            <li>Enzo RYNDERS--V...</li>
+            <li>Mathis LE NÔTRE</li>
+            <li>Tom YSPOE</li>
+            <li>Julien DAUVERGNE</li>
+            <li>Gémino RUFFAULT-...</li>
+            <li>Barnabe HAVARD</li>
+            <li>Axelle HANNIER</li>
+            <li>Nathaël MARTINELLE</li>
+            <li>Corentyn HAYER</li>
+
+        </ul>
+
+        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un utilisateur</button>
+
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+
+        <div class="propertie">
+            <div>
+                <p>Photo de profile</p>
+                <p>Mettre à jour l'image de photo de profile de l'utilisateur.</p>
+            </div>
+            <div>
+                <img src="https://lium.univ-lemans.fr/wp-content/uploads/2018/01/PL-e1663234102408.png" alt="Photo de profile de l'utilisateur">
+                <img src="../ressources/edit.svg" alt="Charger une nouvelle image">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Nom de famille</p>
+                <p>Nom de famille affiché de l’utilisateur.</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Barbecue de l'ADIIL">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Prénom</p>
+                <p>Prénom affiché de l’utilisateur.</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Parking Batiment Info">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Adresse e-mail</p>
+                <p>Adresse e-mail associé à l’utilisateur.</p>
+            </div>
+            <div>
+                <input type="email" placeholder="Parking Batiment Info">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Rôles</p>
+                <p>Lister les rôles à attribuer aux utilisateurs.</p>
+            </div>
+            <div>
+                <input type="text" disabled placeholder="Parking Batiment Info">
+            </div>
+        </div>
+
+        <div class="propertie">
+            <div>
+                <p>Points d'éxperiences</p>
+                <p>Sélectionnez le niveau d’xp de l’utilisateur.</p>
+            </div>
+            <div>
+                <input type="number" placeholder="512" min="-42">
+            </div>
+        </div>
+
+        <div class="saves-buttons">
+            <button class="btn-transparent btn-blue"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+            <button class="btn-transparent btn-red"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script type="module" src="../scripts/toggle.js"></script>
+    <script type="module" src="../scripts/users.js"></script>
+    
+</body>
+</html>
