@@ -41,6 +41,7 @@ class Item extends BaseModel implements JsonSerializable
     public function delete() : void
     {
         $this->getImage()?->deleteFile();
+        $this->DB->query("UPDATE COMMANDE SET id_article=null WHERE id_article = ?", "i", [$this->id]);
         $this->DB->query("DELETE FROM ARTICLE WHERE id_article = ?", "i", [$this->id]);
     }
 

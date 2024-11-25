@@ -1,6 +1,7 @@
 <?php
 namespace model;
 
+use Filter;
 use JsonSerializable;
 
 require_once __DIR__ . '/BaseModel.php';
@@ -66,6 +67,28 @@ class Member extends BaseModel implements JsonSerializable
     public function getProfilePic(): File | null
     {
         return File::getFile($this->toJson()["pp_membre"]);
+    }
+
+    public function setRoles(array $roles): bool
+    {
+        $rolesObjects = [];
+        foreach ($roles as $role) {
+            $role = Role::getInstance(filter::int($role));
+            if (is_null($role)) {
+                return false;
+            }
+            $rolesObjects[] = $role;
+        }
+
+        // On supprime les rôles actuels
+        $this->DB->query("DELETE FROM ASSIGNATION WHERE id_membre = ?", "i", [$this->id]);
+
+        // On ajoute les nouveaux rôles
+        foreach ($rolesObjects as $role) {
+            $role->addMember($this);
+        }
+
+        return true;
     }
 
 

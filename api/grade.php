@@ -5,6 +5,7 @@ use model\Grade;
 
 require_once 'DB.php';
 require_once 'tools.php';
+require_once 'filter.php';
 require_once 'models/Grade.php';
 require_once 'filter.php';
 
@@ -14,27 +15,27 @@ ini_set('display_errors', 1);
 header('Content-Type: application/json');
 
 $methode = $_SERVER['REQUEST_METHOD'];
-$DB = new DB();
+
 
 switch ($methode) {
     case 'GET':                      # READ
-        get_grades($DB);
+        get_grades();
         break;
     case 'POST':                     # CREATE
-        create_grade($DB);
+        create_grade();
         break;
     case 'PUT':                      # UPDATE (données seulement)
         if (tools::methodAccepted('application/json')) {
-            update_grade($DB);
+            update_grade();
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
         if (tools::methodAccepted('multipart/form-data')) {
-            update_image($DB);
+            update_image();
         }
         break;
     case 'DELETE':                   # DELETE
-        delete_grade($DB);
+        delete_grade();
         break;
 
     default:
@@ -44,11 +45,11 @@ switch ($methode) {
 }
 
 
-function get_grades($DB){
-
+function get_grades() : void
+{
     if (isset($_GET['id']))
     {
-        $id = $DB->clean($_GET['id']);
+        $id = filter::int($_GET['id']);
         $grades = Grade::getInstance($id);
 
         if ($grades === null) {
@@ -144,7 +145,7 @@ function update_image() : void
     echo $grade;
 }
 
-function delete_grade($DB)
+function delete_grade() : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
