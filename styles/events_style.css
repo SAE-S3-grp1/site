@@ -1,8 +1,6 @@
 
 section{
-    display: flex;
     height: fit-content;
-    align-items: stretch;
 }
 h1{
     margin-left: 5vw;
@@ -24,15 +22,18 @@ h1{
 }
 
 .events-display{
-    width: 100%;
+    width: fit-content;
     height: calc(100vh - 125px);
 
     display: flex;
-
-    align-items: center;
     flex-direction: column;
-
     justify-content: space-evenly;
+
+    align-items: flex-end;
+    align-self: center;
+
+    margin: auto;
+
 }
 
 .event{
@@ -109,17 +110,20 @@ h1{
 .timeline-event {
     display: flex;
     align-items: center;
-    padding-left: 20px;
-    margin: auto 25px;
+    margin-right: 25px;
 }
 
 .timeline-event p {
     font-size: 1em;
-    color: white;
-    margin: 0;
-    text-align: left;
-    margin-right: 25px; 
+    text-align: left    ;
+    margin: auto 25px; 
     width: 75px;
+}
+
+.timeline-event h4 {
+    font-size: 1.2em;
+    text-align: right;
+    padding-right: 10px;
 }
 
 .timeline-marker {
@@ -144,10 +148,10 @@ h1{
 }
 
 .vertical-line {
-    position: absolute;
     width: 2px; /* Largeur de la ligne */
     height: 100px; /* Hauteur de la ligne */
     background-color: #ff0000; /* Couleur de la ligne */
     margin: 0 auto; /* Centre la ligne */
     left: 10px;
 }
+

@@ -21,17 +21,32 @@
     require_once 'header.php';
     require_once 'database.php';
     $db = new DB();
+    $isLoggedIn = isset($_SESSION["userid"]);
+
 ?>
 <h1>LES EVENEMENTS</h1>
 <section>
     <div class="events-display">
                 <?php
+                    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show'])) {
+                        $show_number = 8 + $_GET['show'];
+                    }else{
+                        $show_number = 8;
+                    }
+
+
                     $date = getdate();
                     $sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
+
+                    $joursFr = [0 => 'Dimanche', 1 => 'Lundi', 2 => 'Mardi', 3 => 'Mercredi', 4 => 'Jeudi', 5 => 'Vendredi', 6 => 'Samedi'];
+                    $moisFr = [1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'];
+                    $current_date = new DateTime(date("Y-m-d"));
+
+
                     $events_to_display = $db->select(
-                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement >= ? ORDER BY date_evenement ASC;",
-                        "s",
-                        [$sql_date]
+                        "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement >= ? ORDER BY date_evenement ASC LIMIT ? ;",
+                        "si",
+                        [$sql_date, $show_number]
                     );
                     $passed_events = $db->select(
                         "SELECT id_evenement, nom_evenement, lieu_evenement, date_evenement FROM EVENEMENT WHERE date_evenement < ? ORDER BY date_evenement ASC LIMIT 2;",
@@ -39,7 +54,7 @@
                         [$sql_date]
                     );
                     $events_to_display = array_merge($passed_events, $events_to_display);
-                    $current_date = new DateTime(date("Y-m-d"));
+
 
                 foreach ($events_to_display as $event):
                     $eventid = $event["id_evenement"];
@@ -67,33 +82,22 @@
                     <div class="event-box <?php echo "$other_classes";?>">
 
                         <div class="timeline-event">
+                            
+                            <h4> <?php echo ucwords($joursFr[$event_date_info['wday']]." ".$event_date_info["mday"]." ".$moisFr[$event_date_info['mon']]);?></h4>
+
+                            <div class="vertical-line"></div>
+                            
                             <p> <?php echo "$date_pin_label";?></p>
+
                             <div class="timeline-marker <?php echo " $date_pin_class" ?>">
                                 <div class="time-line"></div>
                             </div>
                         </div>
 
-                        <div class="event" event-id=" <?php echo $eventid;?>">
+                        <div class="event" event-id="<?php echo $eventid;?>">
                             <div>
                                 <h2><?php echo $event['nom_evenement'];?></h2>
-                                <?php
-                                    $moisFr = [
-                                        'January'   => 'Janvier',
-                                        'February'  => 'Février',
-                                        'March'     => 'Mars',
-                                        'April'     => 'Avril',
-                                        'May'       => 'Mai',
-                                        'June'      => 'Juin',
-                                        'July'      => 'Juillet',
-                                        'August'    => 'Août',
-                                        'September' => 'Septembre',
-                                        'October'   => 'Octobre',
-                                        'November'  => 'Novembre',
-                                        'December'  => 'Décembre'
-                                    ];
-
-                                    echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['month']].", ".$event["lieu_evenement"]);
-                                ?>
+                                <?php echo ucwords($event["lieu_evenement"]);?>
                             </div>
 
                             <h4
@@ -137,11 +141,11 @@
 
                             </h4>
                         </div>
-                        <div class="vertical-line"></div>
                     </div>
                 <?php endforeach; ?>
-            </div>
-    </section>
+        </div>
+        <a href="events.php?show=<?php echo $show_number + 8; //todo avec ceux passés?>">Voir Plus</a>
+</section>
 
     <?php require_once 'footer.php';?>
 </body>
