@@ -5,7 +5,9 @@ use model\File;
 
 require_once 'DB.php';
 require_once 'tools.php';
-require_once 
+require_once 'filter.php';
+require_once 'models/File.php';
+require_once 'models/Accounting.php';
 
 require_once 'models/Accounting.php';
 
@@ -20,7 +22,7 @@ $methode = $_SERVER['REQUEST_METHOD'];
 
 switch ($methode) {
     case 'GET':                      # READ
-        get_accounting($DB);
+        get_accounting();
         break;
 
     case 'POST':                     # CREATE
@@ -61,33 +63,38 @@ function get_accounting(): void
 }
 
 
-function create_accounting($DB): void
+function create_accounting(): void
 {
     // TODO : Récupérer l'ID de membre grace au token PHP
+
+    if (!isset($_POST['date'], $_POST['nom'], $_POST['id_membre'])) {
+        http_response_code(400);
+        echo json_encode(["message" => "Missing parameters"]);
+        return;
+    }
 
     $file = File::saveFile();
 
     if ($file == null) {
         http_response_code(400);
         echo json_encode(["message" => "Accounting file not created"]);
-        return;
-    }
 
-    if ($file) {
+    } else {
 
-        $DB->query("INSERT INTO COMPTABILITE (date_comptabilite, nom_comptabilite, url_comptabilite, id_membre)
-                     VALUES (?, ?, ?, ?)", "sssi", [$_POST['date_comptabilite'], $_POST['nom_comptabilite'], $file, $_POST['id_membre']]);
+        $date = filter::date($_POST['date']);
+        $nom = filter::string($_POST['nom'], maxLenght: 100);
+        $id_membre = filter::int($_POST['id_membre']);
+
+        $compta = Accounting::create($date, $nom, $file, $id_membre);
+
 
         http_response_code(201);
-        echo json_encode(["message" => "Accounting file created"]);
-    } else {
-        http_response_code(400);
-        echo json_encode(["message" => "Accounting file not created"]);
+        echo $compta;
     }
 
 }
 
-function delete_accounting($DB)
+function delete_accounting($DB) : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);
@@ -95,24 +102,18 @@ function delete_accounting($DB)
         return;
     }
 
-    $data = $DB->select("SELECT url_comptabilite
-                         FROM COMPTABILITE
-                         WHERE COMPTABILITE.id_comptabilite = ?", "i", [$_GET['id']]);
+    $id = filter::int($_GET['id']);
 
-    if (count($data) == 1) {
-        $data = $data[0];
+    $compta = Accounting::getInstance($id);
 
-        if (tools::deleteFile($data['url_comptabilite'])) {
-            $DB->delete("DELETE FROM COMPTABILITE WHERE id_comptabilite = ?", "i", [$_GET['id']]);
-            http_response_code(200);
-            echo json_encode(["message" => "Accounting file deleted"]);
-        } else {
-            http_response_code(400);
-            echo json_encode(["message" => "Accounting file could not deleted"]);
-        }
-    } else {
+    if ($compta == null) {
         http_response_code(404);
         echo json_encode(["message" => "Accounting file not found"]);
+        return;
     }
+
+    $compta->delete();
+    http_response_code(204);
+    echo json_encode(["message" => "Accounting file deleted"]);
 }
 
