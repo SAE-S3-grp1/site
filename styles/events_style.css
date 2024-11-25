@@ -1,3 +1,14 @@
+
+section{
+    display: flex;
+    height: fit-content;
+    align-items: stretch;
+}
+h1{
+    margin-left: 5vw;
+    font-size: 3em;
+    word-spacing: 25px;
+}
 /*********************
 ******  EVENTS  ******
 **********************/
@@ -46,7 +57,7 @@
     overflow: hidden;
 
     cursor: pointer;
-    
+    position: relative;
 }
 
 .event:hover{
@@ -79,4 +90,64 @@
 
     padding: 10px; /* 15? */
 
+}
+
+.event-box{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.passed{
+    opacity: 60%;
+}
+
+/*********************
+*****  TIME BAR  *****
+**********************/
+
+.timeline-event {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    margin: auto 25px;
+}
+
+.timeline-event p {
+    font-size: 1em;
+    color: white;
+    margin: 0;
+    text-align: left;
+    margin-right: 25px; 
+    width: 75px;
+}
+
+.timeline-marker {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: transparent;
+    position: relative;
+}
+
+.timeline-marker.passed {
+    background-color: rgb(155, 140, 140); /* Marqueur d'événements passés */
+}
+
+.timeline-marker.today {
+    background-color: rgb(0, 255, 0); /* Marqueur pour aujourd'hui */
+}
+
+.timeline-marker.upcoming {
+    background-color: rgba(255, 0, 0, 0.8); /* Marqueur pour les événements à venir */
+}
+
+.vertical-line {
+    position: absolute;
+    width: 2px; /* Largeur de la ligne */
+    height: 100px; /* Hauteur de la ligne */
+    background-color: #ff0000; /* Couleur de la ligne */
+    margin: 0 auto; /* Centre la ligne */
+    left: 10px;
 }
