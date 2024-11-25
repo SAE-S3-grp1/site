@@ -3,7 +3,9 @@
 ****** FOOTER ******
 ********************/
 footer {
+    margin: 0;
     margin-top: 20vh;
+    
     display: flex; 
     justify-content: space-between; 
     align-items: center;
@@ -45,7 +47,7 @@ footer > div  a:hover{
 footer > h2{
     font-family: "Koulen","Inter", sans-serif;
     width: fit-content;
-    text-align: end;
+    margin-top: 25px;
 
     writing-mode: vertical-lr;
     text-orientation: upright;
@@ -56,5 +58,4 @@ footer > h2{
     font-weight: 200;
 
     font-size: 2em;
-    text-align: center;
 }

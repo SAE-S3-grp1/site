@@ -156,9 +156,7 @@
             <h2 class="titre_vertical">EVENT</h2>
 
     </section>
-
-    <script src="/scripts/event_details_redirect.js"></script>
-
     <?php require_once 'footer.php';?>
+    <script src="/scripts/event_details_redirect.js"></script>
 </body>
 </html>
