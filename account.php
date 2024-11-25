@@ -15,7 +15,15 @@
 </head>
 
 <body class="body_margin">
-<?php require_once "header.php" ?>
+
+<?php 
+require_once "header.php" ;
+require_once 'database.php';
+
+$db = new DB();
+$isLoggedIn = isset($_SESSION["userid"]);
+?>
+
 
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,50 +37,66 @@
 
 
 <!-- PARTIE MON COMPTE -->
+<?php
+    $infoUser = $db->select("SELECT pp_membre, xp_membre, prenom_membre, nom_membre, email_membre, tp_membre, discord_token_membre, nom_grade, image_grade FROM MEMBRE LEFT JOIN ADHESION ON MEMBRE.id_membre = ADHESION.id_membre LEFT JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade WHERE MEMBRE.id_membre = ?;",
+    "i",
+    [$_SESSION['userid']]);
+?>
+
+
 <H2>MON COMPTE</H2>
 <section> <!-- Ensemble des différents formulaires du compte -->
     <div id="account-generalInfo">
         <div>
             <div id="cadre-pp">
-                <img src="assets/photo_mathis.png" alt="Photo de profil de l'utilisateur"/>
+
+            <?php
+            ?>
+                <img src="/api/files/<?php echo $infoUser[0]['pp_membre'];?>" alt="Photo de profil de l'utilisateur"/>
             </div>
-            <button type="submit"><img src="assets/edit_logo.png" alt="Logo editer la photo de profil"/></button>
+            <button type="submit"><img src=assets/edit_logo.png alt="Logo editer la photo de profil"/></button>
         </div>
         <div>
-            <p>210</p>
+            <p><?php echo $infoUser[0]['xp_membre'];?></p>
             <p>XP</p>
         </div>
         <div>
-            <p>Grade diamant</p>
+            <?php if (empty($infoUser[0]['nom_grade'])): ?>
+            <p>Vous n'avez pas de grade</p>
+            <?php else: ?>
+            <p><?php echo $infoUser[0]['nom_grade']; ?></p>
             <div id="cadre-grade">
-                <img src="assets/grade_diamant.png" alt="Illustration du grade diamant"/>
+                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur"/>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 
     <form method="POST" action="" id="account-personalInfo-form">
         <div>
             <div>
-                <input type="text" id="name" name="name" placeholder="Prénom"required>
-                <input type="text" id="lastName" name="lastName" placeholder="Nom de famille"required>
+                <input type="text" id="name" name="name" placeholder="Prénom" value="<?php echo $infoUser[0]['prenom_membre']; ?>" required>
+                <input type="text" id="lastName" name="lastName" placeholder="Nom de famille" value="<?php echo $infoUser[0]['nom_membre']; ?>" required>
             </div>
             <div>
-                <input type="email" id="mail" name="mail" placeholder="Adresse mail" required>
+                <input type="email" id="mail" name="mail" placeholder="Adresse mail" value="<?php echo $infoUser[0]['email_membre']; ?>"required>
                 
+                <?php if (!is_null($infoUser[0]['tp_membre'])): ?>
                 <select id="tp" name="tp">
-                    <option value="11A">TP 11 A</option>
-                    <option value="11B">TP 11 B</option>
-                    <option value="12C">TP 12 C</option>
-                    <option value="12D">TP 12 D</option>
-                    <option value="21A">TP 21 A</option>
-                    <option value="21B" selected>TP 21 B</option>  <!-- Cette option sera sélectionnée par défaut -->
-                    <option value="22C">TP 22 C</option>
-                    <option value="22D">TP 22 D</option>
-                    <option value="31A">TP 31 A</option>
-                    <option value="31B">TP 31 B</option>
-                    <option value="32C">TP 32 C</option>
-                    <option value="32D">TP 32 D</option>
+                    <option value="11A" <?php echo $infoUser[0]['tp_membre'] === '11a' ? 'selected' : ''; ?>>TP 11 A</option>
+                    <option value="11B" <?php echo $infoUser[0]['tp_membre'] === '11b' ? 'selected' : ''; ?>>TP 11 B</option>
+                    <option value="12C" <?php echo $infoUser[0]['tp_membre'] === '12c' ? 'selected' : ''; ?>>TP 12 C</option>
+                    <option value="12D" <?php echo $infoUser[0]['tp_membre'] === '12d' ? 'selected' : ''; ?>>TP 12 D</option>
+                    <option value="21A" <?php echo $infoUser[0]['tp_membre'] === '21a' ? 'selected' : ''; ?>>TP 21 A</option>
+                    <option value="21B" <?php echo $infoUser[0]['tp_membre'] === '21b' ? 'selected' : ''; ?>>TP 21 B</option>
+                    <option value="22C" <?php echo $infoUser[0]['tp_membre'] === '22c' ? 'selected' : ''; ?>>TP 22 C</option>
+                    <option value="22D" <?php echo $infoUser[0]['tp_membre'] === '22d' ? 'selected' : ''; ?>>TP 22 D</option>
+                    <option value="31A" <?php echo $infoUser[0]['tp_membre'] === '31a' ? 'selected' : ''; ?>>TP 31 A</option>
+                    <option value="31B" <?php echo $infoUser[0]['tp_membre'] === '31b' ? 'selected' : ''; ?>>TP 31 B</option>
+                    <option value="32C" <?php echo $infoUser[0]['tp_membre'] === '32c' ? 'selected' : ''; ?>>TP 32 C</option>
+                    <option value="32D" <?php echo $infoUser[0]['tp_membre'] === '32d' ? 'selected' : ''; ?>>TP 32 D</option>
                 </select>
+                <?php endif; ?>
             </div>
         </div>
 
