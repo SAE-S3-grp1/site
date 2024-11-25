@@ -48,21 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['delete_account_valid']) && $_POST['delete_account_valid'] === 'true'){
         $db->query(
-            "UPDATE MEMBRE SET 
-            nom_membre='', 
-            prenom_membre='', 
-            email_membre='N/A', 
-            password_membre=NULL, 
-            xp_membre=0, 
-            discord_token_membre = NULL, 
-            pp_membre=NULL, 
-            tp_membre=NULL
-            WHERE id_membre = ?",
+            "CALL suppressionCompte ( ? );",
             "i",
             [$_SESSION["userid"]]
         );
         session_destroy();
-        header("Location: index.php"); 
+        header("Location: index.php");
         exit();
     }
 }

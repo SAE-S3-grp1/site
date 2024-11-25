@@ -32,13 +32,13 @@
             <label for="mail">Nom :</label>
             <input type="text" name="lname">
         
-            <label for="mail">Adresse Mail :</label>
+            <label for="mail">Adresse Mail :*</label>
             <input type="email" name="mail" required>
 
-            <label for="password">Mot de passe :</label>
+            <label for="password">Mot de passe :*</label>
             <input type="password" name="password" required>
 
-            <label for="password">Confirmez le Mot de passe :</label>
+            <label for="password">Confirmez le Mot de passe :*</label>
             <input type="password" name="password_verif" required>
 
             <button type="submit">Confirmer</button>
@@ -74,14 +74,15 @@
                     }
 
                     $db->query(
-                        "INSERT INTO `MEMBRE` (`id_membre`, `nom_membre`, `prenom_membre`, `email_membre`, `password_membre`, `xp_membre`, `discord_token_membre`, `pp_membre`, `tp_membre`) 
-                        VALUES (NULL, ?, ?, ?, ?, '0', NULL, NULL, NULL);",
-                        "ssss",
-                        [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT)]
+                        "CALL creationCompte ( ? , ? , ? , ? , ? );",
+                        "sssss",
+                        [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT),'defaultPP.png']
                     );
                 }
                 header("Location: login.php");
                 exit;
+            }else{
+                echo 'Utilisateur déjà présent';
             }
         }
         ?>

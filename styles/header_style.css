@@ -14,6 +14,7 @@ header {
     right:0;
     padding-left: 1vw;
     margin-bottom: 11.69vh;
+    z-index: 999;
 }
 
 nav {

@@ -1,0 +1,82 @@
+/*********************
+******  EVENTS  ******
+**********************/
+
+.event-subscribed{
+    background-color: rgb(38, 100, 49);
+}
+.event-not-subscribed{
+    background-color: #c3161675;
+}
+.event-full{
+    background-color: #5D5757;
+}
+
+.events-display{
+    width: 100%;
+    height: calc(100vh - 125px);
+
+    display: flex;
+
+    align-items: center;
+    flex-direction: column;
+
+    justify-content: space-evenly;
+}
+
+.event{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 40vw;
+    min-width: 500px;
+    max-width: 780px;
+    
+    min-height: 130px;
+    max-height: 170px;
+
+    border-radius: 40px;
+
+    padding: 2vw 1vw 2vw 1vw;
+
+    background-color: #000000;   
+
+    font-size: 1.2em;
+    overflow: hidden;
+
+    cursor: pointer;
+    
+}
+
+.event:hover{
+    background-color: #333333; 
+    transform: scale(1.02); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); 
+    transition: all 0.3s ease-in-out;
+}
+
+.event > div{
+    width: 240px;
+    overflow: hidden;
+}
+.event > *{
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+.event > div h2{
+    margin-bottom: 10px;
+}
+
+
+.event h4{
+    width: 125px;
+    border-radius: 20px;
+
+    align-self: center;
+    text-align: center;
+
+    padding: 10px; /* 15? */
+
+}

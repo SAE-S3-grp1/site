@@ -10,7 +10,7 @@
     margin: 0;
 }
 
-.body_margin > *:not(:first-child):not(:last-child) {
+.body_margin > *:not(header):not(footer) {
     margin-right: 2vw;
     margin-left: 2vw;
 }
