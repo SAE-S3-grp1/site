@@ -15,7 +15,15 @@
 </head>
 
 <body class="body_margin">
-<?php require_once "header.php" ?>
+
+<?php 
+require_once "header.php" ;
+require_once 'database.php';
+
+$db = new DB();
+$isLoggedIn = isset($_SESSION["userid"]);
+?>
+
 
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,56 +37,183 @@
 
 
 <!-- PARTIE MON COMPTE -->
+<?php
+    $infoUser = $db->select("SELECT pp_membre, xp_membre, prenom_membre, nom_membre, email_membre, tp_membre, discord_token_membre, nom_grade, image_grade FROM MEMBRE LEFT JOIN ADHESION ON MEMBRE.id_membre = ADHESION.id_membre LEFT JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade WHERE MEMBRE.id_membre = ?;",
+    "i",
+    [$_SESSION['userid']]);
+?>
+
+
 <H2>MON COMPTE</H2>
+
+<!-- Affichage du message de succès ou d'erreur -->
+<?php
+if (isset($_SESSION['message'])) {
+    $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
+    echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+    unset($_SESSION['message']); // Supprimer le message après affichage
+    unset($_SESSION['message_type']); // Supprimer le type après affichage
+}
+?>
+
+
+
 <section> <!-- Ensemble des différents formulaires du compte -->
+    
+
+
+    <!-- Partie contenant les informations générales sur le compte de l'utilisateur -->
     <div id="account-generalInfo">
         <div>
             <div id="cadre-pp">
-                <img src="assets/photo_mathis.png" alt="Photo de profil de l'utilisateur"/>
+
+            <?php
+            ?>
+                <img src="/api/files/<?php echo $infoUser[0]['pp_membre'];?>" alt="Photo de profil de l'utilisateur"/>
             </div>
-            <button type="submit"><img src="assets/edit_logo.png" alt="Logo editer la photo de profil"/></button>
+            <button type="submit"><img src=assets/edit_logo.png alt="Logo editer la photo de profil"/></button>
         </div>
         <div>
-            <p>210</p>
+            <p><?php echo $infoUser[0]['xp_membre'];?></p>
             <p>XP</p>
         </div>
         <div>
-            <p>Grade diamant</p>
+            <?php if (empty($infoUser[0]['nom_grade'])): ?>
+            <p>Vous n'avez pas de grade</p>
+            <?php else: ?>
+            <p><?php echo $infoUser[0]['nom_grade']; ?></p>
             <div id="cadre-grade">
-                <img src="assets/grade_diamant.png" alt="Illustration du grade diamant"/>
+                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur"/>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 
+
+
+
+
+    <!-- Formulaire contenant les données personnelles de l'utilisateur -->
+    <?php
+    // Traitement du formulaire
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['lastName'], $_POST['mail'])) {
+        // Charger les informations actuelles de l'utilisateur depuis la base de données
+        $currentUserData = $db->select(
+            "SELECT prenom_membre, nom_membre, email_membre, tp_membre FROM MEMBRE WHERE id_membre = ?",
+            "i",
+            [$_SESSION['userid']]
+        );
+
+        // Vérifier si les données actuelles existent
+        if (!empty($currentUserData)) {
+            $currentName = $currentUserData[0]['prenom_membre'];
+            $currentLastName = $currentUserData[0]['nom_membre'];
+            $currentMail = $currentUserData[0]['email_membre'];
+            $currentTp = $currentUserData[0]['tp_membre'];
+
+            // Récupérer les nouvelles valeurs ou conserver les anciennes si aucune modification
+            $name = empty($_POST['name']) ? $currentName : htmlspecialchars($_POST['name']);
+            $lastName = empty($_POST['lastName']) ? $currentLastName : htmlspecialchars($_POST['lastName']);
+            $mail = empty($_POST['mail']) ? $currentMail : htmlspecialchars($_POST['mail']);
+            $tp = isset($_POST['tp']) && !empty($_POST['tp']) ? htmlspecialchars($_POST['tp']) : $currentTp;
+
+            // Vérifier si l'adresse e-mail existe déjà (et appartient à un autre utilisateur)
+            $existingEmail = $db->select(
+                "SELECT id_membre FROM MEMBRE WHERE email_membre = ? AND id_membre != ?",
+                "si",
+                [$mail, $_SESSION['userid']]
+            );
+
+            if (!empty($existingEmail)) {
+                // Cas où l'adresse e-mail est déjà utilisée
+                $_SESSION['message'] = "Les modifications n'ont pas pu être effectuées car l'adresse e-mail est déjà utilisée par un autre compte.";
+                $_SESSION['message_type'] = "error"; // Pour gérer les styles
+            } else {
+                // Mettre à jour les informations de l'utilisateur
+                $db->query(
+                    "UPDATE MEMBRE SET prenom_membre = ?, nom_membre = ?, email_membre = ?, tp_membre = ? WHERE id_membre = ?",
+                    "ssssi",
+                    [$name, $lastName, $mail, $tp, $_SESSION['userid']]
+                );
+
+                // Message de succès suite aux modifications
+                $_SESSION['message'] = "Vos informations ont été mises à jour avec succès !";
+                $_SESSION['message_type'] = "success"; // Pour gérer les styles
+            }
+        } else {
+            // Cas où l'utilisateur actuel n'existe pas dans la base
+            $_SESSION['message'] = "Erreur : utilisateur introuvable dans la base de données.";
+            $_SESSION['message_type'] = "error";
+        }
+
+        // Recharger la page
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+    ?>
+
     <form method="POST" action="" id="account-personalInfo-form">
+        <?php if (isset($successMessage)): ?>
+            <p class="success-message"><?php echo $successMessage; ?></p>
+        <?php endif; ?>
+        <?php if (isset($errorMessage)): ?>
+            <p class="error-message"><?php echo $errorMessage; ?></p>
+        <?php endif; ?>
+
         <div>
             <div>
-                <input type="text" id="name" name="name" placeholder="Prénom"required>
-                <input type="text" id="lastName" name="lastName" placeholder="Nom de famille"required>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Prénom" 
+                    value="<?php echo htmlspecialchars($infoUser[0]['prenom_membre']); ?>" 
+                    required>
+                <input 
+                    type="text" 
+                    id="lastName" 
+                    name="lastName" 
+                    placeholder="Nom de famille" 
+                    value="<?php echo htmlspecialchars($infoUser[0]['nom_membre']); ?>" 
+                    required>
             </div>
             <div>
-                <input type="email" id="mail" name="mail" placeholder="Adresse mail" required>
+                <input 
+                    type="email" 
+                    id="mail" 
+                    name="mail" 
+                    placeholder="Adresse mail" 
+                    value="<?php echo htmlspecialchars($infoUser[0]['email_membre']); ?>" 
+                    required>
                 
+                <?php if (!is_null($infoUser[0]['tp_membre'])): ?>
                 <select id="tp" name="tp">
-                    <option value="11A">TP 11 A</option>
-                    <option value="11B">TP 11 B</option>
-                    <option value="12C">TP 12 C</option>
-                    <option value="12D">TP 12 D</option>
-                    <option value="21A">TP 21 A</option>
-                    <option value="21B" selected>TP 21 B</option>  <!-- Cette option sera sélectionnée par défaut -->
-                    <option value="22C">TP 22 C</option>
-                    <option value="22D">TP 22 D</option>
-                    <option value="31A">TP 31 A</option>
-                    <option value="31B">TP 31 B</option>
-                    <option value="32C">TP 32 C</option>
-                    <option value="32D">TP 32 D</option>
+                    <option value="11A" <?php echo $infoUser[0]['tp_membre'] === '11A' ? 'selected' : ''; ?>>TP 11 A</option>
+                    <option value="11B" <?php echo $infoUser[0]['tp_membre'] === '11B' ? 'selected' : ''; ?>>TP 11 B</option>
+                    <option value="12C" <?php echo $infoUser[0]['tp_membre'] === '12C' ? 'selected' : ''; ?>>TP 12 C</option>
+                    <option value="12D" <?php echo $infoUser[0]['tp_membre'] === '12D' ? 'selected' : ''; ?>>TP 12 D</option>
+                    <option value="21A" <?php echo $infoUser[0]['tp_membre'] === '21A' ? 'selected' : ''; ?>>TP 21 A</option>
+                    <option value="21B" <?php echo $infoUser[0]['tp_membre'] === '21B' ? 'selected' : ''; ?>>TP 21 B</option>
+                    <option value="22C" <?php echo $infoUser[0]['tp_membre'] === '22C' ? 'selected' : ''; ?>>TP 22 C</option>
+                    <option value="22D" <?php echo $infoUser[0]['tp_membre'] === '22D' ? 'selected' : ''; ?>>TP 22 D</option>
+                    <option value="31A" <?php echo $infoUser[0]['tp_membre'] === '31A' ? 'selected' : ''; ?>>TP 31 A</option>
+                    <option value="31B" <?php echo $infoUser[0]['tp_membre'] === '31B' ? 'selected' : ''; ?>>TP 31 B</option>
+                    <option value="32C" <?php echo $infoUser[0]['tp_membre'] === '32C' ? 'selected' : ''; ?>>TP 32 C</option>
+                    <option value="32D" <?php echo $infoUser[0]['tp_membre'] === '32D' ? 'selected' : ''; ?>>TP 32 D</option>
                 </select>
+                <?php endif; ?>
             </div>
         </div>
 
-        <button type="submit"><img src="assets/save_logo.png" alt="Logo editer la photo de profil"/></button>
+        <button type="submit">
+            <img src="assets/save_logo.png" alt="Logo enregistrer les modifications"/>
+        </button>
     </form>
-    
+
+
+
+
+    <!-- Formulaire permettant à l'utilisateur de modifier son mot de passe-->
     <form method="POST" action="" id="account-editPass-form">
         <div>
             <div>
@@ -95,7 +230,13 @@
     </form>
 </section>
 
+
+
+
+
+
 <section> <!-- Ensemble des différents boutons du compte -->
+
     <div id="buttons-section">
         <!--Discord-->
         <button type="button">
