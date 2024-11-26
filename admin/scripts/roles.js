@@ -58,17 +58,17 @@ async function saveRole(id_role){
     const data = {
         name: prop_nom_role.value === '' ? 'N/A' : prop_nom_role.value,
         permissions: {
-            p_log: prop_logs.classList.contains('active'),
-            p_boutique: prop_boutique.classList.contains('active'),
-            p_reunion: prop_reunions.classList.contains('active'),
-            p_utilisateur: prop_users.classList.contains('active'),
-            p_grade: prop_grades.classList.contains('active'),
-            p_role: prop_roles.classList.contains('active'),
-            p_actualite: prop_actualites.classList.contains('active'),
-            p_evenement: prop_events.classList.contains('active'),
-            p_comptabilite: prop_comptabilite.classList.contains('active'),
-            p_achat: prop_historique.classList.contains('active'),
-            p_moderation: prop_moderation.classList.contains('active')
+            p_log: prop_logs.classList.contains('toggle-active'),
+            p_boutique: prop_boutique.classList.contains('toggle-active'),
+            p_reunion: prop_reunions.classList.contains('toggle-active'),
+            p_utilisateur: prop_users.classList.contains('toggle-active'),
+            p_grade: prop_grades.classList.contains('toggle-active'),
+            p_role: prop_roles.classList.contains('toggle-active'),
+            p_actualite: prop_actualites.classList.contains('toggle-active'),
+            p_evenement: prop_events.classList.contains('toggle-active'),
+            p_comptabilite: prop_comptabilite.classList.contains('toggle-active'),
+            p_achat: prop_historique.classList.contains('toggle-active'),
+            p_moderation: prop_moderation.classList.contains('toggle-active')
         }
     };
 
@@ -123,19 +123,23 @@ async function selectRole(id_role, li){
     const role = await requestGET(`/role.php?id=${id_role}`);
 
     // Update displayed information
+    function updateToggleStatus(toggle, status){
+        if(status) toggle.classList.add('toggle-active');
+        else toggle.classList.remove('toggle-active');
+    }
     prop_nom_role.value = role.nom_role;
-    if (role.p_log) prop_logs.classList.add('active');
-    if (role.p_boutique) prop_boutique.classList.add('active');
-    if (role.p_utilisateur) prop_users.classList.add('active');
-    if (role.p_grade) prop_grades.classList.add('active');
-    if (role.p_role) prop_roles.classList.add('active');
-    if (role.p_actualite) prop_actualites.classList.add('active');
-    if (role.p_evenement) prop_events.classList.add('active');
-    if (role.p_comptabilite) prop_comptabilite.classList.add('active');
-    if (role.p_achat) prop_historique.classList.add('active');
-    if (role.p_moderation) prop_moderation.classList.add('active');
-    if (role.p_reunion) prop_reunions.classList.add('active');
-    
+    updateToggleStatus(prop_logs, role.p_log);
+    updateToggleStatus(prop_boutique, role.p_boutique);
+    updateToggleStatus(prop_users, role.p_utilisateur);
+    updateToggleStatus(prop_grades, role.p_grade);
+    updateToggleStatus(prop_roles, role.p_role);
+    updateToggleStatus(prop_actualites, role.p_actualite);
+    updateToggleStatus(prop_events, role.p_evenement);
+    updateToggleStatus(prop_comptabilite, role.p_comptabilite);
+    updateToggleStatus(prop_historique, role.p_achat);
+    updateToggleStatus(prop_moderation, role.p_moderation);
+    updateToggleStatus(prop_reunions, role.p_reunion);
+
     // Update save button
     save_btn.onclick = ()=>{
         saveRole(id_role);

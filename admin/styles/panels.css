@@ -363,6 +363,12 @@ textarea{
 .skeleton-text:nth-child(4){
     width: 80%;
 }
+.skeleton-toggle{
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    animation: skeleton-loading 0.7s linear infinite alternate;
+}
 .skeleton-image{
     width: 84px;
     height: 84px;
