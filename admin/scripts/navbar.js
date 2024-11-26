@@ -51,6 +51,10 @@ export async function refreshNavbar(fetchData, selectItem, defaultSelectedItem =
     if (items.length === 0)
         empty_navbar.hidden = false;
 
+    // Deselect
+    for (const item of navbar.children)
+        item.classList.remove('active');
+
     // Select default item
     if (needToBeSelectedLi !== null)
         needToBeSelectedLi.click();

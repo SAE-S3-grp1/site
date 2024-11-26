@@ -3,6 +3,7 @@ import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
+import { getFullFilepath } from "./files.js";
 
 // Show skeleton
 showPropertieSkeleton();
@@ -81,7 +82,7 @@ async function deleteGrade(id_grade){
     await requestDELETE(`/grade.php?id=${id_grade}`);
     
     /// Update navbar
-    reloadNavbar(); // Will hide loader
+    refreshNavbar(fetchData, selectGrade);
 
     // Deleted message
     toast('Grade supprimé avec succès.');
@@ -106,7 +107,7 @@ async function selectGrade(id_grade, li){
     const grade = await requestGET(`/grade.php?id=${id_grade}`);
 
     // Update displayed information
-    prop_image_grade.src = grade.image_grade ? grade.image_grade : '../ressources/default_images/grade.webp';
+    prop_image_grade.src = await getFullFilepath(grade.image_grade, '../ressources/default_images/grade.webp');
     prop_nom_grade.value = grade.nom_grade;
     prop_description_grade_grade.value = grade.description_grade;
     prop_prix_grade.value = grade.prix_grade;

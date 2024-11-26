@@ -102,7 +102,7 @@ function update_user() : void
     $email = filter::email($data['email'], maxLenght: 100);
     $tp = filter::string($data['tp'], maxLenght: 3);
     $xp = filter::int($data['xp']);
-    $roles = filter::json($data['roles']);
+    $roles = $data['roles'];
 
     $user = Member::getInstance($id);
 

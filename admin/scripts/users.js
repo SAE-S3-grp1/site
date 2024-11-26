@@ -3,6 +3,7 @@ import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
+import { getFullFilepath } from "./files.js";
 
 // Show skeleton
 showPropertieSkeleton();
@@ -50,11 +51,12 @@ async function saveUser(id_user){
 
     // Create data
     const data = {
-        name: prop_nom.value,
-        firstname: prop_prenom.value,
-        email: prop_email.value,
+        name: prop_nom.value === '' ? 'N/A' : prop_nom.value,
+        firstname: prop_prenom.value === '' ? 'N/A' : prop_prenom.value,
+        email: prop_email.value === '' ? 'N/A' : prop_email.value,
         tp: prop_tp.value,
-        xp: prop_xp.value
+        xp: prop_xp.value === '' ? 0 : prop_xp.value,
+        roles: []
     };
 
     // Send data
@@ -83,7 +85,7 @@ async function deleteUser(id_user){
     await requestDELETE(`/users.php?id=${id_user}`);
     
     /// Update navbar
-    reloadNavbar(); // Will hide loader
+    refreshNavbar(fetchData, selectUser);
 
     // Deleted message
     toast('Utilisateur supprimé avec succès.');
@@ -108,7 +110,7 @@ async function selectUser(id_member, li){
     const user = await requestGET(`/users.php?id=${id_member}`);
 
     // Update displayed information
-    prop_img.src = user.pp_membre ? user.pp_membre : '../ressources/default_images/member.webp';
+    prop_img.src = await getFullFilepath(user.pp_membre, '../ressources/default_images/user.jpg');
     prop_nom.value = user.nom_membre;
     prop_prenom.value = user.prenom_membre;
     prop_email.value = user.email_membre;
@@ -142,7 +144,6 @@ async function selectUser(id_member, li){
     }
     prop_nom.onkeyup = updateName;
     prop_prenom.onkeyup = updateName;
-
 
     // Hide loader
     hideLoader();

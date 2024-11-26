@@ -28,7 +28,7 @@ class Filter
     {
         $filtered = filter_var($value, FILTER_VALIDATE_EMAIL);
 
-        if (!$filtered || strlen($filtered) < $minLenght || strlen($filtered) > $maxLenght)
+        if (is_null($filtered) || strlen($filtered) < $minLenght || strlen($filtered) > $maxLenght)
         {
             self::deny($value, "email");
         }
@@ -40,7 +40,7 @@ class Filter
     {
         $filtered = filter_var($value, FILTER_VALIDATE_INT);
 
-        if (!$filtered || $filtered < $min || $filtered > $max)
+        if (is_null($filtered) || $filtered < $min || $filtered > $max)
         {
             self::deny($value, "int");
         }

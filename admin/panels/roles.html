@@ -22,21 +22,83 @@
 
     <!-- NAVIGUATION -->
     <nav>
-        <ul>
+        <p hidden id="empty_navbar">Il n'y a pas grand chose ici</p>
+        <ul id="skeleton_navbar">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="content_navbar">
 
             <!-- AUTO GENERATED -->
-            <li>Comunication</li>
-            <li>Comptables</li>
-            <li>Secrétaire</li>
 
         </ul>
 
-        <button class="btn-transparent navadd-btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter</button>
+        <button class="btn-transparent navadd-btn" id="new_btn"><img src="../ressources/add.svg" alt="Ajouter">Ajouter un utilisateur</button>
 
     </nav>
 
     <!-- MAIN -->
     <main>
+
+ <!-- SKELETON FOR LOADING -->
+ <div id="main_skeleton">
+
+    <div class="propertie">
+        <div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+        </div>
+        <div>
+            <div class="skeleton-image"></div>
+            <div class="skeleton-image"></div>
+        </div>
+    </div>
+
+    <div class="propertie">
+        <div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+        </div>
+        <div>
+            <div class="skeleton-text"></div>
+        </div>
+    </div>
+
+    <div class="propertie">
+        <div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+        </div>
+        <div>
+            <div class="skeleton-text"></div>
+        </div>
+    </div>
+
+    <div class="propertie">
+        <div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+        </div>
+        <div>
+            <div class="skeleton-text"></div>
+        </div>
+    </div>
+
+    <div class="propertie">
+        <div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+        </div>
+        <div>
+            <div class="skeleton-text"></div>
+        </div>
+    </div>  
+
+</div>
+
+<!-- MAIN PROPERTIES -->
+<div id="main_content" style="display: none;">
 
         <div class="propertie">
             <div>
@@ -44,7 +106,7 @@
                 <p>Nom affiché du rôle sur l’interface administrateur.</p>
             </div>
             <div>
-                <input type="text" placeholder="Comptable">
+                <input type="text" placeholder="Comptable" id="prop_nom_role">
             </div>
         </div>
 
@@ -54,7 +116,7 @@
                 <p>Ajouter, modifier ou supprimer des éléments de la boutique</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_boutique"></div>
             </div>
         </div>
 
@@ -64,7 +126,7 @@
                 <p>Pouvoir modifier l’adresse mail, le nom le prénom et l’xp d’un membre</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_users"></div>
             </div>
         </div>
 
@@ -74,7 +136,7 @@
                 <p>Gestion des grades, de leur nom, de leur prix et de leur réduction</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_grades"></div>
             </div>
         </div>
 
@@ -84,7 +146,7 @@
                 <p>Modifier les noms des rôles, et leur permissions</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_roles"></div>
             </div>
         </div>
 
@@ -94,7 +156,7 @@
                 <p>Création, modification, publication et suppression d'actualités</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_actualites"></div>
             </div>
         </div>
 
@@ -104,7 +166,7 @@
                 <p>Création, modification, publication et suppression d'événements</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_events"></div>
             </div>
         </div>
 
@@ -114,7 +176,7 @@
                 <p>Création, modification, publication de fiches de comptabilité.</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_comptabilite"></div>
             </div>
         </div>
 
@@ -124,7 +186,7 @@
                 <p>Permet de créer, modifier et supprimer des réunions ainsi que d'ajouter les compte-rendus liées a celle-çi.</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_reunions"></div>
             </div>
         </div>
 
@@ -134,7 +196,7 @@
                 <p>Accès a la liste des derniers achats des utilisateurs.</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_historique"></div>
             </div>
         </div>
 
@@ -144,7 +206,7 @@
                 <p>Accède a la vue des derniers logs de la console du serveur.</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_logs"></div>
             </div>
         </div>
 
@@ -154,18 +216,21 @@
                 <p>Permet la suppression de contenu utilisateur jugée inaproprié.</p>
             </div>
             <div>
-                <div class="toggle"></div>
+                <div class="toggle" id="prop_moderation"></div>
             </div>
         </div>
 
         <div class="saves-buttons">
-            <button class="btn-transparent btn-blue"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
-            <button class="btn-transparent btn-red"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+            <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
+            <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
+        </div>
+
         </div>
 
     </main>
 
     <!-- SCRIPTS -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="module" src="../scripts/toggle.js"></script>
     <script type="module" src="../scripts/roles.js"></script>
     
