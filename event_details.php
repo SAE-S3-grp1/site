@@ -71,7 +71,12 @@
     </div>
 </section>
 
-<?php require_once 'footer.php';?>
 
+<section>
+    
+</section>
+
+
+<?php require_once 'footer.php';?>
 </body>
 </html>
