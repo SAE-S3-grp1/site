@@ -20,6 +20,7 @@ export function showLoader(){
 export function hideLoader(){
     loader.classList.remove('showed');
     setTimeout(() => {
-        loader.style.display = 'none';
+        if (!loader.classList.contains('showed'))
+            loader.style.display = 'none';
     }, 200);
 }
