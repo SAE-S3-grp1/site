@@ -92,24 +92,11 @@
                         <div>
                             <h2><?php echo $event['nom_evenement'];?></h2>
                             <?php
-                                $moisFr = [
-                                    'January'   => 'Janvier',
-                                    'February'  => 'Février',
-                                    'March'     => 'Mars',
-                                    'April'     => 'Avril',
-                                    'May'       => 'Mai',
-                                    'June'      => 'Juin',
-                                    'July'      => 'Juillet',
-                                    'August'    => 'Août',
-                                    'September' => 'Septembre',
-                                    'October'   => 'Octobre',
-                                    'November'  => 'Novembre',
-                                    'December'  => 'Décembre'
-                                ];
+                                $moisFr = [1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'];
 
                                 $event_date = substr($event['date_evenement'], 0, 10);
                                 $event_date_info = getdate(strtotime($event_date));
-                                echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['month']].", ".$event["lieu_evenement"]);
+                                echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['mon']].", ".$event["lieu_evenement"]);
                             ?>
                         </div>
 
