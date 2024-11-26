@@ -5,13 +5,13 @@
 class Filter
 {
 
-    private static function deny(string $value, string $attribute) {
+    private static function deny(mixed $value, string $attribute) {
         http_response_code(400);
         echo json_encode(["message" => $value . " is not a valid " . $attribute . " in this context"]);
         exit();
     }
 
-    public static function string(string $value, int $minLenght=0, int $maxLenght=5000) : string
+    public static function string(mixed $value, int $minLenght=0, int $maxLenght=5000) : string
     {
         // On retire la "merde" de la chaine
         $filtered = htmlspecialchars($value);
@@ -24,11 +24,11 @@ class Filter
         return $filtered;
     }
 
-    public static function email(string $value, int $minLenght=5, int $maxLenght=254) : string | bool
+    public static function email(mixed $value, int $minLenght=5, int $maxLenght=254) : string | bool
     {
         $filtered = filter_var($value, FILTER_VALIDATE_EMAIL);
 
-        if (!$filtered || strlen($filtered) < $minLenght || strlen($filtered) > $maxLenght)
+        if ($filtered === false || strlen($filtered) < $minLenght || strlen($filtered) > $maxLenght)
         {
             self::deny($value, "email");
         }
@@ -36,11 +36,11 @@ class Filter
         return $filtered;
     }
 
-    public static function int(string $value, int $min=0, int $max=PHP_INT_MAX) : int | bool
+    public static function int(mixed $value, int $min=0, int $max=PHP_INT_MAX) : int | bool
     {
         $filtered = filter_var($value, FILTER_VALIDATE_INT);
 
-        if (!$filtered || $filtered < $min || $filtered > $max)
+        if ($filtered === false || $filtered < $min || $filtered > $max)
         {
             self::deny($value, "int");
         }
@@ -48,7 +48,7 @@ class Filter
         return $filtered;
     }
 
-    public static function float(string $value, int $min=0, int $max=PHP_INT_MAX) : float | bool
+    public static function float(mixed $value, int $min=0, int $max=PHP_INT_MAX) : float | bool
     {
         $filtered = filter_var($value, FILTER_VALIDATE_FLOAT, ['options' => [
                 'min_range' => $min,
@@ -56,7 +56,7 @@ class Filter
             ]
         ]);
 
-        if (!$filtered)
+        if ($filtered === false)
         {
             self::deny($value, "float");
         }
@@ -64,7 +64,7 @@ class Filter
         return $filtered;
     }
 
-    public static function bool(string $value) : bool
+    public static function bool(mixed $value) : bool
     {
         $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN);
 
@@ -76,7 +76,7 @@ class Filter
         return $filtered;
     }
 
-    public static function date(string $value) : string
+    public static function date(mixed $value) : string
     {
        $exp = '/^(\d{4})-(\d{2})-(\d{2})$/';
 
@@ -88,15 +88,13 @@ class Filter
         return $value;
     }
 
-    public static function json(string $value) : array
+    public static function json(mixed $value) : array
     {
-        $filtered = json_decode($value, true);
-
-        if ($filtered === null)
+        if (!is_array($value))
         {
             self::deny($value, "json");
         }
 
-        return $filtered;
+        return $value;
     }
 }
