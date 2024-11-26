@@ -358,3 +358,64 @@ H2 {
 }
 
 
+
+/***********************
+****** MES ACHATS ******
+************************/
+
+/* Style global pour la section */
+#historique-achats {
+    background-color: #1a1a1a; /* Fond sombre */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre légère */
+    color: white; /* Couleur du texte */
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Style pour le tableau */
+#tab-historique-achats {
+    width: 100%;
+    border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    margin-top: 10px;
+}
+
+/* Style pour l'en-tête du tableau */
+#tab-historique-achats th {
+    background-color: #333; /* Fond des en-têtes */
+    color: white; /* Texte blanc */
+    text-align: left; /* Texte aligné à gauche */
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #555;
+}
+
+/* Style pour les lignes de données */
+#tab-historique-achats td {
+    padding: 10px;
+    border-bottom: 1px solid #444; /* Ligne de séparation entre les lignes */
+    color: #e6e6e6; /* Texte légèrement gris pour contraster */
+}
+
+/* Alternance de couleur pour les lignes */
+#tab-historique-achats tr:nth-child(even) {
+    background-color: #2a2a2a; /* Gris foncé pour les lignes paires */
+}
+
+/* Style pour les bordures */
+#tab-historique-achats th, #tab-historique-achats td {
+    border-right: 1px solid #444; /* Bordure entre colonnes */
+}
+
+#tab-historique-achats th:last-child, #tab-historique-achats td:last-child {
+    border-right: none; /* Pas de bordure pour la dernière colonne */
+}
+
+/* Style des boutons */
+form button {
+    color: white; /* Texte blanc */
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}

@@ -336,11 +336,87 @@ if (isset($_SESSION['message'])) {
 
 
 
-<!-- PARTIE MES COMMANDES -->
-<H2>MES COMMANDES</H2>
+<!-- PARTIE MES ACHATS -->
 <section>
-</section>
 
+<?php
+// Vérifie si "viewAll" est défini et vaut "1" dans l'URL
+$viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
+?>
+
+    <h2>Historique des achats</h2>
+
+    <!-- Bouton pour afficher tout ou afficher moins -->
+    <form method="GET" action="">
+        <?php if ($viewAll): ?>
+            <button type="submit" name="viewAll" value="0">Afficher moins</button>
+        <?php else: ?>
+            <button type="submit" name="viewAll" value="1">Afficher tout</button>
+        <?php endif; ?>
+    </form>
+
+    <?php
+    // Préparer la requête SQL avec ou sans LIMIT
+    $sql = "
+        SELECT type_transaction, element, quantite, montant, mode_paiement, date_transaction, 
+        CASE 
+        WHEN recupere = 1 THEN 'Oui'
+        ELSE 'Non'
+        END AS recupere 
+        FROM HISTORIQUE_COMPLET WHERE id_membre=? ORDER BY date_transaction DESC";
+
+
+    // Ajouter LIMIT si "viewAll" n'est pas activé
+    if (!$viewAll) {
+        $sql .= " LIMIT 1";
+    }
+
+    // Exécuter la requête
+    $historiqueAchats = $db->select(
+        $sql,
+        "i",
+        [$_SESSION['userid']]
+    );
+
+    ?>
+
+    <!--Affichage du tableau-->
+
+    <div id=historique-achats>
+
+        <?php
+        if (!empty($historiqueAchats)): ?>
+            <table id="tab-historique-achats">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Mode de paiement</th>
+                    <th>Récupéré</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($historiqueAchats as $achat): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($achat['date_transaction']); ?></td>
+                        <td><?php echo htmlspecialchars($achat['type_transaction']); ?></td>
+                        <td><?php echo htmlspecialchars($achat['element']); ?></td>
+                        <td><?php echo htmlspecialchars($achat['quantite']); ?></td>
+                        <td><?php echo htmlspecialchars(number_format($achat['montant'], 2, ',', ' ')) . " €"; ?></td>
+                        <td><?php echo htmlspecialchars($achat['mode_paiement']); ?></td>
+                        <td><?php echo htmlspecialchars($achat['recupere']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+            </table>
+        <?php else: ?>
+            <p>Vous n'avez effectué aucun achat pour le moment.</p>
+        <?php endif; ?>
+    </div>
+</section>
 
 
 <!-- FOOTER -->
