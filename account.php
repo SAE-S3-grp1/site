@@ -16,15 +16,26 @@
 
 <body class="body_margin">
 
+
+
+<!--------------->
+<!------PHP------>
+<!--------------->
+
+ <!-- Importer les fichiers -->
 <?php 
 require_once "header.php" ;
 require_once 'database.php';
 
+// Connexion à la base de donnees
 $db = new DB();
+
+// 
 $isLoggedIn = isset($_SESSION["userid"]);
 ?>
 
 
+<!-- Deconnecte l'utilisateur si celui-ci le souhaite -->
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deconnexion']) && $_POST['deconnexion'] === 'true') {
@@ -36,7 +47,7 @@ $isLoggedIn = isset($_SESSION["userid"]);
 ?>
 
 
-<!-- PARTIE MON COMPTE -->
+ <!-- Recuperer les informations de l'utilisateur -->
 <?php
     $infoUser = $db->select("SELECT pp_membre, xp_membre, prenom_membre, nom_membre, email_membre, tp_membre, discord_token_membre, nom_grade, image_grade FROM MEMBRE LEFT JOIN ADHESION ON MEMBRE.id_membre = ADHESION.id_membre LEFT JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade WHERE MEMBRE.id_membre = ?;",
     "i",
@@ -44,57 +55,8 @@ $isLoggedIn = isset($_SESSION["userid"]);
 ?>
 
 
-<H2>MON COMPTE</H2>
-
-<!-- Affichage du message de succès ou d'erreur -->
-<?php
-if (isset($_SESSION['message'])) {
-    $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
-    echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
-    unset($_SESSION['message']); // Supprimer le message après affichage
-    unset($_SESSION['message_type']); // Supprimer le type après affichage
-}
-?>
-
-
-
-<section> <!-- Ensemble des différents formulaires du compte -->
-    
-
-
-    <!-- Partie contenant les informations générales sur le compte de l'utilisateur -->
-    <div id="account-generalInfo">
-        <div>
-            <div id="cadre-pp">
-
-            <?php
-            ?>
-                <img src="/api/files/<?php echo $infoUser[0]['pp_membre'];?>" alt="Photo de profil de l'utilisateur"/>
-            </div>
-            <button type="submit"><img src=assets/edit_logo.png alt="Logo editer la photo de profil"/></button>
-        </div>
-        <div>
-            <p><?php echo $infoUser[0]['xp_membre'];?></p>
-            <p>XP</p>
-        </div>
-        <div>
-            <?php if (empty($infoUser[0]['nom_grade'])): ?>
-            <p>Vous n'avez pas de grade</p>
-            <?php else: ?>
-            <p><?php echo $infoUser[0]['nom_grade']; ?></p>
-            <div id="cadre-grade">
-                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur"/>
-            </div>
-            <?php endif; ?>
-        </div>
-    </div>
-
-
-
-
-
-    <!-- Formulaire contenant les données personnelles de l'utilisateur -->
-    <?php
+ <!-- Formulaire contenant les données personnelles de l'utilisateur -->
+ <?php
     // Traitement du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['lastName'], $_POST['mail'])) {
         // Charger les informations actuelles de l'utilisateur depuis la base de données
@@ -152,6 +114,112 @@ if (isset($_SESSION['message'])) {
     }
     ?>
 
+
+ <!-- Formulaire permettant à l'utilisateur de modifier son mot de passe-->
+ <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mdp'], $_POST['newMdp'], $_POST['newMdpVerif'])) {
+        $currentPassword = htmlspecialchars(trim($_POST['mdp']));
+        $newPassword = htmlspecialchars(trim($_POST['newMdp']));
+        $newPasswordVerif = htmlspecialchars(trim($_POST['newMdpVerif']));
+
+        // Récupérer l'utilisateur et le mot de passe actuel depuis la base de données
+        $user = $db->select(
+            "SELECT password_membre FROM MEMBRE WHERE id_membre = ?",
+            "i",
+            [$_SESSION['userid']]
+        );
+        
+        if (!empty($user) && password_verify($currentPassword, $user[0]['password_membre'])) {
+            // Vérifier la correspondance des nouveaux mots de passe
+            if ($newPassword === $newPasswordVerif) {
+                // Mettre à jour le mot de passe dans la base de données
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $db->query(
+                    "UPDATE MEMBRE SET password_membre = ? WHERE id_membre = ?",
+                    "si",
+                    [$hashedPassword, $_SESSION['userid']]
+                );
+
+                $_SESSION['message'] = "Mot de passe mis à jour avec succès !";
+                $_SESSION['message_type'] = "success";
+            } else {
+                $_SESSION['message'] = "Les nouveaux mots de passe ne correspondent pas.";
+                $_SESSION['message_type'] = "error";
+            }
+        } else {
+            $_SESSION['message'] = "Mot de passe actuel incorrect.";
+            $_SESSION['message_type'] = "error";
+        }
+
+        // Redirection pour éviter le double envoi du formulaire
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+    ?>
+
+
+
+
+
+
+
+<!--------------->
+<!------HTML----->
+<!--------------->
+
+
+<!-- PARTIE MON COMPTE -->
+
+<H2>MON COMPTE</H2>
+
+
+
+<!-- Affichage du message de succès ou d'erreur -->
+<?php
+if (isset($_SESSION['message'])) {
+    $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
+    echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+    unset($_SESSION['message']); // Supprimer le message après affichage
+    unset($_SESSION['message_type']); // Supprimer le type après affichage
+}
+?>
+
+
+
+<section> <!-- Ensemble des différents formulaires du compte -->
+    
+
+
+    <!-- Partie contenant les informations générales sur le compte de l'utilisateur -->
+    <div id="account-generalInfo">
+        <div>
+            <div id="cadre-pp">
+
+            <?php
+            ?>
+                <img src="/api/files/<?php echo $infoUser[0]['pp_membre'];?>" alt="Photo de profil de l'utilisateur"/>
+            </div>
+            <button type="submit"><img src=assets/edit_logo.png alt="Logo editer la photo de profil"/></button>
+        </div>
+        <div>
+            <p><?php echo $infoUser[0]['xp_membre'];?></p>
+            <p>XP</p>
+        </div>
+        <div>
+            <?php if (empty($infoUser[0]['nom_grade'])): ?>
+            <p>Vous n'avez pas de grade</p>
+            <?php else: ?>
+            <p><?php echo $infoUser[0]['nom_grade']; ?></p>
+            <div id="cadre-grade">
+                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur"/>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+
+
+ <!-- Formulaire contenant les données personnelles de l'utilisateur -->
     <form method="POST" action="" id="account-personalInfo-form">
         <?php if (isset($successMessage)): ?>
             <p class="success-message"><?php echo $successMessage; ?></p>
@@ -256,7 +324,6 @@ if (isset($_SESSION['message'])) {
         </form>
 
         <!--Supprimer son compte-->
-
         <form action="delete_account.php" method="post">
             <input type="hidden" name="delete_account" value="true">
             <button type="submit">
