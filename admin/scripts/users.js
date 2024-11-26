@@ -10,6 +10,13 @@ showPropertieSkeleton();
 // Get inputs
 const delete_btn = document.getElementById('delete_btn');
 const new_btn = document.getElementById('new_btn');
+const prop_img = document.getElementById('prop_img');
+const prop_nom = document.getElementById('prop_nom');
+const prop_prenom = document.getElementById('prop_prenom');
+const prop_email = document.getElementById('prop_email');
+const prop_roles = document.getElementById('prop_roles');
+const prop_xp = document.getElementById('prop_xp');
+const prop_tp = document.getElementById('prop_tp');
 
 /**
  * Reloads the navigation bar with grade items.
@@ -43,10 +50,11 @@ async function saveUser(id_user){
 
     // Create data
     const data = {
-        name: prop_nom_grade.value,
-        description: prop_description_grade_grade.value,
-        price: prop_prix_grade.value,
-        reduction: prop_reduction_grade.value
+        name: prop_nom.value,
+        firstname: prop_prenom.value,
+        email: prop_email.value,
+        tp: prop_tp.value,
+        xp: prop_xp.value
     };
 
     // Send data
@@ -55,7 +63,7 @@ async function saveUser(id_user){
         toast('Grade mis à jour avec succès.');
         selectUser(id_user);
     } catch (error) {
-        toast('Erreur lors de la mise à jour du grade.', true);
+        toast(error.message, true);
     }
 
     // Stop loader
@@ -100,11 +108,12 @@ async function selectUser(id_member, li){
     const user = await requestGET(`/users.php?id=${id_member}`);
 
     // Update displayed information
-    prop_image_grade.src = user.image_grade ? user.image_grade : '../ressources/default_images/member.webp';
-    prop_nom_grade.value = user.nom_grade;
-    prop_description_grade_grade.value = user.description_grade;
-    prop_prix_grade.value = user.prix_grade;
-    prop_reduction_grade.value = user.reduction_grade;
+    prop_img.src = user.pp_membre ? user.pp_membre : '../ressources/default_images/member.webp';
+    prop_nom.value = user.nom_membre;
+    prop_prenom.value = user.prenom_membre;
+    prop_email.value = user.email_membre;
+    prop_xp.value = user.xp_membre;
+    prop_tp.value = user.tp_membre;
 
     // Update save button
     save_btn.onclick = ()=>{
@@ -128,9 +137,12 @@ async function selectUser(id_member, li){
     };
 
     // Update name
-    prop_nom_grade.onkeyup = ()=>{
-        li.textContent = prop_nom_grade.value;
-    };
+    function updateName(){
+        li.textContent = prop_prenom.value + ' ' + prop_nom.value.toUpperCase();
+    }
+    prop_nom.onkeyup = updateName;
+    prop_prenom.onkeyup = updateName;
+
 
     // Hide loader
     hideLoader();
@@ -142,6 +154,18 @@ async function selectUser(id_member, li){
 
 // Handle new user
 new_btn.onclick = async ()=>{
+
+    // Show loader
+    showLoader();
+
+    // Create new grade
+    try {
+        const { id_membre } = await requestPOST('/users.php');
+        refreshNavbar(fetchData, selectUser, id_membre);
+    } catch (error) {
+        toast(error.message, true);
+        hideLoader();
+    }
 
 };
 

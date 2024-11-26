@@ -198,7 +198,7 @@ main > div{
 }
 
 /* INPUT */
-input{
+input, select{
     background-color: var(--background-color-whiter);
     border: 1.5px solid var(--background-color-darker);
     border-radius: 8px;
@@ -209,7 +209,7 @@ input{
     outline: none;
     width: 100%;
 }
-input:focus{
+input:focus, select:focus{
     border-color: var(--text-lighter);
 }
 
@@ -375,7 +375,6 @@ textarea{
 .skeleton-image:last-child{
     margin-right: 0;
 }
-
 
 @keyframes skeleton-loading {
     from{

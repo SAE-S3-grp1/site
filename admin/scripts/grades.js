@@ -61,7 +61,7 @@ async function saveGrade(id_grade){
         toast('Grade mis à jour avec succès.');
         selectGrade(id_grade);
     } catch (error) {
-        toast('Erreur lors de la mise à jour du grade.', true);
+        toast(error.message, true);
     }
 
     // Stop loader

@@ -16,4 +16,4 @@ listItems.forEach(item => {
 
 
 /* Select first permissions */
-listItems[1].click();
+listItems[2].click();
