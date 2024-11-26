@@ -63,8 +63,8 @@
                 $password_verif = format_input($_POST['password_verif']);
 
                 if($password == $password_verif){
-                    $fname = "";
-                    $lname = "";
+                    $fname = "N/A";
+                    $lname = "N/A";
     
                     if(isset($_POST['fname'])){
                         $fname = format_input($_POST['fname']);

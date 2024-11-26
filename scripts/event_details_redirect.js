@@ -1,4 +1,4 @@
-const eventDivs = document.querySelectorAll('.events-display > .event');
+const eventDivs = document.querySelectorAll('.event');
 
 // Ajouter un gestionnaire de clic à chaque div
 eventDivs.forEach(div => {

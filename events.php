@@ -23,18 +23,16 @@
     $db = new DB();
     $isLoggedIn = isset($_SESSION["userid"]);
 
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] > 7) {
+        $show_number = 8 + (int) $_GET['show'];
+    } else {
+        $show_number = 8;
+    }
 ?>
 <h1>LES EVENEMENTS</h1>
 <section>
     <div class="events-display">
                 <?php
-                    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && $_GET['show'] > 7) {
-                        $show_number = 8 + $_GET['show'];
-                    }else{
-                        $show_number = 8;
-                    }
-
-
                     $date = getdate();
                     $sql_date = $date["year"]."-".$date["mon"]."-".$date["mday"];
 
@@ -144,7 +142,7 @@
                     </div>
                 <?php endforeach; ?>
         </div>
-        <a href="events.php?show=<?php echo $show_number + 8; ?>">Voir Plus</a>
+        <a class="show-more" href="events.php?show=<?php echo $show_number + 8; ?>">Voir Plus</a>
 </section>
 
     <?php require_once 'footer.php';?>
