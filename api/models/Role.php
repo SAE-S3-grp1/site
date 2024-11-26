@@ -16,7 +16,7 @@ class Role extends BaseModel implements JsonSerializable
         $DB = new \DB();
 
         $id = $DB->query("INSERT INTO ROLE (nom_role, p_log, p_boutique, p_reunion, p_utilisateur, p_grade, p_role, p_actualite, p_evenement, p_comptabilite, p_achat, p_moderation)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", "siibiiiiiiii", [$name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation]);
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", "siiiiiiiiiii", [$name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation]);
 
         return new Role($id);
     }
@@ -26,7 +26,7 @@ class Role extends BaseModel implements JsonSerializable
                            bool $p_grade, bool $p_role, bool $p_actualite, bool $p_evenement, bool $p_comptabilite,
                            bool $p_achat, bool $p_moderation) : Role
     {
-        $this->DB->query("UPDATE ROLE SET nom_role = ?, p_log = ?, p_boutique = ?, p_reunion = ?, p_utilisateur = ?, p_grade = ?, p_role = ?, p_actualite = ?, p_evenement = ?, p_comptabilite = ?, p_achat = ?, p_moderation = ? WHERE id_role = ?", "siibiiiiiiii", [$name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation, $this->id]);
+        $this->DB->query("UPDATE ROLE SET nom_role = ?, p_log = ?, p_boutique = ?, p_reunion = ?, p_utilisateur = ?, p_grade = ?, p_role = ?, p_actualite = ?, p_evenement = ?, p_comptabilite = ?, p_achat = ?, p_moderation = ? WHERE id_role = ?", "siiiiiiiiiiii", [$name, $p_log, $p_boutique, $p_reunion, $p_utilisateur, $p_grade, $p_role, $p_actualite, $p_evenement, $p_comptabilite, $p_achat, $p_moderation, $this->id]);
 
         return $this;
     }
