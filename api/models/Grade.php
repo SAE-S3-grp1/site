@@ -70,9 +70,6 @@ class Grade extends BaseModel implements JsonSerializable
         return json_encode($this);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function jsonSerialize(): array
     {
         return $this->DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$this->id])[0];
