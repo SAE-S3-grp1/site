@@ -28,7 +28,7 @@
 <section>
     <div class="events-display">
                 <?php
-                    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show'])) {
+                    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && $_GET['show'] > 7) {
                         $show_number = 8 + $_GET['show'];
                     }else{
                         $show_number = 8;
@@ -144,9 +144,11 @@
                     </div>
                 <?php endforeach; ?>
         </div>
-        <a href="events.php?show=<?php echo $show_number + 8; //todo avec ceux passés?>">Voir Plus</a>
+        <a href="events.php?show=<?php echo $show_number + 8; ?>">Voir Plus</a>
 </section>
 
     <?php require_once 'footer.php';?>
+    <script src="/scripts/event_details_redirect.js"></script>
+
 </body>
 </html>

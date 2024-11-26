@@ -140,18 +140,18 @@ h1{
 }
 
 .timeline-marker.today {
-    background-color: rgb(0, 255, 0); /* Marqueur pour aujourd'hui */
+    background-color: rgb(119, 241, 190);; /* Marqueur pour aujourd'hui */
 }
 
 .timeline-marker.upcoming {
-    background-color: rgba(255, 0, 0, 0.8); /* Marqueur pour les événements à venir */
+    background-color: rgb(38, 100, 49); /* Marqueur pour les événements à venir */
 }
 
 .vertical-line {
-    width: 2px; /* Largeur de la ligne */
-    height: 100px; /* Hauteur de la ligne */
-    background-color: #ff0000; /* Couleur de la ligne */
-    margin: 0 auto; /* Centre la ligne */
+    width: 2px;
+    height: 100px; 
+    background-color: rgb(119, 241, 190); 
+    margin: 0 auto; 
     left: 10px;
 }
 
