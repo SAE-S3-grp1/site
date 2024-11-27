@@ -13,9 +13,9 @@ function saveFile() : string | null
     {
         // Retourne le nom du fichier si l'enregistrement a réussi, faux sinon.
 
-        $name = tools::generateUUID() . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        $name = generateUUID() . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], '/api/files/' . $name)) {
+        if (move_uploaded_file($_FILES['file']['tmp_name'], __DIR__ . '/api/files/' . $name)) {
             return $name;
         }
 
