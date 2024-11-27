@@ -41,4 +41,14 @@ function saveImage() : string | null
         // On s'assure que l'extension du fichier ne causerait pas de problèmes
         return saveFile();
     }
+
+function deleteFile(string $fileName) : bool
+    {
+        if (file_exists(__DIR__ . "/api/files/" . $fileName)) {
+            unlink(__DIR__ . "/api/files/" . $fileName);
+            return true;
+        }
+
+        return false;
+    }
 ?>
