@@ -7,6 +7,7 @@ require_once 'DB.php';
 require_once 'tools.php';
 require_once 'filter.php';
 require_once 'models/Grade.php';
+require_once 'filter.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -56,9 +57,7 @@ function get_grades() : void
             echo json_encode(['error' => 'Grade not found']);
             return;
         }
-
-        $grades = $grades[0];
-
+        
     } else {
         $grades = Grade::bulkFetch();
     }
@@ -92,7 +91,7 @@ function update_grade() : void
         echo json_encode(['error' => 'Incomplete data']);
         return;
     }
-
+    
     $id = filter::int($_GET['id']);
     $name = filter::string($data['name'], maxLenght: 100);
     $description = filter::string($data['description'], maxLenght: 500);

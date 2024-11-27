@@ -32,7 +32,7 @@ export function toast(text, error = false){
     // Start toaster animation
     setTimeout(() => {
         toaster.classList.add('showed');
-    }, 10);
+    }, 50);
 }
 
 /**
@@ -41,6 +41,7 @@ export function toast(text, error = false){
 function hideToast(){
     toaster.classList.remove('showed');
     setTimeout(() => {
+        if (toaster.classList.contains('showed')) return;
         toaster.style.display = 'none';
     }, 200);
 }

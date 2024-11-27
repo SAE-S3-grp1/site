@@ -40,20 +40,23 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
             options.headers['Content-Type'] = 'multipart/form-data';
         }
 
+        // Fetch data
         const response = await fetch(url, options);
-
-        // Vérification de la réponse
-        if (!response.ok) {
-            throw new Error(`Erreur: ${response.status} ${response.statusText}`);
-        }
 
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
-        if (text) {
-            return JSON.parse(text);
-        } else {
-            return null;
+        const json = text ? JSON.parse(text) : null;
+
+        // Vérification de la réponse
+        if (!response.ok) {
+            if (json && json.message)
+                throw new Error(json.message);
+            else
+                throw new Error(`Erreur: ${response.status} ${response.statusText}`);
         }
+
+        return json;
+
     } catch (error) {
         throw error;
     }
