@@ -185,7 +185,7 @@
 }
 
 .event > div{
-    width: 240px;
+    width: 100%;
     overflow: hidden;
 }
 .event > *{
@@ -205,7 +205,7 @@
     align-self: center;
     text-align: center;
 
-    padding: 10px; /* 15? */
+    padding: 15px; /* 15? */
 
 }
 

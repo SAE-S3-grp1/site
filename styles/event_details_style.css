@@ -1,0 +1,101 @@
+section{
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 6vh;
+}
+
+.event-container{
+    position: relative;
+    width: 100%;
+}
+.event-container h1{
+    font-family: "Koulen", sans-serif;
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    line-height: 100px;
+    font-weight: 500;
+    width: 60%;
+    margin-bottom: 30px;
+    
+}
+.event-container h2{
+    margin-top: -10px;
+    font-size: 3em;
+    font-weight: 200;
+    letter-spacing: 5px;
+}
+
+.event-container h1,
+.event-container h2 {
+    position: relative;
+    z-index: 1;
+}
+.event-container > div{
+    margin-left: 8vw;
+    margin-bottom: 60px;
+    width: fit-content;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.event-container img{
+    position: absolute;
+    border-radius: 15px;
+
+    width: 600px;
+    height: 350px;
+
+    border: 2px white solid;
+    object-fit: cover;
+    z-index: -1;
+
+    right: 10px;
+    top: -20px;
+}
+
+.event-container button{
+    background-color: #4B0082; /* Couleur violette */
+    color: white; /* Texte blanc */
+    font-family: "Inter", sans-serif; /* Police moderne */
+    font-size: 1.2em; /* Taille de texte */
+    font-weight: 500; /* Poids du texte */
+    border: none; /* Supprime la bordure */
+    border-radius: 15px; /* Coins arrondis */
+    padding: 10px 30px; /* Espacement interne */
+    cursor: pointer; /* Curseur pointeur au survol */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Ombre subtile */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+.event-container button:hover {
+    background-color: #5A0099; /* Couleur légèrement plus claire au survol */
+    transform: scale(1.05); /* Effet de zoom */
+}
+
+
+.event-container li{
+    display: block;
+    line-height: 100px;
+}
+.event-container li > div{
+    display: flex;
+    font-size: 2.2em;
+}
+.event-container li > div h3{
+    font-weight: 300;
+    margin-left: 20px;
+}
+
+.event-container p{
+    width: 70%;
+    font-size: 1.5em;
+
+    text-align: justify;
+
+    margin: auto;
+    margin-top: 50px;
+
+    line-height: 40px;
+}

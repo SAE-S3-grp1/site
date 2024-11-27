@@ -22,17 +22,21 @@ h1{
 }
 
 .events-display{
+
     width: fit-content;
-    height: calc(100vh - 125px);
+    height: fit-content;
 
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    gap: 5vh;
 
     align-items: flex-end;
     align-self: center;
-
+    
     margin: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
 
 }
 
@@ -69,7 +73,7 @@ h1{
 }
 
 .event > div{
-    width: 240px;
+    width: 100%;
     overflow: hidden;
 }
 .event > *{
@@ -89,7 +93,7 @@ h1{
     align-self: center;
     text-align: center;
 
-    padding: 10px; /* 15? */
+    padding: 12px; /* 15? */
 
 }
 
@@ -140,7 +144,8 @@ h1{
 }
 
 .timeline-marker.today {
-    background-color: rgb(119, 241, 190);; /* Marqueur pour aujourd'hui */
+    background-color: rgb(64, 180, 141);; /* Marqueur pour aujourd'hui */
+    /*TODO VOIR LA COULEUR*/
 }
 
 .timeline-marker.upcoming {
@@ -155,3 +160,13 @@ h1{
     left: 10px;
 }
 
+.show-more{
+    display: block;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: 500;
+    width: 100%;
+}
+.show-more:hover{
+    opacity: 80%;
+}
