@@ -9,9 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'], $_POST['user
         $date = new DateTime();
         $sqlDate = $date->format('Y-m-d H:i:s');
 
-        var_dump($sqlDate);
-        //todo ddd
-
         if ($fileName !== null) {
             // Met à jour la base de données avec le nom du fichier
             $db->query(
@@ -19,12 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'], $_POST['user
                 "ssii",
                 [$fileName, $sqlDate ,$_POST["userid"], $_POST["eventid"]]
             );
-            // Recharge la page pour afficher la nouvelle image
-            header("Location: event_details.php?".$_POST["eventid"]);
-            exit();
         }
 
-        var_dump($_FILES['file']);
+        // Recharge la page pour afficher la nouvelle image
+        header("Location: event_details.php?id=".$_POST["eventid"]);
+        exit();
 
     }else{
         header("Location: index.php"); 
