@@ -41,42 +41,67 @@
 <body>
 <?php
     require_once 'header.php';
+    require_once 'files_save.php';
 
     $isLoggedIn = isset($_SESSION["userid"]);
-
-    
 ?>
-<section>
-    <div class="event-container">
-        <img src="api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
+<section class="event-details">
+    <img src="api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
 
-        <h1><?php echo strtoupper($event['nom_evenement']); ?></h1>
+    <h1><?php echo strtoupper($event['nom_evenement']); ?></h1>
 
-        <div>
-            <h2><?php echo date('d/m/Y', strtotime($event['date_evenement'])); ?></h2>
-            <button class="registration-button">Inscription</button>
-        </div>
-
-        <ul>
-            <li><div>📍<h3><?php echo $event['lieu_evenement']; ?></h3></div></li>
-            <li><div>💸<h3><?php echo $event['prix_evenement']; ?>€ par personne</h3></div></li>
-            <?php if(boolval($event['reductions_evenement'])){echo "<li><div>💎<h3>-10% pour les membres Diamants</h3></div></li>";} ?>
-        </ul>
-
-        <p>
-            <?php echo nl2br(htmlspecialchars($event['description_evenement'])); ?>
-        </p>
-
-
+    <div>
+        <h2><?php echo date('d/m/Y', strtotime($event['date_evenement'])); ?></h2>
+        <button class="registration-button">Inscription</button>
     </div>
+
+    <ul>
+        <li><div>📍<h3><?php echo $event['lieu_evenement']; ?></h3></div></li>
+        <li><div>💸<h3><?php echo $event['prix_evenement']; ?>€ par personne</h3></div></li>
+        <?php if(boolval($event['reductions_evenement'])){echo "<li><div>💎<h3>-10% pour les membres Diamants</h3></div></li>";} ?>
+    </ul>
+
+    <p>
+        <?php echo nl2br(htmlspecialchars($event['description_evenement'])); ?>
+    </p>
+
 </section>
 
 
-<section>
-    
+<section class="gallery">
+    <h2>GALLERIE</h2>
+    <?php if($isLoggedIn):?>
+
+    <h3>Mes photos</h3>
+    <div class="my-medias">
+        <?php
+            $medias = $db->select(
+                "SELECT url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT 5;",
+                "ii",
+                [$_SESSION["userid"], $eventid]
+            );
+            foreach($medias as $media => $img):?>
+                <img src="api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
+        <?php endforeach;?>
+
+        <div id="add-media">
+            <label for="file-picker">
+                <img src="assets/add_media.png" alt="Ajouter un média">
+            </label>
+            <input type="file" id="file-picker" accept=".png, .jpeg, .webp" hidden>
+        </div>
+
+    </div>
+    <?php endif;?>
+    <h3>Collection Generale</h3>
+
+    <div class="general-medias">
+    </div>
+
 </section>
 
 
 <?php require_once 'footer.php';?>
+<script src="/scripts/open_media.js"></script>
 </body>
 </html>

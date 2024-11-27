@@ -23,10 +23,10 @@
     $db = new DB();
     $isLoggedIn = isset($_SESSION["userid"]);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] > 7) {
-        $show_number = 8 + (int) $_GET['show'];
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] > 3) {
+        $show_number = 3 + (int) $_GET['show'];
     } else {
-        $show_number = 8;
+        $show_number = 3;
     }
 ?>
 <h1>LES EVENEMENTS</h1>
@@ -142,7 +142,7 @@
                     </div>
                 <?php endforeach; ?>
         </div>
-        <a class="show-more" href="events.php?show=<?php echo $show_number + 8; ?>">Voir Plus</a>
+        <a class="show-more" href="events.php?show=<?php echo $show_number + 5; ?>">Voir Plus</a>
 </section>
 
     <?php require_once 'footer.php';?>
