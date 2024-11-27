@@ -10,10 +10,11 @@ require_once __DIR__ . '/File.php';
 class News extends BaseModel implements JsonSerializable
 {
 
-    public function create(string $nom, string $description, string $date, int $id_membre, File $image) : News
+    public static function create(string $nom, string $description, string $date, int $id_membre, File | null $image) : News
     {
-        $req = $this->DB->insert("INSERT INTO ACTUALITE (titre_actualite, contenu_actualite, date_actualite, id_membre, image_actualite) VALUES (?, ?, ?, ?, ?)", "sssis", [$nom, $description, $date, $id_membre, $image->getFileName()]);
-        return $this->getInstance($req);
+        $DB = new \DB();
+        $id = $DB->query("INSERT INTO ACTUALITE (titre_actualite, contenu_actualite, date_actualite, id_membre, image_actualite) VALUES (?, ?, ?, ?, ?)", "sssis", [$nom, $description, $date, $id_membre, $image->getFileName()]);
+        return News::getInstance($id);
     }
 
     public function update(string $nom, string $description, string $date, int $id_membre) : News
@@ -35,7 +36,7 @@ class News extends BaseModel implements JsonSerializable
         $this->DB->query("DELETE FROM ACTUALITE WHERE id_actualite = ?", "i", [$this->id]);
     }
 
-    public function getInstance(int $id) : News | null
+    public static function getInstance(int $id) : News | null
     {
         $DB = new \DB();
         $result = $DB->select("SELECT * FROM ACTUALITE WHERE id_actualite = ?", "i", [$id]);
@@ -47,6 +48,11 @@ class News extends BaseModel implements JsonSerializable
         return new News($result[0]);
     }
 
+    public static function bulkFetch() : array
+    {
+        $DB = new \DB();
+        return $DB->select("SELECT * FROM ACTUALITE");
+    }
 
 
     public function jsonSerialize(): array
