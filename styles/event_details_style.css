@@ -1,14 +1,28 @@
-section{
+body{
     margin-left: 5vw;
     margin-right: 5vw;
-    margin-top: 6vh;
+}
+footer{
+    margin-left: -5vw;
+    margin-right: -5vw;
+}
+section{
+    margin-top: 6vw;
 }
 
-.event-container{
+
+/*********************
+*******  EVENT  ******
+**********************/
+
+.event-details{
+    margin-top: 3vw;
+
     position: relative;
     width: 100%;
 }
-.event-container h1{
+
+.event-details h1{
     font-family: "Koulen", sans-serif;
     font-size: 4.5em;
     letter-spacing: 15px;
@@ -16,21 +30,21 @@ section{
     font-weight: 500;
     width: 60%;
     margin-bottom: 30px;
-    
 }
-.event-container h2{
+
+.event-details h2{
     margin-top: -10px;
     font-size: 3em;
     font-weight: 200;
     letter-spacing: 5px;
 }
 
-.event-container h1,
-.event-container h2 {
+.event-details h1,
+.event-details h2 {
     position: relative;
     z-index: 1;
 }
-.event-container > div{
+.event-details > div{
     margin-left: 8vw;
     margin-bottom: 60px;
     width: fit-content;
@@ -40,7 +54,7 @@ section{
     gap: 30px;
 }
 
-.event-container img{
+.event-details img{
     position: absolute;
     border-radius: 15px;
 
@@ -51,11 +65,11 @@ section{
     object-fit: cover;
     z-index: -1;
 
-    right: 10px;
+    right: 0px;
     top: -20px;
 }
 
-.event-container button{
+.event-details button{
     background-color: #4B0082; /* Couleur violette */
     color: white; /* Texte blanc */
     font-family: "Inter", sans-serif; /* Police moderne */
@@ -69,26 +83,26 @@ section{
     transition: all 0.3s ease; /* Transition fluide */
 }
 
-.event-container button:hover {
+.event-details button:hover {
     background-color: #5A0099; /* Couleur légèrement plus claire au survol */
     transform: scale(1.05); /* Effet de zoom */
 }
 
 
-.event-container li{
+.event-details li{
     display: block;
     line-height: 100px;
 }
-.event-container li > div{
+.event-details li > div{
     display: flex;
     font-size: 2.2em;
 }
-.event-container li > div h3{
+.event-details li > div h3{
     font-weight: 300;
     margin-left: 20px;
 }
 
-.event-container p{
+.event-details p{
     width: 70%;
     font-size: 1.5em;
 
@@ -99,3 +113,106 @@ section{
 
     line-height: 40px;
 }
+
+
+/*********************
+*****  GALLERIE  *****
+**********************/
+
+.gallery h2{
+    font-family: "Koulen", sans-serif;
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    text-align: center;
+}
+
+.gallery h3{
+    font-family: "Koulen", sans-serif;
+    font-size: 2.5em;
+    letter-spacing: 15px;
+}
+
+
+.my-medias{
+    width: 1250px;
+    height: 600px;
+    
+    align-self: center;
+    margin: 2vh auto;
+
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 24px;
+}
+
+.my-medias img{
+    object-fit: cover;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.my-medias > img{
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transition fluide */
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.my-medias > *:hover{
+    transform: scale(1.05);
+}
+
+.my-medias *:nth-child(1){
+    grid-column: span 5 / span 5;
+    grid-row: span 5 / span 5;
+}
+
+.my-medias *:nth-child(2){
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    grid-column-start: 6;
+}
+
+.my-medias *:nth-child(3){
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    grid-column-start: 9;
+}
+
+.my-medias *:nth-child(4){
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 6;
+    grid-row-start: 4;
+}
+
+.my-medias *:nth-child(5){
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 8;
+    grid-row-start: 4;
+}
+
+.my-medias *:nth-child(6){
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 10;
+    grid-row-start: 4;
+}
+
+#add-media{
+    width: 100%;
+    height: 100%;
+    border: none;
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+#add-media img{
+    object-fit: contain;
+    cursor: pointer;
+}
+

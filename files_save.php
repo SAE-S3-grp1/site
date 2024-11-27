@@ -1,5 +1,4 @@
 <?php
-
 function generateUUID(){
         $data = random_bytes(16);
 
@@ -42,5 +41,4 @@ function saveImage() : string | null
         // On s'assure que l'extension du fichier ne causerait pas de problèmes
         return saveFile();
     }
-
 ?>
