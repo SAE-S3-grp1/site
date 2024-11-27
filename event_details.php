@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="styles/event_details_style.css">
 
 </head>
-<body>
+<body class="body_margin">
 <?php
     require_once 'header.php';
 

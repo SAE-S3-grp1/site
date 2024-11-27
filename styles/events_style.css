@@ -2,10 +2,13 @@
 section{
     height: fit-content;
 }
-h1{
-    margin-left: 5vw;
-    font-size: 3em;
-    word-spacing: 25px;
+H1 {
+    margin-left: 2vw;
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    line-height: 100px;
+    font-weight: 500;
+    font-family: "Koulen", sans-serif;
 }
 /*********************
 ******  EVENTS  ******
