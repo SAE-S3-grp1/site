@@ -26,6 +26,7 @@
 <?php 
 require_once "header.php" ;
 require_once 'database.php';
+require_once 'files_save.php';
 
 // Connexion à la base de donnees
 $db = new DB();
@@ -115,7 +116,7 @@ $isLoggedIn = isset($_SESSION["userid"]);
     ?>
 
 
- <!-- Formulaire permettant à l'utilisateur de modifier son mot de passe-->
+<!-- Formulaire permettant à l'utilisateur de modifier son mot de passe-->
  <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mdp'], $_POST['newMdp'], $_POST['newMdpVerif'])) {
         $currentPassword = htmlspecialchars(trim($_POST['mdp']));
@@ -157,7 +158,28 @@ $isLoggedIn = isset($_SESSION["userid"]);
     }
     ?>
 
+<!-- Formulaire permettant de modifier la photo de profil de l'utilisateur-->
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Appelle saveImage() pour traiter l'image
+    $fileName = saveImage();
 
+    if ($fileName !== null) {
+        // Met à jour la base de données avec le nom du fichier
+        $db->query(
+            "UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?",
+            "si",
+            [$fileName, $_SESSION['userid']]
+            );
+
+        // Recharge la page pour afficher la nouvelle image
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    } else {
+        echo "<p>Échec de la mise à jour. Veuillez vérifier le fichier envoyé.</p>";
+    }
+}
+?>
 
 
 
@@ -199,7 +221,23 @@ if (isset($_SESSION['message'])) {
             ?>
                 <img src="/api/files/<?php echo $infoUser[0]['pp_membre'];?>" alt="Photo de profil de l'utilisateur"/>
             </div>
-            <button type="submit"><img src=assets/edit_logo.png alt="Logo editer la photo de profil"/></button>
+
+
+            <!-------------->
+            <form method="POST" enctype="multipart/form-data">
+                <!-- Champ de fichier caché -->
+                <input type="file" id="profilePictureInput" name="file" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="this.form.submit()">
+
+                <!-- Bouton qui déclenche l'ouverture de l'explorateur -->
+                <button type="button" onclick="document.getElementById('profilePictureInput').click()">
+                    <img src="assets/edit_logo.png" alt="Icone éditer la photo de profil" />
+                </button>
+            </form>
+
+            <!-------------->
+
+
+
         </div>
         <div>
             <p><?php echo $infoUser[0]['xp_membre'];?></p>
