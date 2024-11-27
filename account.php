@@ -62,6 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fileName = saveImage();
 
     if ($fileName !== null) {
+
+        // Suppression de l'ancienne image si elle existe
+        if (!empty($infoUser[0]['pp_membre'])) {
+            deleteFile($infoUser[0]['pp_membre']); 
+        }
+
         // Met à jour la base de données avec le nom du fichier
         $db->query(
             "UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?",
@@ -69,12 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             [$fileName, $_SESSION['userid']]
             );
 
-        // Recharge la page pour afficher la nouvelle image
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
+            $_SESSION['message'] = "Mise à jour de la photo de profil réussie !";
+            $_SESSION['message_type'] = "success";
     } else {
-        echo "<p>Échec de la mise à jour. Veuillez vérifier le fichier envoyé.</p>";
+        $_SESSION['message'] = "Erreur : veuillez vérifier le fichier envoyé.";
+        $_SESSION['message_type'] = "error";
     }
+    // Recharge la page pour afficher la nouvelle image
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
 }
 ?>
 
