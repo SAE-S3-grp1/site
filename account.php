@@ -344,31 +344,22 @@ if (isset($_SESSION['message'])) {
 $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
 ?>
 
-    <h2>Historique des achats</h2>
-
-    <!-- Bouton pour afficher tout ou afficher moins -->
-    <form method="GET" action="">
-        <?php if ($viewAll): ?>
-            <button type="submit" name="viewAll" value="0">Afficher moins</button>
-        <?php else: ?>
-            <button type="submit" name="viewAll" value="1">Afficher tout</button>
-        <?php endif; ?>
-    </form>
+    <h2>MES ACHATS</h2>
 
     <?php
     // Préparer la requête SQL avec ou sans LIMIT
     $sql = "
         SELECT type_transaction, element, quantite, montant, mode_paiement, date_transaction, 
         CASE 
-        WHEN recupere = 1 THEN 'Oui'
-        ELSE 'Non'
-        END AS recupere 
+        WHEN recupere = 1 THEN 'Récupéré'
+        ELSE 'Non récupéré'
+        END AS statut 
         FROM HISTORIQUE_COMPLET WHERE id_membre=? ORDER BY date_transaction DESC";
 
 
     // Ajouter LIMIT si "viewAll" n'est pas activé
     if (!$viewAll) {
-        $sql .= " LIMIT 1";
+        $sql .= " LIMIT 3";
     }
 
     // Exécuter la requête
@@ -380,9 +371,18 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
 
     ?>
 
-    <!--Affichage du tableau-->
+    <!--Zone du tableau-->
 
     <div id=historique-achats>
+
+        <!-- Bouton pour afficher tout ou afficher moins -->
+        <form method="GET" action="" id="viewAll-form">
+            <?php if ($viewAll): ?>
+                <button type="submit" name="viewAll" value="0">Afficher moins</button>
+            <?php else: ?>
+                <button type="submit" name="viewAll" value="1">Afficher tout</button>
+            <?php endif; ?>
+         </form>
 
         <?php
         if (!empty($historiqueAchats)): ?>
@@ -395,7 +395,7 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
                     <th>Quantité</th>
                     <th>Prix</th>
                     <th>Mode de paiement</th>
-                    <th>Récupéré</th>
+                    <th>Statut</th>
                 </tr>
             </thead>
             <tbody>
@@ -407,7 +407,7 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
                         <td><?php echo htmlspecialchars($achat['quantite']); ?></td>
                         <td><?php echo htmlspecialchars(number_format($achat['montant'], 2, ',', ' ')) . " €"; ?></td>
                         <td><?php echo htmlspecialchars($achat['mode_paiement']); ?></td>
-                        <td><?php echo htmlspecialchars($achat['recupere']); ?></td>
+                        <td><?php echo htmlspecialchars($achat['statut']); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

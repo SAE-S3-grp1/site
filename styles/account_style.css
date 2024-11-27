@@ -21,6 +21,7 @@ H2 {
     background-color: rgb(23, 23, 23);
     margin-top: 80px;
     margin-bottom: 60px;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
 }
 
 #account-generalInfo div:first-of-type {
@@ -118,6 +119,7 @@ H2 {
     margin-bottom: 60px;
     padding-left: 5vh;
     padding-right: 5vh;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
 }
 
 #account-personalInfo-form button{
@@ -196,6 +198,7 @@ H2 {
     margin-bottom: 60px;
     padding-left: 5vh;
     padding-right: 5vh;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
 
 }
 
@@ -258,7 +261,7 @@ H2 {
     height: 6vh;
     align-self: center;
     margin: auto;
-    margin-bottom: 8vh;
+    margin-bottom: 11.69vh;
 }
 
 #buttons-section button{
@@ -363,59 +366,76 @@ H2 {
 ****** MES ACHATS ******
 ************************/
 
-/* Style global pour la section */
 #historique-achats {
-    background-color: #1a1a1a; /* Fond sombre */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre légère */
-    color: white; /* Couleur du texte */
-    max-width: 800px;
+    width: 60%;
     margin: auto;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
+    color: white;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
 }
 
-/* Style pour le tableau */
-#tab-historique-achats {
+
+#historique-achats table {
     width: 100%;
-    border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    border-radius: 15px;
+    background-color: #1E1E1E;
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 10px;
+    overflow: hidden;
 }
 
-/* Style pour l'en-tête du tableau */
-#tab-historique-achats th {
-    background-color: #333; /* Fond des en-têtes */
-    color: white; /* Texte blanc */
-    text-align: left; /* Texte aligné à gauche */
-    padding: 10px;
+#historique-achats table thead {
+    border-bottom: 20px solid #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#historique-achats table th {
+    background-color: #1E1E1E;
+    color:white;
+    padding: 20px;
     font-weight: bold;
-    border-bottom: 2px solid #555;
+    text-align: center;
+    font-size: 1.25em;
 }
 
-/* Style pour les lignes de données */
-#tab-historique-achats td {
+#historique-achats table td {
     padding: 10px;
-    border-bottom: 1px solid #444; /* Ligne de séparation entre les lignes */
-    color: #e6e6e6; /* Texte légèrement gris pour contraster */
+    color: white;
 }
 
-/* Alternance de couleur pour les lignes */
-#tab-historique-achats tr:nth-child(even) {
-    background-color: #2a2a2a; /* Gris foncé pour les lignes paires */
+#historique-achats table tbody tr {
+    text-align: center;
 }
 
-/* Style pour les bordures */
-#tab-historique-achats th, #tab-historique-achats td {
-    border-right: 1px solid #444; /* Bordure entre colonnes */
+#historique-achats table tbody tr:not(:last-of-type) {
+    border-bottom: 1px solid white;
 }
 
-#tab-historique-achats th:last-child, #tab-historique-achats td:last-child {
-    border-right: none; /* Pas de bordure pour la dernière colonne */
+/* Style du bouton */
+
+#viewAll-form{
+    align-self: flex-end;
+    background-color: none;
 }
 
-/* Style des boutons */
-form button {
-    color: white; /* Texte blanc */
+#viewAll-form button {
+    background: none;
     border: none;
+    color: white;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 1em;
+    opacity: 80%;
+}
+
+
+#viewAll-form button:hover {
+    opacity: 100%;
 }
