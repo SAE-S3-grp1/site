@@ -75,7 +75,7 @@
     <div class="my-medias">
         <?php
             $medias = $db->select(
-                "SELECT url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT 5;",
+                "SELECT url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT 4;",
                 "ii",
                 [$_SESSION["userid"], $eventid]
             );
@@ -84,15 +84,24 @@
         <?php endforeach;?>
 
         <form id="add-media" action="add_media.php" method="post" enctype="multipart/form-data">
-            <label for="file-picker">
-                <img src="/assets/add_media.png" alt="Ajouter un média">
-            </label>
-            <input type="hidden" name="eventid" value="<?php echo $eventid?>">
-            <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
+                <label for="file-picker">
+                    <img src="/assets/add_media.png" alt="Ajouter un média">
+                </label>
+                <input type="hidden" name="eventid" value="<?php echo $eventid?>">
+                <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
 
-            <input type="file" id="file-picker" name="file" accept="image/jpeg, image/png, image/webp" hidden>
-            <button type="submit" style="display:none;">Envoyer</button>
+                <input type="file" id="file-picker" name="file" accept="image/jpeg, image/png, image/webp" hidden>
+                <button type="submit" style="display:none;">Envoyer</button>
         </form>
+
+        <form id="open-gallery" action="my_gallery.php" method="get">
+            <label for="open-gallery-button">
+                <img src="/assets/explore_gallery.png" alt="Voir ma galerie entière">
+            </label>
+            <input type="hidden" name="eventid" value="<?php echo $eventid ?>">
+            <button id="open-gallery-button" type="submit" style="display:none;">Envoyer</button>
+        </form>
+
 
 
     </div>
@@ -107,5 +116,8 @@
 
 <?php require_once 'footer.php';?>
 <script src="/scripts/open_media.js"></script>
+<script src="/scripts/add_media.js"></script>
+<script src="/scripts/open_gallery.js"></script>
+
 </body>
 </html>
