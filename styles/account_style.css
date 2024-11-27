@@ -3,7 +3,11 @@
 ************************/
 
 H2 {
-    font-size: 60px;
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    line-height: 100px;
+    font-weight: 500;
+    font-family: "Koulen", sans-serif;
 }
 
 
