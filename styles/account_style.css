@@ -39,6 +39,7 @@ H2 {
     overflow: hidden;
     border-radius: 100px;
     border: 4px solid rgb(119, 241, 190);
+    cursor: pointer;
 }
 
 #cadre-pp img {
@@ -47,16 +48,18 @@ H2 {
     object-fit: cover;
 }
 
-#account-generalInfo button {
+#account-generalInfo form {
     display: flex;
     flex-direction: row;
-    all: unset;
-    cursor: pointer;
     align-items: flex-end;
-    align-self: flex-end;
 }
 
-#account-generalInfo button img {
+#account-generalInfo form button {
+    all: unset;
+    cursor: pointer;
+}
+
+#account-generalInfo form button img {
     width: 3vh;
     height: 3vh;
 }
@@ -374,7 +377,6 @@ H2 {
     border-radius: 15px;
     box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
     color: white;
-    max-width: 800px;
     display: flex;
     flex-direction: column;
     margin-top: 80px;

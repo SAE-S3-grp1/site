@@ -55,9 +55,31 @@ $isLoggedIn = isset($_SESSION["userid"]);
     [$_SESSION['userid']]);
 ?>
 
+<!-- Formulaire permettant de modifier la photo de profil de l'utilisateur-->
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Appelle saveImage() pour traiter l'image
+    $fileName = saveImage();
 
- <!-- Formulaire contenant les données personnelles de l'utilisateur -->
- <?php
+    if ($fileName !== null) {
+        // Met à jour la base de données avec le nom du fichier
+        $db->query(
+            "UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?",
+            "si",
+            [$fileName, $_SESSION['userid']]
+            );
+
+        // Recharge la page pour afficher la nouvelle image
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    } else {
+        echo "<p>Échec de la mise à jour. Veuillez vérifier le fichier envoyé.</p>";
+    }
+}
+?>
+
+<!-- Formulaire contenant les données personnelles de l'utilisateur -->
+<?php
     // Traitement du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['lastName'], $_POST['mail'])) {
         // Charger les informations actuelles de l'utilisateur depuis la base de données
@@ -117,7 +139,7 @@ $isLoggedIn = isset($_SESSION["userid"]);
 
 
 <!-- Formulaire permettant à l'utilisateur de modifier son mot de passe-->
- <?php
+<?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mdp'], $_POST['newMdp'], $_POST['newMdpVerif'])) {
         $currentPassword = htmlspecialchars(trim($_POST['mdp']));
         $newPassword = htmlspecialchars(trim($_POST['newMdp']));
@@ -156,29 +178,6 @@ $isLoggedIn = isset($_SESSION["userid"]);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     }
-    ?>
-
-<!-- Formulaire permettant de modifier la photo de profil de l'utilisateur-->
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Appelle saveImage() pour traiter l'image
-    $fileName = saveImage();
-
-    if ($fileName !== null) {
-        // Met à jour la base de données avec le nom du fichier
-        $db->query(
-            "UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?",
-            "si",
-            [$fileName, $_SESSION['userid']]
-            );
-
-        // Recharge la page pour afficher la nouvelle image
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    } else {
-        echo "<p>Échec de la mise à jour. Veuillez vérifier le fichier envoyé.</p>";
-    }
-}
 ?>
 
 
@@ -214,46 +213,36 @@ if (isset($_SESSION['message'])) {
 
     <!-- Partie contenant les informations générales sur le compte de l'utilisateur -->
     <div id="account-generalInfo">
-        <div>
-            <div id="cadre-pp">
+    <div>
+        <form method="POST" enctype="multipart/form-data" id="pp-form">
 
-            <?php
-            ?>
-                <img src="/api/files/<?php echo $infoUser[0]['pp_membre'];?>" alt="Photo de profil de l'utilisateur"/>
-            </div>
+            <label id="cadre-pp" for="profilePictureInput">
+                <img src="/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
+            </label>
 
+            <input type="file" id="profilePictureInput" name="file" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="this.form.submit()">
 
-            <!-------------->
-            <form method="POST" enctype="multipart/form-data">
-                <!-- Champ de fichier caché -->
-                <input type="file" id="profilePictureInput" name="file" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="this.form.submit()">
-
-                <!-- Bouton qui déclenche l'ouverture de l'explorateur -->
-                <button type="button" onclick="document.getElementById('profilePictureInput').click()">
-                    <img src="assets/edit_logo.png" alt="Icone éditer la photo de profil" />
-                </button>
-            </form>
-
-            <!-------------->
-
-
-
-        </div>
-        <div>
-            <p><?php echo $infoUser[0]['xp_membre'];?></p>
-            <p>XP</p>
-        </div>
-        <div>
-            <?php if (empty($infoUser[0]['nom_grade'])): ?>
+            <button type="button" id="edit-icon" onclick="document.getElementById('profilePictureInput').click()">
+                <img src="assets/edit_logo.png" alt="Icone éditer la photo de profil" />
+            </button>
+        </form>
+    </div>
+    <div>
+        <p><?php echo $infoUser[0]['xp_membre']; ?></p>
+        <p>XP</p>
+    </div>
+    <div>
+        <?php if (empty($infoUser[0]['nom_grade'])): ?>
             <p>Vous n'avez pas de grade</p>
-            <?php else: ?>
+        <?php else: ?>
             <p><?php echo $infoUser[0]['nom_grade']; ?></p>
             <div id="cadre-grade">
-                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur"/>
+                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
             </div>
-            <?php endif; ?>
-        </div>
+        <?php endif; ?>
     </div>
+</div>
+
 
 
 
