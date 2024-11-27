@@ -41,22 +41,8 @@
 <body>
 <?php
     require_once 'header.php';
-    require_once 'files_save.php';
 
     $isLoggedIn = isset($_SESSION["userid"]);
-
-    $date = new DateTime();
-    $sqlDate = $date->format('Y-m-d H:i:s');
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
-        saveImage();
-        $db->query(
-            "INSERT INTO MEDIA VALUES (NULL, ?, ?, ?, ?);",
-            "ssii",
-            [,$sqlDate,$_SESSION["userid"], $eventid]
-        );
-    }
-
 ?>
 <section class="event-details">
     <img src="api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
@@ -97,11 +83,14 @@
                 <img src="api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
         <?php endforeach;?>
 
-        <form id="add-media" action="" method="post" enctype="multipart/form-data">
+        <form id="add-media" action="add_media.php" method="post" enctype="multipart/form-data">
             <label for="file-picker">
                 <img src="/assets/add_media.png" alt="Ajouter un média">
             </label>
-            <input type="file" id="file-picker" name="file" accept=".png, .jpeg" hidden>
+            <input type="hidden" name="eventid" value="<?php echo $eventid?>">
+            <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
+
+            <input type="file" id="file-picker" name="file" accept="image/jpeg, image/png, image/webp" hidden>
             <button type="submit" style="display:none;">Envoyer</button>
         </form>
 
