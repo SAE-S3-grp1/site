@@ -12,8 +12,6 @@ ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
-$DB = new DB();
-
 $methode = $_SERVER['REQUEST_METHOD'];
 
 
