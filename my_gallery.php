@@ -63,7 +63,7 @@
            <?php
             
             $medias = $db->select(
-                "SELECT url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT ?;",
+                "SELECT id_media, url_media FROM `MEDIA` WHERE id_membre = ? and id_evenement = ? ORDER by date_media ASC LIMIT ?;",
                 "iii",
                 [$userid, $eventid, $limit]
                 );
@@ -72,7 +72,17 @@
                 <div class="media-container">
                     <img src="api/files/<?php echo trim($img['url_media']); ?>" alt="Image Personnelle de l'événement">
                     <div class="delete-icon">
-                        <img src="assets/delete_icon.png" alt="poubelle">
+
+                        <form class="delete-media" action="delete_media.php" method="post">
+                            <label for="del-media">
+                                <img src="assets/delete_icon.png" alt="poubelle">
+                            </label>
+                            <input type="hidden" name="mediaid" value="<?php echo $img['id_media']?>">
+                            <input type="hidden" name="eventid" value="<?php echo $eventid?>">
+
+                            <button type="submit" style="display:none;">Envoyer</button>
+                        </form>
+
                     </div>
                 </div>
             <?php endforeach;?>
@@ -86,6 +96,8 @@
 
 <script src="/scripts/open_media.js"></script>
 <script src="/scripts/add_media.js"></script>
+<script src="/scripts/delete_media.js"></script>
+
 
 </body>
 </html>

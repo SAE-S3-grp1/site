@@ -117,5 +117,7 @@
 <?php require_once 'footer.php';?>
 <script src="/scripts/open_media.js"></script>
 <script src="/scripts/add_media.js"></script>
+<script src="/scripts/open_gallery.js"></script>
+
 </body>
 </html>

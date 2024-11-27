@@ -100,9 +100,8 @@ h1{
 
     border-radius: 0;
     border: none;
+    cursor: crosshair;
 }
-
-
 
 
 #add-media{
@@ -112,5 +111,7 @@ h1{
 #add-media img{
     object-fit: contain;
     cursor: pointer;
+    border: none;
+
 }
 
