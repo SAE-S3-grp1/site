@@ -1,3 +1,4 @@
+<!-- HEADER -->
 <footer>
     <div>
         <a href="contact.php">Nous contacter</a>

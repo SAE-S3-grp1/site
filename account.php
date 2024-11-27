@@ -364,7 +364,7 @@ if (isset($_SESSION['message'])) {
 
 
 <!-- PARTIE MES ACHATS -->
-<section>
+<section id="section-mesAchats">
 
 <?php
 // Vérifie si "viewAll" est défini et vaut "1" dans l'URL
@@ -403,7 +403,7 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
     <div id=historique-achats>
 
         <!-- Bouton pour afficher tout ou afficher moins -->
-        <form method="GET" action="" id="viewAll-form">
+        <form method="GET" action="#section-mesAchats" id="viewAll-form">
             <?php if ($viewAll): ?>
                 <button type="submit" name="viewAll" value="0">Afficher moins</button>
             <?php else: ?>
@@ -446,7 +446,7 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
 </section>
 
 
-<!-- FOOTER -->
+
 <?php require_once "footer.php" ?>
 </body>
 </html>
