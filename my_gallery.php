@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <title><?php echo $event['nom_evenement']?></title>
+    <title>Ma Gallerie</title>
     
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
@@ -41,11 +41,22 @@
                 exit;
             }
         }
+
+        $event = $db->select(
+            "SELECT `nom_evenement` FROM EVENEMENT WHERE id_evenement = ?",
+            "i",
+            [$eventid]
+        )[0];
     ?>
 
 
 <section class="user-gallery">
+
+    <a href="event_details.php?id=<?php echo "$eventid";?>" class="back-arrow">
+        &#8592;<span>Retour</span>
+    </a>
     <h1>MA GALLERIE</h1>
+    <h2><?php echo $event['nom_evenement']?></h2>
 
     <div class="my-medias">
 

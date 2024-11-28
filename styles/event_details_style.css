@@ -1,5 +1,13 @@
 section{
-    margin-top: 6vw;
+    margin-top: 4vh;
+}
+body{
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+footer{
+    margin-left: -5vw;
+    margin-right: -5vw;
 }
 
 /*********************
