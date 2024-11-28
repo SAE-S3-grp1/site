@@ -144,7 +144,7 @@ h1{
 }
 
 .timeline-marker.today {
-    background-color: rgb(64, 180, 141);; /* Marqueur pour aujourd'hui */
+    background-color: rgb(64, 180, 141); /* Marqueur pour aujourd'hui */
     /*TODO VOIR LA COULEUR*/
 }
 

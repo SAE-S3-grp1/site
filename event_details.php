@@ -4,6 +4,8 @@
         require_once 'database.php';
         $db = new DB();
 
+        $show = 10;
+
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             $eventid = $_GET['id'];
             $event = $db->select(
@@ -17,6 +19,11 @@
                 exit;
             }
             $event = $event[0];
+
+            if (isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] >= 10) {
+                $show = (int) $_GET['show'];
+            }
+
         }else{
             header("Location: index.php");
             exit;
@@ -109,7 +116,36 @@
     <h3>Collection Generale</h3>
 
     <div class="general-medias">
+
+    <?php $medias = $db->select(
+                "SELECT url_media FROM `MEDIA` WHERE id_evenement = ? ORDER by date_media ASC LIMIT ? ;",
+                "ii",
+                [$eventid, $show]
+            );
+            foreach($medias as $media => $img):?>
+                <img src="api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
+        <?php endforeach;?>
+        
+
     </div>
+    <div class="s    <?php var_dump($show)?>
+how-more">
+        <form action="" method="GET" style="display: inline;">
+            <input type="hidden" name="id" value="<?php echo $eventid?>">
+            <input type="hidden" name="show" value="<?php echo $show + 10?>">
+
+            <button type="submit">Voir plus</button>
+        </form>
+
+        <form action="" method="GET" style="display: inline;">
+            <input type="hidden" name="id" value="<?php echo $eventid?>">
+            <?php if($show >= 20): ?>
+                <input type="hidden" name="show" value="<?php echo $show - 10?>">
+            <?php endif;?>
+            <button type="submit">Voir Moins</button>
+        </form>
+    </div>
+
 
 </section>
 

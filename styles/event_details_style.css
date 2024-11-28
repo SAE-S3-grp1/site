@@ -10,14 +10,11 @@ section{
     margin-top: 6vw;
 }
 
-
 /*********************
 *******  EVENT  ******
 **********************/
 
 .event-details{
-    margin-top: 3vw;
-
     position: relative;
     width: 100%;
 }
@@ -130,6 +127,8 @@ section{
     font-family: "Koulen", sans-serif;
     font-size: 2.5em;
     letter-spacing: 15px;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
 }
 
 
@@ -139,6 +138,7 @@ section{
     
     align-self: center;
     margin: 2vh auto;
+    margin-bottom: 5vh;
 
     padding: 10px;
 
@@ -220,4 +220,91 @@ section{
     width: 100%;
     height: 100%;
     aspect-ratio: 1/1;
+}
+
+
+.general-medias{
+    width: 100%;
+    height: fit-content; 
+
+    display: flex;
+    flex-wrap: wrap;    
+
+    align-items: center;
+    
+    margin: 2vh auto;
+    padding: 10px;
+    justify-content: space-evenly; 
+    gap: 2vw;
+
+}
+
+.general-medias > *{
+    margin: auto;
+    margin-bottom: 30px;
+
+    aspect-ratio: 1/1;
+
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+.general-medias img{
+
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+
+    width: 300px;    
+
+    height: 300px;
+    border-radius: 15px;
+    aspect-ratio: 1/1;
+
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.general-medias > *:hover{
+    transform: scale(1.05);
+}
+
+.show-more {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: auto 5vw;
+    gap: 30px;
+}
+
+.show-more form:last-child {
+    margin-right: 0;
+}
+
+.show-more button {
+    width: 125px;
+    background-color: rgb(38, 100, 49);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.show-more form:last-child button {
+    background-color: darkred;
+}
+
+.show-more button:hover {
+    background-color: rgb(64, 180, 141);
+}
+
+.show-more form:last-child button:hover {
+    background-color: red;
+}
+
+.show-more button:active {
+    transform: scale(0.98);
 }

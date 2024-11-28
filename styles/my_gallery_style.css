@@ -26,7 +26,8 @@ h1{
     height: fit-content; 
 
     display: flex;
-    flex-wrap: wrap;    
+    flex-wrap: wrap;   
+    justify-content: space-evenly; 
 
     align-items: center;
     

@@ -24,9 +24,9 @@
     $isLoggedIn = isset($_SESSION["userid"]);
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] > 3) {
-        $show_number = 3 + (int) $_GET['show'];
+        $show_number = 8 + (int) $_GET['show'];
     } else {
-        $show_number = 3;
+        $show_number = 8;
     }
 ?>
 <h1>LES EVENEMENTS</h1>
