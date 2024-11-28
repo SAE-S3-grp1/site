@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="styles/event_details_style.css">
 
 </head>
-<body class="body_margin">
+<body>
 <?php
     require_once 'header.php';
 
@@ -128,8 +128,7 @@
         
 
     </div>
-    <div class="s    <?php var_dump($show)?>
-how-more">
+    <div class="show-more">
         <form action="" method="GET" style="display: inline;">
             <input type="hidden" name="id" value="<?php echo $eventid?>">
             <input type="hidden" name="show" value="<?php echo $show + 10?>">
