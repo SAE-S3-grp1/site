@@ -1,13 +1,16 @@
 section {
   height: fit-content;
 }
-H1 {
+h1 {
   margin-left: 2vw;
   font-size: 4.5em;
   letter-spacing: 15px;
   line-height: 100px;
   font-weight: 500;
   font-family: "Koulen", sans-serif;
+}
+footer{
+    margin-top: 0;
 }
 .event-subscribed {
   background-color: rgb(38, 100, 49);
@@ -18,19 +21,27 @@ H1 {
 .event-full {
   background-color: #5d5757;
 }
+
 .events-display {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  gap: 8vh;
-  align-items: flex-end;
-  align-self: center;
-  margin: auto;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-}
+    width: fit-content;
+
+    margin: auto;
+    margin-bottom: 5vh;
+
+    padding: 20px;
+
+    height: fit-content; /* Limite la hauteur pour permettre le défilement */
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 8vh;
+    align-items: flex-end;
+    align-self: center;
+
+    position: relative;
+  }
+  
 .event {
   display: flex;
   justify-content: space-between;
@@ -47,10 +58,12 @@ H1 {
   overflow: hidden;
   cursor: pointer;
   position: relative;
+  transition: all 0.3s ease-in-out;
+
 }
 .event:hover {
   background-color: #333333;
-  transform: scale(1.02);
+  transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
 }
@@ -124,7 +137,7 @@ H1 {
 
 .show-more {
     position: relative;
-    margin: 10vh auto 5vh auto;
+    margin: 3vh auto 0 auto;
     left: 5vw;
 
     opacity: 80%;
@@ -139,7 +152,7 @@ H1 {
 
     color: rgb(119, 241, 190);
     border-radius: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
 
     transition: all 0.3s ease-in-out;
     text-decoration: none;

@@ -19,7 +19,7 @@
     require_once 'database.php';
     $db = new DB();
     $isLoggedIn = isset($_SESSION["userid"]);
-    $show = 2;
+    $show = 5;
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['show']) && is_numeric($_GET['show'])) {
         $show = (int) $_GET['show'];
@@ -27,7 +27,7 @@
 ?>
 <h1>LES EVENEMENTS</h1>
 <section>
-    <a class="show-more" href="events.php?show=<?php echo $show + 5; ?>">Voir Plus d'Anciens Evenements</a>
+    <a class="show-more" href="events.php?show= <?php echo $show + 10?>">Voir plus loin dans le passé</a>
     <div class="events-display">
                 <?php
                     $date = getdate();
@@ -48,6 +48,8 @@
                     );
                     $events_to_display = array_merge($passed_events, $events_to_display);
 
+                $closest_event_id = "";
+
                 foreach ($events_to_display as $event):
                     $eventid = $event["id_evenement"];
                     $event_date = substr($event['date_evenement'], 0, 10);
@@ -64,12 +66,16 @@
                     } elseif ($event_date == $current_date) {
                         $date_pin_class = "today";
                         $date_pin_label = "Aujourd'hui";
+                        $closest_event_id = "closest-event"; // Marquer l'événement du jour comme le plus proche
                     } else {
                         $date_pin_class = "upcoming";
                         $date_pin_label = "A venir";
+                        if (empty($closest_event_id)) {
+                            $closest_event_id = "closest-event"; // Marquer le premier événement futur comme le plus proche
+                        }
                     }
                     ?>
-                    <div class="event-box <?php echo "$other_classes";?>">
+                    <div class="event-box <?php echo "$other_classes";?>" id="<?php echo $closest_event_id ?>">
                         <div class="timeline-event">
                             <h4> <?php echo ucwords($joursFr[$event_date_info['wday']]." ".$event_date_info["mday"]." ".$moisFr[$event_date_info['mon']]);?></h4>
                             <div class="vertical-line"></div>
@@ -121,10 +127,12 @@
                             </h4>
                         </div>
                     </div>
+                    <?php $closest_event_id = "";?>
                 <?php endforeach; ?>
         </div>
 </section>
     <?php require_once 'footer.php';?>
     <script src="/scripts/event_details_redirect.js"></script>
+    <script src="/scripts/scroll_to_closest_event.js"></script>
 </body>
 </html>
