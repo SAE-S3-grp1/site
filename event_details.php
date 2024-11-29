@@ -48,8 +48,6 @@
 <body>
 <?php
     require_once 'header.php';
-    var_dump($show);
-
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
 <section class="event-details">
@@ -110,7 +108,7 @@
             <button id="open-gallery-button" type="submit" style="display:none;">Envoyer</button>
         </form>
 
-
+ 
 
     </div>
     <?php endif;?>
