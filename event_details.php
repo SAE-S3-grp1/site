@@ -4,7 +4,7 @@
         require_once 'database.php';
         $db = new DB();
 
-        $show = 10;
+        $show = 8;
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             $eventid = $_GET['id'];
@@ -20,7 +20,7 @@
             }
             $event = $event[0];
 
-            if (isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show'] >= 10) {
+            if (isset($_GET['show']) && is_numeric($_GET['show']) && $_GET['show']) {
                 $show = (int) $_GET['show'];
             }
 
@@ -48,6 +48,7 @@
 <body>
 <?php
     require_once 'header.php';
+    var_dump($show);
 
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
@@ -131,7 +132,7 @@
     <div class="show-more">
         <form action="" method="GET" style="display: inline;">
             <input type="hidden" name="id" value="<?php echo $eventid?>">
-            <input type="hidden" name="show" value="<?php echo $show + 10?>">
+            <input type="hidden" name="show" value="<?php echo $show + 8?>">
 
             <button type="submit">Voir plus</button>
         </form>

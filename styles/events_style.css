@@ -9,9 +9,7 @@ h1 {
   font-weight: 500;
   font-family: "Koulen", sans-serif;
 }
-footer{
-    margin-top: 0;
-}
+
 .event-subscribed {
   background-color: rgb(38, 100, 49);
 }
@@ -123,6 +121,11 @@ footer{
 .timeline-marker.today {
   background-color: rgb(64, 180, 141);
 }
+
+.timeline-marker.today + p {
+    font-weight: 900;
+}
+
 .timeline-marker.upcoming {
   background-color: rgb(38, 100, 49);
 }
