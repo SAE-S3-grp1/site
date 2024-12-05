@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title>Accueil</title>
-    
+
     <link rel="stylesheet" href="styles/index_style.css">
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
 
-
-
 </head>
+
 <body id="index" class="body_margin">
+
     <?php
      require_once 'header.php';
      require_once 'database.php';
@@ -24,37 +25,41 @@
      $isLoggedIn = isset($_SESSION["userid"]);
 
     ?>
-    
-    <!--H1 A METTRE -->
-    <section>
-        <h2 class="titre_vertical"> ADIIL</h2>
-        <div id="index_carrousel">
-            <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
-        </div>
-    </section>
+    <div id="page-container">
+        <div id="firefly-container"></div>
 
-    <section>
-        <div class="paragraphes">
-            <p>
-                <b class="underline">L'ADIIL</b>, ou l'<b>Association</b> du <b>Département</b> <b>Informatique</b> de l'<b>IUT</b> de <b>Laval</b>, 
-                est une organisation étudiante dédiée à créer un environnement propice à l'épanouissement dans le campus. 
-                Participer a des évèvements, et plus globalement a la vie du département.
-            </p>
-            <p>
-                L'ADIIL, véritable moteur de la vie étudiante à l'IUT de Laval, 
-                offre un cadre propice à l'épanouissement académique et social des étudiants en informatique. 
-                En participant à ses événements variés, les étudiants enrichissent leur expérience universitaire,
-                tout en renforçant les liens au sein de la communauté.
-            </p>
-        </div>
-        <h2 class="titre_vertical">L'ASSO</h2>
-    </section>
+        <!--H1 A METTRE -->
+        <section>
+            <h2 class="titre_vertical"> ADIIL</h2>
+            <div id="index_carrousel">
+                <img src="assets/photo_bureau_ADIIL.png" alt="Carrousel ADIIL">
+            </div>
+        </section>
 
-    <section>
-        <h2 class="titre_vertical">SCORES</h2>
+        <section>
+            <div class="paragraphes">
+                <p>
+                    <b class="underline">L'ADIIL</b>, ou l'<b>Association</b> du <b>Département</b> <b>Informatique</b>
+                    de l'<b>IUT</b> de <b>Laval</b>,
+                    est une organisation étudiante dédiée à créer un environnement propice à l'épanouissement dans le
+                    campus.
+                    Participer a des évèvements, et plus globalement a la vie du département.
+                </p>
+                <p>
+                    L'ADIIL, véritable moteur de la vie étudiante à l'IUT de Laval,
+                    offre un cadre propice à l'épanouissement académique et social des étudiants en informatique.
+                    En participant à ses événements variés, les étudiants enrichissent leur expérience universitaire,
+                    tout en renforçant les liens au sein de la communauté.
+                </p>
+            </div>
+            <h2 class="titre_vertical">L'ASSO</h2>
+        </section>
 
-        <div id="podium">
-            <?php
+        <section>
+            <h2 class="titre_vertical">SCORES</h2>
+
+            <div id="podium">
+                <?php
                 $podium = $db->select(
                     "SELECT prenom_membre, xp_membre, pp_membre FROM MEMBRE ORDER BY xp_membre DESC LIMIT 3;"
                 );
@@ -66,15 +71,16 @@
                     <h3>#0<?php echo $member_number?></h3>
                     <h4><?php echo $pod['prenom_membre'];?></h4>
                     <div>
-                        <img src="/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture" class="profile_picture">
+                        <img src="/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
+                            class="profile_picture">
                         <?php echo $pod['xp_membre'];?> xp
                     </div>
                 </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
+                <?php endforeach; ?>
+            </div>
+        </section>
 
-    <section>
+        <section>
             <div class="events-display">
                 <?php
                     $date = getdate();
@@ -88,20 +94,19 @@
                 foreach ($events_to_display as $event):
                     $eventid = $event["id_evenement"];?>
 
-                    <div class="event" event-id="<?php echo $eventid;?>">
-                        <div>
-                            <h2><?php echo $event['nom_evenement'];?></h2>
-                            <?php
+                <div class="event" event-id="<?php echo $eventid;?>">
+                    <div>
+                        <h2><?php echo $event['nom_evenement'];?></h2>
+                        <?php
                                 $moisFr = [1 => 'Janvier', 2 => 'Février', 3 => 'Mars', 4 => 'Avril', 5 => 'Mai', 6 => 'Juin', 7 => 'Juillet', 8 => 'Août', 9 => 'Septembre', 10 => 'Octobre', 11 => 'Novembre', 12 => 'Décembre'];
 
                                 $event_date = substr($event['date_evenement'], 0, 10);
                                 $event_date_info = getdate(strtotime($event_date));
                                 echo ucwords($event_date_info["mday"]." ".$moisFr[$event_date_info['mon']].", ".$event["lieu_evenement"]);
                             ?>
-                        </div>
+                    </div>
 
-                        <h4
-                            <?php
+                    <h4 <?php
                             $isPlaceDisponible = $db->select(
                                 "SELECT (EVENEMENT.places_evenement - (SELECT COUNT(*) FROM INSCRIPTION WHERE INSCRIPTION.id_evenement = EVENEMENT.id_evenement)) > 0 AS isPlaceDisponible FROM EVENEMENT WHERE EVENEMENT.id_evenement = ? ;",
                                 "i",
@@ -133,17 +138,19 @@
 
                             echo "class=\"$event_subscription_color_class\"";
                             ?>>
-                            <?php echo $event_subscription_label;?>
+                        <?php echo $event_subscription_label;?>
 
-                        </h4>
-                    </div>
+                    </h4>
+                </div>
                 <?php endforeach; ?>
                 <h3><a href="events.php">Voir tous les événements</a></h3>
             </div>
             <h2 class="titre_vertical">EVENT</h2>
 
-    </section>
+        </section>
+    </div>
     <?php require_once 'footer.php';?>
     <script src="/scripts/event_details_redirect.js"></script>
 </body>
+
 </html>
