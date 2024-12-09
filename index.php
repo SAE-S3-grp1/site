@@ -26,8 +26,6 @@
 
     ?>
     <div id="page-container">
-        <div id="firefly-container"></div>
-
         <!--H1 A METTRE -->
         <section>
             <h2 class="titre_vertical"> ADIIL</h2>

@@ -67,24 +67,33 @@ footer{
 }
 
 .event-details button{
-    background-color: #4B0082; /* Couleur violette */
-    color: white; /* Texte blanc */
-    font-family: "Inter", sans-serif; /* Police moderne */
-    font-size: 1.2em; /* Taille de texte */
-    font-weight: 500; /* Poids du texte */
-    border: none; /* Supprime la bordure */
-    border-radius: 15px; /* Coins arrondis */
-    padding: 10px 30px; /* Espacement interne */
-    cursor: pointer; /* Curseur pointeur au survol */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Ombre subtile */
-    transition: all 0.3s ease; /* Transition fluide */
+    width: 100%;
+    background-color: #4B0082; 
+    color: white; 
+    font-family: "Inter", sans-serif; 
+    font-size: 1.2em; 
+    font-weight: 500; 
+    border: none; 
+    border-radius: 15px; 
+    padding: 10px 30px; 
+    cursor: pointer; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+    transition: all 0.3s ease;
 }
 
 .event-details button:hover {
-    background-color: #5A0099; /* Couleur légèrement plus claire au survol */
-    transform: scale(1.05); /* Effet de zoom */
+    background-color: #5A0099; 
+    transform: scale(1.05); 
 }
 
+#passed_subscription{
+    background-color: #757a76;
+    cursor: default;
+}
+#passed_subscription:hover {
+    background-color: #757a76; 
+    transform: scale(1.05);
+}
 
 .event-details li{
     display: block;
