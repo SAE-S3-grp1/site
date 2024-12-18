@@ -1,0 +1,66 @@
+/*******************
+****** HEADER ******
+********************/
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    background-color: rgb(23, 23, 23);
+    width: 100%;
+    height: 98px;
+    top:0;
+    right:0;
+    padding-left: 1vw;
+    margin-bottom: 11.69vh;
+    z-index: 999;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+header li {
+    display: inline-block;
+    padding: 10px;
+}
+
+
+header a:not(#accueil){
+    font-family: 'Inter', serif;
+    font-weight: bold;
+    font-size: 1.5em;
+
+    border-radius: 15px;
+    margin-right: 20px;
+    transition-duration: 0.2s;
+    padding: 10px;
+    text-align: center;
+}
+
+header a:hover:not(#accueil){
+    color: rgb(23, 23, 23);    
+    background-color: rgb(119, 241, 190);
+
+}
+
+#accueil {
+    display: flex;
+    align-items: center;
+    padding-left: 1vw;
+}
+
+#accueil img {
+    margin: 0px;
+    width: 160px;
+}
+
+#header_admin{
+    font-size: 15px;
+    color: rgb(119, 241, 190);
+}
+
+
+
