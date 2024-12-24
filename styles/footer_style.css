@@ -12,7 +12,7 @@ footer {
 
     background-color: rgb(23, 23, 23);
 
-    height: 250px; 
+    height: 260px; 
     padding: 35px; 
 
     position: relative;
@@ -48,6 +48,8 @@ footer > h2{
     font-family: "Koulen","Inter", sans-serif;
     width: fit-content;
     margin-top: 25px;
+    margin-bottom: 25px;
+    
 
     writing-mode: vertical-lr;
     text-orientation: upright;
