@@ -87,14 +87,15 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 <H1>LA BOUTIQUE</H1>
 
-<div class="filter-section">
+<div id="filter-section">
     <form method="post">
         <fieldset>
             <legend>Catégories</legend>
             <label><input type="checkbox" name="category[]" value="Sucré" <?= in_array('Sucré', $filters) ? 'checked' : '' ?>> Sucré</label><br>
             <label><input type="checkbox" name="category[]" value="Salé" <?= in_array('Salé', $filters) ? 'checked' : '' ?>> Salé</label><br>
             <label><input type="checkbox" name="category[]" value="Boisson" <?= in_array('Boisson', $filters) ? 'checked' : '' ?>> Boisson</label><br>
-            <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label>
+            <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label><br>
+            <label><input type="checkbox" name="category[]" value="Grade" <?= in_array('Grade', $filters) ? 'checked' : '' ?>> Grade</label>
         </fieldset>
         <fieldset>
             <legend>Trier par</legend>
@@ -110,21 +111,36 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
     </form>
 </div>
 
-<div class="product-list">
-    <?php if (!empty($products)) : ?>
-        <ul>
-            <?php foreach ($products as $product) : ?>
-                <li>
-                    <h3><?= htmlspecialchars($product['nom_article']) ?></h3>
-                    <p>Prix : <?= htmlspecialchars($product['prix_article']) ?> €</p>
-                    <p>Catégorie : <?= htmlspecialchars($product['categorie_article']) ?></p>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else : ?>
-        <p>Aucun produit trouvé pour les critères sélectionnés.</p>
-    <?php endif; ?>
-</div>
+
+
+<?php if (!empty($products)) : ?>
+    <div id="product-list">
+        <?php foreach ($products as $product) : ?>
+                <div id="one-product">
+                    <div>
+                        <img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                        <h3 title="<?= htmlspecialchars($product['nom_article']) ?>">
+                            <?= htmlspecialchars($product['nom_article']) ?>
+                        </h3>
+                        <p>-- Prix : <?= htmlspecialchars($product['prix_article']) ?> € --</p>
+                    </div>
+                    <div>
+                        <p id="stock-status">
+                            <?php if ((int)$product['stock_article'] > 0): ?>
+                                <button id="add-to-cart-button">Ajouter au panier</button>
+                            <?php else: ?>
+                                <button id="out-of-stock">Épuisé</button>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                </div>
+        <?php endforeach; ?>
+    </div>
+<?php else : ?>
+    <p>Aucun produit trouvé pour les critères sélectionnés.</p>
+<?php endif; ?>
+
+
 
 
 <?php require_once "footer.php" ?>
