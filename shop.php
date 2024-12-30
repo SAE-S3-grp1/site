@@ -31,15 +31,16 @@ require_once 'files_save.php';
 // Connexion à la base de donnees
 $db = new DB();
 
-//Gestion des filtres et tris
+//Gestion de la recherche, des filtres et tris
 $filters = [];
 $orderBy = "";
+$searchTerm = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['reset'])) {
-        // Réinitialiser les filtres et tri
         $filters = [];
         $orderBy = "";
+        $searchTerm = "";
     } else {
         if (isset($_POST['category'])) {
             $filters = $_POST['category'];
@@ -47,12 +48,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['sort'])) {
             $orderBy = $_POST['sort'];
         }
+        if (!empty($_POST['search'])) {
+            $searchTerm = $_POST['search'];
+        }
     }
 }
 
 $query = "SELECT * FROM ARTICLE";
 $whereClauses = [];
 $params = [];
+
+
+// Ajout de la recherche par nom
+if (!empty($searchTerm)) {
+    $whereClauses[] = "nom_article LIKE ?";
+    $params[] = '%' . $searchTerm . '%';
+}
+
 
 // Ajout des filtres par catégorie
 if (!empty($filters)) {
@@ -89,6 +101,10 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 <div id="filter-section">
     <form method="post">
+        <fieldset>
+            <legend>Recherche</legend>
+            <input type="text" name="search" placeholder="Rechercher un article" value="<?= htmlspecialchars($searchTerm) ?>">
+        </fieldset>
         <fieldset>
             <legend>Catégories</legend>
             <label><input type="checkbox" name="category[]" value="Sucré" <?= in_array('Sucré', $filters) ? 'checked' : '' ?>> Sucré</label><br>
