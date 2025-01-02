@@ -22,16 +22,20 @@
 <!------PHP------>
 <!--------------->
 
- <!-- Importer les fichiers -->
+<!-- Importer les fichiers -->
 <?php 
 require_once "header.php" ;
 require_once 'database.php';
 require_once 'files_save.php';
+require_once 'cart_class.php';
 
 // Connexion à la base de donnees
 $db = new DB();
 
-//Gestion de la recherche, des filtres et tris
+// Initialisation du panier
+$cart = new cart();
+
+// Gestion de la recherche, des filtres et tris
 $filters = [];
 $orderBy = "";
 $searchTerm = "";
@@ -93,11 +97,14 @@ if ($orderBy === "price_asc") {
 $products = $db->select($query, str_repeat("s", count($params)), $params);
 ?>
 
+
+
 <!--------------->
 <!------HTML----->
 <!--------------->
 
 <H1>LA BOUTIQUE</H1>
+
 
 <div id="filter-section">
     <form method="post">
@@ -127,7 +134,11 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
     </form>
 </div>
 
-
+<div>
+    <button id="cart-button" >
+        <a href="cart.php">Panier</a>
+    </button>
+</div>
 
 <?php if (!empty($products)) : ?>
     <div id="product-list">
@@ -138,12 +149,14 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                         <h3 title="<?= htmlspecialchars($product['nom_article']) ?>">
                             <?= htmlspecialchars($product['nom_article']) ?>
                         </h3>
-                        <p>-- Prix : <?= htmlspecialchars($product['prix_article']) ?> € --</p>
+                        <p>-- Prix : <?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> € --</p>
                     </div>
                     <div>
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0): ?>
-                                <button id="add-to-cart-button">Ajouter au panier</button>
+                                <button id="add-to-cart-button" >
+                                    <a href="cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">Ajouter au panier</a>
+                                </button>
                             <?php else: ?>
                                 <button id="out-of-stock">Épuisé</button>
                             <?php endif; ?>

@@ -10,6 +10,35 @@ H1 {
     font-family: "Koulen", sans-serif;
 }
 
+
+/***Ensemble des différents éléments pour filter, trier et rechercher les produits***/
+
+#filter-section {
+    background-color: rgba(0, 0, 0, 0.107);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
+    font-size: 1.2em;
+    color: rgb(169, 169, 169);
+}
+
+
+#filter-section fieldset{
+    all: unset;
+}
+
+
+/***Lien vers le panier***/
+#cart-button {
+    width: 180px;
+    height: 60px;
+    background-color:  rgb(119, 241, 190);
+    color: #1E1E1E;
+}
+
+
+/***Affichage des produits***/
+
 #product-list {
     display: flex;
     flex-wrap: wrap;
@@ -89,19 +118,4 @@ H1 {
     border: none;
     cursor:initial;
     font-size: 1em;
-}
-
-
-
-#filter-section {
-    background-color: rgba(0, 0, 0, 0.107);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
-    font-size: 1.2em;
-    color: rgb(169, 169, 169);
-}
-
-#filter-section fieldset{
-    all: unset;
 }

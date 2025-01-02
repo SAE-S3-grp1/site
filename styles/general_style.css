@@ -10,17 +10,23 @@
     margin: 0;
 }
 
-.body_margin > *:not(header):not(footer) {
-    margin-right: 2vw;
-    margin-left: 2vw;
-}
-
-
 html{
     font-family: "Inter", sans-serif;
     color: white;
     background-color: #1E1E1E;
     margin-top: 20vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.body_margin > *:not(header):not(footer) {
+    margin-right: 2vw;
+    margin-left: 2vw;
+    flex: 1;
 }
 
 p {

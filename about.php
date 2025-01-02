@@ -8,16 +8,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 
-    <link rel="stylesheet" href="styles/about_style.css">
     <link rel="stylesheet" href="styles/general_style.css">
+    <link rel="stylesheet" href="styles/about_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
+    <link rel="stylesheet" href="styles/footer_style.css">
 
 </head>
 
 
 <body class="body_margin">
 
-<?php require_once "header.php" ?>
+
+
+<!--------------->
+<!------PHP------>
+<!--------------->
+
+
+<!-- Importer les fichiers -->
+<?php 
+require_once "header.php" 
+?>
+
+
+
+
+
+<!--------------->
+<!------HTML----->
+<!--------------->
+
 
 <!-- CORPS DE LA PRESENTATION -->
 <section>
@@ -66,7 +86,7 @@
 </section>
 
 
-<!-- FOOTER -->
+
 <?php require_once "footer.php" ?>
 
 </body>
