@@ -9,3 +9,113 @@ H1 {
     font-weight: 500;
     font-family: "Koulen", sans-serif;
 }
+
+
+/***Ensemble des différents éléments pour filter, trier et rechercher les produits***/
+
+#filter-section {
+    background-color: rgba(0, 0, 0, 0.107);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
+    font-size: 1.2em;
+    color: rgb(169, 169, 169);
+}
+
+
+#filter-section fieldset{
+    all: unset;
+}
+
+
+/***Lien vers le panier***/
+#cart-button {
+    width: 180px;
+    height: 60px;
+    background-color:  rgb(119, 241, 190);
+    color: #1E1E1E;
+}
+
+
+/***Affichage des produits***/
+
+#product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin: 60px;
+}
+
+#one-product {
+    background-color: rgb(23, 23, 23);
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#one-product div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: 0px;
+}
+
+#one-product div:first-of-type img {
+    width: 15vh;
+    height: 15vh;
+    overflow: hidden;
+    border-radius: 20px;
+    align-self: center;
+}
+
+#one-product h3 {
+    font-size: 1.6em;
+    text-align: center;
+    white-space: wrap; /*white-space: nowrap;*/
+    overflow: hidden;
+    /*text-overflow: ellipsis; /* Ajoute les "..." */
+    word-wrap: break-word;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#one-product p {
+    word-wrap: break-word;
+    margin-top: auto;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: rgb(169, 169, 169);
+    align-self: center;
+    
+}
+
+#add-to-cart-button {
+    padding: 10px;
+    background-color: rgb(119, 241, 190);
+    color: #1E1E1E;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+
+#out-of-stock {
+    padding: 10px;
+    background-color: rgb(169, 169, 169);
+    color: #1E1E1E;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    cursor:initial;
+    font-size: 1em;
+}
