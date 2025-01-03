@@ -4,9 +4,6 @@
 
 <?php
 
-// Démarre la session ou récupère la session de l'utilisateur
-session_start();
-
 // Importer les fichiers
 require_once 'database.php';
 require_once 'files_save.php';
@@ -16,7 +13,7 @@ require_once 'cart_class.php';
 $db = new DB();
 
 // Initialisation du panier
-$cart = new cart();
+$cart = new cart($db);
 
 if(isset($_GET['id'])){
     $product = $db->select(
@@ -30,7 +27,7 @@ if(isset($_GET['id'])){
     }
 
     $cart->add($product[0]['id_article']);
-    die('Le produit a bien été ajouté à votre panier <a href="javascript:history.back()">retourner sur le catalogue</a>');
+    die('Le produit a bien été ajouté à votre panier');
 
 } else {
     die("Vous n'avez pas ajouté de produit à ajouter au panier");

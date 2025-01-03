@@ -34,7 +34,14 @@ require_once 'cart_class.php';
 $db = new DB();
 
 // Initialisation du panier
-$cart = new cart();
+$cart = new cart($db);
+?>
+
+<!-- Suppression d'un article du panier -->
+<?php
+    if(isset($_GET['del'])){
+        $cart->del($_GET['del']);
+    }
 ?>
 
 <!-- On récupère les produits du panier -->
@@ -54,13 +61,6 @@ $cart = new cart();
             $types, 
             $ids
         );
-    }
-?>
-
-<!-- Suppression d'un article du panier -->
-<?php
-    if(isset($_GET['del'])){
-        $cart->del($_GET['del']);
     }
 ?>
 
@@ -94,16 +94,14 @@ $cart = new cart();
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($products as $product) : 
-                    $product['quantity'] =2;
-                ?>
+            <?php foreach ($products as $product) :?>
 
             <tr>
                 <td><img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" /></td>
                 <td><?= htmlspecialchars($product['nom_article']) ?></td>
                 <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
-                <td><?= htmlspecialchars($product['quantity']) ?></td>
-                <td><?= number_format(htmlspecialchars($product['prix_article'] * $product['quantity']), 2, ',', ' ') ?> €</td>  
+                <td><?=$_SESSION['cart'][$product['id_article']]?></td>
+                <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
                 <td>
                         <a href="update_cart.php?id=<?= $item['id'] ?>&action=add">+</a>
                         <a href="update_cart.php?id=<?= $item['id'] ?>&action=remove">-</a>
@@ -112,6 +110,16 @@ $cart = new cart();
             </tr>
             <?php endforeach; ?>
         </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
+            </tr>
+            <tr>
+                <th>Nombre d'articles</th>
+                <td><?=$cart->count()?> articles</td>
+            </tr>
+        </tfoot>
     </table>
         
 </div>

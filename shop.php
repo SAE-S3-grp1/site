@@ -33,7 +33,7 @@ require_once 'cart_class.php';
 $db = new DB();
 
 // Initialisation du panier
-$cart = new cart();
+$cart = new cart($db);
 
 // Gestion de la recherche, des filtres et tris
 $filters = [];
@@ -155,7 +155,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0): ?>
                                 <button id="add-to-cart-button" >
-                                    <a href="cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">Ajouter au panier</a>
+                                    <a class="addCart" href="cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">Ajouter au panier</a>
                                 </button>
                             <?php else: ?>
                                 <button id="out-of-stock">Épuisé</button>
@@ -173,6 +173,9 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 
 <?php require_once "footer.php" ?>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/scripts/add_cart.js"></script>
 
 </body>
 </html>
