@@ -12,7 +12,22 @@ class cart {
         if(!isset($_SESSION['cart'])) {
             $_SESSION['cart']=array();
         }
+
         $this->db = $db;
+
+        if(isset($_POST['cart']['quantity'])) {
+            $this->recalc();
+        }
+    }
+
+    public function recalc () {
+        //$_SESSION['cart'] = $_POST['cart']['quantity'];
+
+        foreach($_SESSION['cart'] as $product_id => $quantity) {
+            if(isset($_POST['cart']['quantity'][$product_id])) {
+                $_SESSION['cart'][$product_id]= $_POST['cart']['quantity'][$product_id];
+            }
+        }
     }
 
     public function total(){

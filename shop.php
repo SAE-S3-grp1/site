@@ -138,6 +138,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
     <button id="cart-button" >
         <a href="cart.php">Panier</a>
     </button>
+    <p>Nombre d'articles : <span id="count"><?= $cart->count(); ?></span></p>
 </div>
 
 <?php if (!empty($products)) : ?>

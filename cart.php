@@ -81,48 +81,48 @@ $cart = new cart($db);
 </div>
 
 
-<div id="cart-container">
-    <table id="cart-table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Article</th>
-                <th>Prix unitaire</th>
-                <th>Quantité</th>
-                <th>Sous-total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($products as $product) :?>
+<form method="POST" action="cart.php">
+    <div id="cart-container">
+        <table id="cart-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Article</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Sous-total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $product) :?>
 
-            <tr>
-                <td><img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" /></td>
-                <td><?= htmlspecialchars($product['nom_article']) ?></td>
-                <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
-                <td><?=$_SESSION['cart'][$product['id_article']]?></td>
-                <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
-                <td>
-                        <a href="update_cart.php?id=<?= $item['id'] ?>&action=add">+</a>
-                        <a href="update_cart.php?id=<?= $item['id'] ?>&action=remove">-</a>
+                <tr>
+                    <td><img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" /></td>
+                    <td><?= htmlspecialchars($product['nom_article']) ?></td>
+                    <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
+                    <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>"></td>
+                    <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
+                    <td>
                         <a href="cart.php?del=<?= $product['id_article'] ?>">Supprimer</a>
                     </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Total</th>
-                <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
-            </tr>
-            <tr>
-                <th>Nombre d'articles</th>
-                <td><?=$cart->count()?> articles</td>
-            </tr>
-        </tfoot>
-    </table>
-        
-</div>
+                </tr>
+                <?php endforeach; ?>
+                <input type='submit' value='Recalculer'>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
+                </tr>
+                <tr>
+                    <th>Nombre d'articles</th>
+                    <td><?=$cart->count()?> articles</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</form>
 
 
 
