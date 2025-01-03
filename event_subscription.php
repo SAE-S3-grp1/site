@@ -15,6 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isLoggedIn) {
             "iid",
             [$userid, $eventid, $_POST["price"]]
         );
+        $xp = $db->select("SELECT xp_evenement FROM EVENEMENT WHERE id_evenement = ?", "i", [$eventid])[0]['xp_evenement'];
+        $db->query(
+            "UPDATE MEMBRE SET MEMBRE.xp_membre = MEMBRE.xp_membre + ? where MEMBRE.id_membre = ?;",
+            "ii",
+            [$xp, $userid]
+        );
         header("Location: events.php");
         exit;
     }
