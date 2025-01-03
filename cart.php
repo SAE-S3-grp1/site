@@ -37,13 +37,6 @@ $db = new DB();
 $cart = new cart($db);
 ?>
 
-<!-- Suppression d'un article du panier -->
-<?php
-    if(isset($_GET['del'])){
-        $cart->del($_GET['del']);
-    }
-?>
-
 <!-- On récupère les produits du panier -->
 <?php
     $ids = array_keys($_SESSION['cart']);

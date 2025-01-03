@@ -15,6 +15,10 @@ class cart {
 
         $this->db = $db;
 
+        if(isset($_GET['del'])){
+            $this->del($_GET['del']);
+        }
+
         if(isset($_POST['cart']['quantity'])) {
             $this->recalc();
         }
