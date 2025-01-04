@@ -49,7 +49,7 @@ function get_events() : void
         $id = filter::int($_GET['id']);
         $events = Event::getInstance($id);
 
-        if (!$events) {
+        if ($events == null) {
             http_response_code(404);
             echo json_encode(['error' => 'Event not found']);
             return;
