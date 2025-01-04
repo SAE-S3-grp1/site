@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
 
+    <script>
+        //Fonction pour valider la soumission du formulaire (form-quantity) par la touche "Entrée"
+        function pressEnter (event) {
+            var code=event.which || event.keyCode;
+            if (code==13) { //Code de la touche "Entrée"
+                document.getElementById("form-quantity").submit();
+            }
+        }
+    </script>
+
 </head>
 
 <body class="body_margin">
@@ -59,7 +69,6 @@ $cart = new cart($db);
 
 
 
-
 <!--------------->
 <!------HTML----->
 <!--------------->
@@ -74,7 +83,7 @@ $cart = new cart($db);
 </div>
 
 
-<form method="POST" action="cart.php">
+<form method="POST" action="cart.php" id= "form-quantity">
     <div id="cart-container">
         <table id="cart-table">
             <thead>

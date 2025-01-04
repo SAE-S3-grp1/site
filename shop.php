@@ -12,11 +12,42 @@
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
 
+
+    <!--Automatisation de la soumission du formulaire (filter-form)-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("#filter-form");
+            
+            // Soumission du formulaire lorsqu'on appuie sur "Entrée" dans le champ de recherche
+            const searchInput = document.querySelector("input[name='search']");
+            searchInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    form.submit();
+                }
+            });
+
+            // Soumission du formulaire lorsqu'une catégorie est sélectionnée
+            const categoryCheckboxes = document.querySelectorAll("input[name='category[]']");
+            categoryCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener("change", function () {
+                    form.submit();
+                });
+            });
+
+            // Soumission du formulaire lorsqu'une option de tri est sélectionnée
+            const sortSelect = document.querySelector("select[name='sort']");
+            sortSelect.addEventListener("change", function () {
+                form.submit();
+            });
+        });
+    </script>
+
 </head>
 
+
+
 <body class="body_margin">
-
-
 
 <!--------------->
 <!------PHP------>
@@ -35,15 +66,17 @@ $db = new DB();
 // Initialisation du panier
 $cart = new cart($db);
 
-// Gestion de la recherche, des filtres et tris
-$filters = [];
-$orderBy = "";
-$searchTerm = "";
 
+// Gestion de la recherche, des filtres et tris
+
+//Traitement du formulaire
+$filters = [];
+$orderBy = "name_asc";
+$searchTerm = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['reset'])) {
         $filters = [];
-        $orderBy = "";
+        $orderBy = "name_asc";
         $searchTerm = "";
     } else {
         if (isset($_POST['category'])) {
@@ -58,30 +91,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+//Construction de la requête SQL
 $query = "SELECT * FROM ARTICLE";
 $whereClauses = [];
 $params = [];
-
-
 // Ajout de la recherche par nom
 if (!empty($searchTerm)) {
     $whereClauses[] = "nom_article LIKE ?";
     $params[] = '%' . $searchTerm . '%';
 }
-
-
 // Ajout des filtres par catégorie
 if (!empty($filters)) {
     $placeholders = implode(", ", array_fill(0, count($filters), "?"));
     $whereClauses[] = "categorie_article IN ($placeholders)";
     $params = array_merge($params, $filters);
 }
-
 // Ajout des clauses WHERE
 if (!empty($whereClauses)) {
     $query .= " WHERE " . implode(" AND ", $whereClauses);
 }
-
 // Ajout du tri
 if ($orderBy === "price_asc") {
     $query .= " ORDER BY prix_article ASC";
@@ -92,7 +120,6 @@ if ($orderBy === "price_asc") {
 } elseif ($orderBy === "name_desc") {
     $query .= " ORDER BY nom_article DESC";
 }
-
 // Exécution de la requête
 $products = $db->select($query, str_repeat("s", count($params)), $params);
 ?>
@@ -107,7 +134,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 
 <div id="filter-section">
-    <form method="post">
+    <form method="post" id="filter-form">
         <fieldset>
             <legend>Recherche</legend>
             <input type="text" name="search" placeholder="Rechercher un article" value="<?= htmlspecialchars($searchTerm) ?>">
@@ -123,14 +150,13 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
         <fieldset>
             <legend>Trier par</legend>
             <select name="sort">
-                <option value="name_asc" <?= $orderBy === 'name_asc' ? 'selected' : '' ?>>Alphabétique (A-Z)</option>
-                <option value="name_desc" <?= $orderBy === 'name_desc' ? 'selected' : '' ?>>Alphabétique (Z-A)</option>
+                <option value="name_asc" <?= $orderBy === 'name_asc' ? 'selected' : '' ?>>Ordre alphabétique (A-Z)</option>
+                <option value="name_desc" <?= $orderBy === 'name_desc' ? 'selected' : '' ?>>Ordre anti-alphabétique (Z-A)</option>
                 <option value="price_asc" <?= $orderBy === 'price_asc' ? 'selected' : '' ?>>Prix croissant</option>
                 <option value="price_desc" <?= $orderBy === 'price_desc' ? 'selected' : '' ?>>Prix décroissant</option>
             </select>
         </fieldset>
         <button type="submit" name="reset">Réinitialiser</button>
-        <button type="submit">Appliquer</button>
     </form>
 </div>
 
@@ -176,8 +202,10 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 <?php require_once "footer.php" ?>
 
+<!--Dynamisme du panier-->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/scripts/add_cart.js"></script>
 
 </body>
 </html>
+
