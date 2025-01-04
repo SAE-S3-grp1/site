@@ -11,10 +11,12 @@ const skeleton = document.getElementById('skeleton_navbar');
 const empty_navbar = document.getElementById('empty_navbar');
 
 /**
- * @param {Function} fetchData - An asynchronous function that fetches the data for the navbar.
- * @param {Function(): Promise<{label: string, id: number}[]>} fetchData - An asynchronous function that fetches the data for the navbar.
- * @param {Function(number, HTMLElement): void} selectItem - A callback function that handles the selection of an item in the navbar.
-*/
+ * Refreshes the navbar by fetching new data and updating the items.
+ *
+ * @param {Function} fetchData - An async function that fetches the data for the navbar items.
+ * @param {Function} selectItem - A function that handles the selection of a navbar item.
+ * @param {string|null} [defaultSelectedItem=null] - The ID of the item to be selected by default. If null, the first item will be selected.
+ */
 export async function refreshNavbar(fetchData, selectItem, defaultSelectedItem = null) {
 
     // Show loader
