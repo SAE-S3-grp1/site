@@ -130,6 +130,24 @@ $cart = new cart($db);
 
 
 
+<div>
+    <form class="subscription" action="order.php" method="post">
+        <?php
+        if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+            // Encodage du panier entier en JSON et transmission dans un seul champ caché
+            echo '<input type="hidden" name="cart" value="' . htmlspecialchars(json_encode($_SESSION['cart'], JSON_UNESCAPED_UNICODE)) . '">';
+        } else {
+            echo 'Votre panier est vide.';
+        }
+        ?>
+        <button type="submit">Payer</button>
+    </form>
+</div>
+
+
+
+
+
 <?php require_once "footer.php" ?>
 
 </body>
