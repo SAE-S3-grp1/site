@@ -1,0 +1,18 @@
+/************************
+******  Commander  ******
+*************************/
+
+H1 {
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    line-height: 100px;
+    font-weight: 500;
+    font-family: "Koulen", sans-serif;
+}
+
+#cart-button {
+    width: 180px;
+    height: 60px;
+    background-color:  rgb(119, 241, 190);
+    color: #1E1E1E;
+}

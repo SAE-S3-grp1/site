@@ -1,14 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commander</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link rel="stylesheet" href="styles/general_style.css">
+    <link rel="stylesheet" href="styles/order_style.css">
+    <link rel="stylesheet" href="styles/header_style.css">
+    <link rel="stylesheet" href="styles/footer_style.css">
+
+</head>
+
+<body class="body_margin">
+
+
+
+
+<!--------------->
+<!------PHP------>
+<!--------------->
+
+
 <?php
-session_start();
+// Importer les fichiers
+require_once "header.php" ;
+require_once 'database.php';
+require_once 'files_save.php';
+require_once 'cart_class.php';
+
+
+// Connexion à la base de donnees
+$db = new DB();
+
+// Initialisation du panier
+$cart = new cart($db);
+
+
 
 $isLoggedIn = isset($_SESSION["userid"]);
 if (!$isLoggedIn) {
     header("Location: login.php");
     exit;
 }
-
-require_once 'database.php';
-$db = new DB();
 
 $userid = $_SESSION["userid"];
 
@@ -38,6 +74,7 @@ foreach ($products as $product) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     if (isset($_POST['mode_paiement']) && !empty($_POST['mode_paiement'])) {
         $mode_paiement = $_POST['mode_paiement'];
 
@@ -49,98 +86,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 [$userid, $product_id, $item['quantite'], $mode_paiement]
             );
         }
-
-        // Vider le panier après la commande
         $_SESSION['cart'] = [];
+        
+        $_SESSION['message'] = "Commande réalisée avec succès !";
+        $_SESSION['message_type'] = "success";
 
-        // Rediriger vers le panier
-        header("Location: cart.php");
+        header("Location: cart.php"); // Rediriger vers le panier
         exit;
     } else {
-        echo "Erreur : mode de paiement non sélectionné.";
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commande - Panier</title>
-    <link rel="stylesheet" href="styles/order_style.css">
-</head>
-<body>
-    <div class="order-container">
-        <h1>Résumé de votre commande</h1>
 
-        <div>
-            <button id="cart-button" >
-                <a href="cart.php">Panier</a>
-            </button>
-        </div>
 
-        <table>
-            <thead>
+<!--------------->
+<!------HTML----->
+<!--------------->
+
+<h1>MA COMMANDE</h1>
+
+<div>
+    <button id="cart-button" >
+        <a href="cart.php">Retourner au panier</a>
+    </button>
+</div>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Quantité</th>
+                <th>Prix Unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($cart_items as $product_id => $item): ?>
                 <tr>
-                    <th>Article</th>
-                    <th>Quantité</th>
-                    <th>Prix Unitaire</th>
-                    <th>Total</th>
+                    <td><?php echo htmlspecialchars($item['nom_article']); ?></td>
+                    <td><?php echo $item['quantite']; ?></td>
+                    <td><?php echo number_format($item['prix_article'], 2, ',', ' ') . " €"; ?></td>
+                    <td><?php echo number_format($item['prix_article'] * $item['quantite'], 2, ',', ' ') . " €"; ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($cart_items as $product_id => $item): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($item['nom_article']); ?></td>
-                        <td><?php echo $item['quantite']; ?></td>
-                        <td><?php echo number_format($item['prix_article'], 2, ',', ' ') . " €"; ?></td>
-                        <td><?php echo number_format($item['prix_article'] * $item['quantite'], 2, ',', ' ') . " €"; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
-        <h3>Total : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
+<h3>Total : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
 
-        <form method="POST" action="order.php">
-            <label for="mode_paiement">Mode de Paiement :</label>
-            <select id="mode_paiement" name="mode_paiement" required>
-                <option value="carte_credit">Carte de Crédit</option>
-                <option value="paypal">PayPal</option>
-            </select><br><br>
+<form method="POST" action="order.php">
 
-            <div id="carte_credit" class="mode_paiement_fields">
-                <label for="numero_carte">Numéro de Carte :</label>
-                <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
+    <label for="mode_paiement">Mode de Paiement :</label>
+    <select id="mode_paiement" name="mode_paiement" required>
+        <option value="carte_credit">Carte de Crédit</option>
+        <option value="paypal">PayPal</option>
+    </select><br><br>
 
-                <label for="expiration">Date d'Expiration :</label>
-                <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
+    <div id="carte_credit" class="mode_paiement_fields">
+        <label for="numero_carte">Numéro de Carte :</label>
+        <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
 
-                <label for="cvv">CVV :</label>
-                <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
-            </div>
+        <label for="expiration">Date d'Expiration :</label>
+        <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
 
-            <div id="paypal" class="mode_paiement_fields" style="display: none;">
-                <label for="compte_paypal">Connectez-vous à votre compte PayPal :</label><br>
-                <button type="button">Se connecter à PayPal</button><br><br>
-            </div>
-
-            <button type="submit">Valider la commande</button>
-        </form>
+        <label for="cvv">CVV :</label>
+        <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
     </div>
 
-    <script>
-        document.getElementById('mode_paiement').addEventListener('change', function() {
-            var modePaiement = this.value;
-            if (modePaiement === 'carte_credit') {
-                document.getElementById('carte_credit').style.display = 'block';
-                document.getElementById('paypal').style.display = 'none';
-            } else if (modePaiement === 'paypal') {
-                document.getElementById('carte_credit').style.display = 'none';
-                document.getElementById('paypal').style.display = 'block';
-            }
-        });
-    </script>
+    <div id="paypal" class="mode_paiement_fields" style="display: none;">
+        <label for="compte_paypal">Connectez-vous à votre compte PayPal :</label><br>
+        <button type="button">Se connecter à PayPal</button><br><br>
+    </div>
+
+    <button type="submit">Valider la commande</button>
+</form>
+
+
+
+
+<script>
+    document.getElementById('mode_paiement').addEventListener('change', function() {
+        var modePaiement = this.value;
+        if (modePaiement === 'carte_credit') {
+            document.getElementById('carte_credit').style.display = 'block';
+            document.getElementById('paypal').style.display = 'none';
+        } else if (modePaiement === 'paypal') {
+            document.getElementById('carte_credit').style.display = 'none';
+            document.getElementById('paypal').style.display = 'block';
+        }
+    });
+</script>
+
+
+<?php require_once "footer.php" ?>
+
 </body>
 </html>

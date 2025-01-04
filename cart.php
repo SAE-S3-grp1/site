@@ -76,9 +76,21 @@ $cart = new cart($db);
 
 <H1>MON PANIER</H1>
 
+<!-- Affichage du message de succès ou d'erreur -->
+<div>
+    <?php
+        if (isset($_SESSION['message'])) {
+            $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
+            echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+            unset($_SESSION['message']); // Supprimer le message après affichage
+            unset($_SESSION['message_type']); // Supprimer le type après affichage
+        }
+    ?>
+</div>
+
 <div>
     <button id="shop-button" >
-        <a href="shop.php">Boutique</a>
+        <a href="shop.php">Retourner à la boutique</a>
     </button>
 </div>
 
@@ -110,7 +122,6 @@ $cart = new cart($db);
                     </td>
                 </tr>
                 <?php endforeach; ?>
-                <input type='submit' value='Recalculer'>
             </tbody>
             <tfoot>
                 <tr>
