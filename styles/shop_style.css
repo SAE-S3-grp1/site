@@ -85,7 +85,17 @@ H1 {
     margin-bottom: 30px;
 }
 
-#one-product p {
+#one-product p:first-of-type{
+    word-wrap: break-word;
+    margin-top: auto;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    color: white;
+    align-self: center;
+    
+}
+
+#one-product p:nth-of-type(2) {
     word-wrap: break-word;
     margin-top: auto;
     margin-bottom: 10px;

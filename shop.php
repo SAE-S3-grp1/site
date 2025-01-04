@@ -150,6 +150,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                         <h3 title="<?= htmlspecialchars($product['nom_article']) ?>">
                             <?= htmlspecialchars($product['nom_article']) ?>
                         </h3>
+                        <p>+ <?= htmlspecialchars($product['xp_article']) ?> XP</p>
                         <p>-- Prix : <?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> € --</p>
                     </div>
                     <div>
