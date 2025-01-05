@@ -28,7 +28,7 @@ class Member extends BaseModel implements JsonSerializable
         return $this;
     }
 
-    public function updateProfilePic(File $pp)
+    public function updateProfilePic(File $pp) : Member
     {
         $this->DB->query("UPDATE MEMBRE SET pp_membre = ? WHERE id_membre = ?", "si", [$pp->getFileName(), $this->id]);
 

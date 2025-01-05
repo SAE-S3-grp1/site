@@ -6,7 +6,7 @@ use model\Item;
 require_once 'DB.php';
 require_once 'tools.php';
 require_once 'filter.php';
-require_once 'models/item.php';
+require_once 'models/Item.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -55,8 +55,6 @@ function get_items() : void
             echo json_encode(['error' => 'Item not found']);
             return;
         }
-
-        $item = $item[0];
 
     } else {
         $item = Item::bulkFetch();
