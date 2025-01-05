@@ -201,7 +201,7 @@ class TechnicalLogGenerator {
             $logs[] = $this->generateLog();
         }
 
-        return array_reverse($logs);
+        return join("\n", $logs);
     }
 }
 
@@ -209,5 +209,5 @@ function get_logs() : void {
     $generator = new TechnicalLogGenerator();
     $logs = $generator->generateMultipleLogs(100);
 
-    echo json_encode($logs);
+    echo json_encode(["logs"=>$logs]);
 }
