@@ -50,7 +50,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
         if (DEBUG_FETCHS) {
-            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: royalblue;');
+            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
         }
         const json = text ? JSON.parse(text) : null;
 

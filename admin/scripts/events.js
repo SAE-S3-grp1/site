@@ -3,7 +3,7 @@ import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { getFullFilepath } from "./files.js";
+import { getFullFilepath, openFileDialog } from "./files.js";
 import { getToggleStatus, updateToggleStatus } from "./toggle.js";
 
 // Show skeleton
@@ -149,6 +149,32 @@ async function selectEvent(id_event, li){
     // Update name
     prop_name.onkeyup = ()=>{
         li.textContent = prop_name.value;
+    };
+
+    // Update image
+    document.getElementById('prop_image_edit').onclick = async ()=>{
+    
+        // Get file form
+        const image = await openFileDialog();
+
+        // Update image src
+        const url = URL.createObjectURL(image);
+        prop_image.src = url;
+
+        // Show loader
+        showLoader();
+
+        // Send data
+        try {
+            await requestPATCH('/event.php?id=' + id_event.toString(), image);
+            toast('Image mis à jour avec succès.');
+        } catch (error) {
+            toast(error.message, true);
+        }
+
+        // Stop loader
+        hideLoader();
+
     };
 
     // Hide loader

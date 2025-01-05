@@ -29,7 +29,7 @@ switch ($methode) {
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-            update_event();
+            update_image();
         break;
     case 'DELETE':                   # DELETE
         delete_event();

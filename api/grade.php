@@ -120,13 +120,6 @@ function update_image() : void
     }
 
     $id = filter::int($_GET['id']);
-
-    if (!isset($_FILES['image'])) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Please provide an image']);
-        return;
-    }
-
     $grade = Grade::getInstance($id);
 
     if ($grade === null) {
@@ -137,10 +130,16 @@ function update_image() : void
 
     $image = File::saveImage();
 
+    if (!$image) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Image could not be processed']);
+        return;
+    }
+
     $grade->updateImage($image);
 
-    http_response_code(204);
-    echo $grade;
+    echo json_encode($grade);
+
 }
 
 function delete_grade() : void
