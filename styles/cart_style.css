@@ -16,3 +16,102 @@ H1 {
     background-color:  rgb(119, 241, 190);
     color: #1E1E1E;
 }
+
+#cart-container{
+    width: 60%;
+    margin: auto;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+}
+
+#cart-container table{
+    width: 100%;
+    border-radius: 15px;
+    background-color: #1E1E1E;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#cart-container table thead {
+    border-bottom: 20px solid #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#cart-container table th {
+    background-color: #1E1E1E;
+    color:white;
+    padding: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.25em;
+}
+
+#cart-container table td {
+    padding: 10px;
+    color: white;
+}
+
+#cart-container tbody tr {
+    text-align: center;
+}
+
+#cart-container table tbody tr:not(:last-of-type) {
+    border-bottom: 1px solid white;
+}
+
+#article-cell {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#article-cell img {
+    width: 15vh;
+    height: 15vh;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+#article-cell p {
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    flex: 1;
+}
+
+#cart-container tbody tr input {
+    border-radius: 5px;
+    border: 2px solid rgb(169, 169, 169);
+    width: 5vw;
+    height: 4vh;
+    background-color: #1E1E1E;
+    font-size: 16px;               
+    color: white;  
+    padding: 2vh;
+    text-align: center;
+}
+
+
+#cart-container table tfoot {
+    border-top: 20px solid #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+
+
+#empty-cart{
+    text-align: center;
+}

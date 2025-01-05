@@ -95,66 +95,63 @@ $cart = new cart($db);
 </div>
 
 <?php if (!empty($_SESSION['cart'])) : ?>
+<div id='cart-container'>
     <form method="POST" action="cart.php" id= "form-quantity">
-        <div id="cart-container">
-            <table id="cart-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Article</th>
-                        <th>Prix unitaire</th>
-                        <th>Quantité</th>
-                        <th>Sous-total</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($products as $product) :?>
-                    <tr>
-                        <td><img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" /></td>
-                        <td><?= htmlspecialchars($product['nom_article']) ?></td>
-                        <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
-                        <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>"></td>
-                        <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
-                        <td>
-                            <a href="cart.php?del=<?= $product['id_article'] ?>">Supprimer</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Total</th>
-                        <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre d'articles</th>
-                        <td><?=$cart->count()?> articles</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+    <table>
+            <thead>
+                <tr>
+                    <th>Article</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Sous-total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $product) :?>
+                <tr>
+                    <td id='article-cell'>
+                        <img src="/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                        <p><?= htmlspecialchars($product['nom_article']) ?></p>
+                    </td>
+                    <td><?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> €</td>                
+                    <td><input type='text' name="cart[quantity][<?=$product['id_article']?>]" value="<?=$_SESSION['cart'][$product['id_article']]?>" onkeydown="pressEnter(event)"></td>
+                    <td><?= number_format(htmlspecialchars($product['prix_article'] * $_SESSION['cart'][$product['id_article']]), 2, ',', ' ') ?> €</td>  
+                    <td>
+                        <a href="cart.php?del=<?= $product['id_article'] ?>">Supprimer</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Nombre d'articles</th>
+                    <td><?=$cart->count()?> articles</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
+                </tr>
+            </tfoot>
+        </table>
     </form>
-
-
-
-    <div>
-        <form class="subscription" action="order.php" method="post">
-            <?php
-            if (isset($_SESSION['cart'])) {
-                // Encodage du panier entier en JSON et transmission dans un seul champ caché
-                echo '<input type="hidden" name="cart" value="' . htmlspecialchars(json_encode($_SESSION['cart'], JSON_UNESCAPED_UNICODE)) . '">';
-            }
-            ?>
-            <button type="submit">Payer</button>
-        </form>
-    </div>
-
-
+ </div>
+<div>
+    <form class="subscription" action="order.php" method="post">
+        <?php
+        if (isset($_SESSION['cart'])) {
+            // Encodage du panier entier en JSON et transmission dans un seul champ caché
+            echo '<input type="hidden" name="cart" value="' . htmlspecialchars(json_encode($_SESSION['cart'], JSON_UNESCAPED_UNICODE)) . '">';
+        }
+        ?>
+        <button type="submit">Payer</button>
+    </form>
+</div>
 
 <?php else : ?>
-    <p>Votre panier est vide</p>
+    <p id="empty-cart">Votre panier est vide</p>
 <?php endif; ?>
+
 
 
 
