@@ -60,6 +60,8 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         if (!response.ok)
             if (json && json.message)
                 throw new Error(json.message);
+            else if (json && json.error)
+                throw new Error(json.error);
             else
                 throw new Error(`Erreur: ${response.status} ${response.statusText}`);
 

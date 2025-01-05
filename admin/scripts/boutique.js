@@ -55,7 +55,7 @@ async function saveArticle(id_article){
         xp: prop_xp.value,
         stocks: prop_qte.value,
         price: prop_price.value,
-        reductions: getToggleStatus(prop_reductions)
+        reduction: getToggleStatus(prop_reductions)
     };
 
     // Send data
@@ -81,7 +81,7 @@ async function deleteArticle(id_article){
     showLoader();
 
     // Send request
-    await requestDELETE(`/article.php?id=${id_article}`);
+    await requestDELETE(`/item.php?id=${id_article}`);
     
     /// Update navbar
     refreshNavbar(fetchData, selectArticle);
@@ -158,7 +158,7 @@ new_btn.onclick = async ()=>{
 
     // Create new article
     try {
-        const id = await requestPOST('/article.php');
+        const id = await requestPOST('/item.php');
         refreshNavbar(fetchData, selectArticle, id);
     } catch (error) {
         toast("Erreur lors de la création de l'article", true);

@@ -1,4 +1,8 @@
 /* SET HEIGHT OF TEXTAREA */
 textarea{
-    height: 100%;
+    height: 98%;
+    background-color: transparent;
+    padding: 30px;
+    outline: none;
+    border: none;
 }
