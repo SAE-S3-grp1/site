@@ -14,6 +14,7 @@ const prop_image = document.getElementById('prop_image');
 const prop_name = document.getElementById('prop_name');
 const prop_price = document.getElementById('prop_price');
 const prop_xp = document.getElementById('prop_xp');
+const prop_categorie = document.getElementById('prop_categorie');
 const prop_qte = document.getElementById('prop_qte');
 const prop_reductions = document.getElementById('prop_reductions');
 const save_btn = document.getElementById('save_btn');
@@ -55,6 +56,7 @@ async function saveArticle(id_article){
         xp: prop_xp.value,
         stocks: prop_qte.value,
         price: prop_price.value,
+        categorie: prop_categorie.value,
         reduction: getToggleStatus(prop_reductions)
     };
 
@@ -113,6 +115,7 @@ async function selectArticle(id_article, li){
     prop_name.value = article.nom_article;
     prop_xp.value = article.xp_article;
     prop_qte.value = article.stock_article;
+    prop_categorie.value = article.categorie_article;
     prop_price.value = article.prix_article;
     updateToggleStatus(prop_reductions, article.reduction_article);
 
