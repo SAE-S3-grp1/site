@@ -6,7 +6,7 @@ use model\Item;
 require_once 'DB.php';
 require_once 'tools.php';
 require_once 'filter.php';
-require_once 'Item.php';
+require_once 'models/item.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
