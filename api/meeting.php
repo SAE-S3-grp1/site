@@ -64,7 +64,7 @@ function create_meeting() : void
 
     if (isset($_POST['date'], $_POST['user'])) {
 
-        $date = filter::string($_POST['date']);
+        $date = filter::date($_POST['date']);
         $user = Member::getInstance(filter::int($_POST['user']));
 
         $file = File::saveFile();
