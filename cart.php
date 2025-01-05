@@ -73,25 +73,29 @@ $cart = new cart($db);
 <!------HTML----->
 <!--------------->
 
-
+<div>
 <H1>MON PANIER</H1>
 
-<!-- Affichage du message de succès ou d'erreur -->
-<div>
-    <?php
-        if (isset($_SESSION['message'])) {
-            $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
-            echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
-            unset($_SESSION['message']); // Supprimer le message après affichage
-            unset($_SESSION['message_type']); // Supprimer le type après affichage
-        }
-    ?>
-</div>
+    <!-- Affichage du message de succès ou d'erreur -->
+    <div>
+        <?php
+            if (isset($_SESSION['message'])) {
+                $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
+                echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+                unset($_SESSION['message']); // Supprimer le message après affichage
+                unset($_SESSION['message_type']); // Supprimer le type après affichage
+            }
+        ?>
+    </div>
 
-<div>
-    <button id="shop-button" >
-        <a href="shop.php">Retourner à la boutique</a>
-    </button>
+    <div>
+        <button id="shop-button" >
+            <a href="shop.php">
+                <img src="assets/fleche_retour.png" alt="Fleche de retour">
+                Retourner à la boutique
+            </a>
+        </button>
+    </div>
 </div>
 
 <?php if (!empty($_SESSION['cart'])) : ?>
@@ -125,17 +129,17 @@ $cart = new cart($db);
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Nombre d'articles</th>
-                    <td><?=$cart->count()?> articles</td>
+                    <th>Nombre d'articles &nbsp : </th>
+                    <td><?=$cart->count()?></td>
                 </tr>
                 <tr>
-                    <th>Total</th>
+                    <th>Total &nbsp : </th>
                     <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
                 </tr>
             </tfoot>
         </table>
     </form>
- </div>
+</div>
 <div>
     <form class="subscription" action="order.php" method="post">
         <?php
@@ -144,7 +148,9 @@ $cart = new cart($db);
             echo '<input type="hidden" name="cart" value="' . htmlspecialchars(json_encode($_SESSION['cart'], JSON_UNESCAPED_UNICODE)) . '">';
         }
         ?>
-        <button type="submit">Payer</button>
+        <button type="submit" id='order-button'>
+            Commander
+        </button>
     </form>
 </div>
 

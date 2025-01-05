@@ -132,39 +132,41 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 <H1>LA BOUTIQUE</H1>
 
+<div id="principal-section">
+    <div id="filter-section">
+        <form method="post" id="filter-form">
+            <fieldset>
+                <input id = "search-input" type="text" name="search" placeholder="Rechercher un article" value="<?= htmlspecialchars($searchTerm) ?>">
+            </fieldset>
+            <fieldset>
+                <legend>Catégories</legend>
+                <label><input type="checkbox" name="category[]" value="Sucré" <?= in_array('Sucré', $filters) ? 'checked' : '' ?>> Sucré</label><br>
+                <label><input type="checkbox" name="category[]" value="Salé" <?= in_array('Salé', $filters) ? 'checked' : '' ?>> Salé</label><br>
+                <label><input type="checkbox" name="category[]" value="Boisson" <?= in_array('Boisson', $filters) ? 'checked' : '' ?>> Boisson</label><br>
+                <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label><br>
+                <label><input type="checkbox" name="category[]" value="Grade" <?= in_array('Grade', $filters) ? 'checked' : '' ?>> Grade</label>
+            </fieldset>
+            <fieldset>
+                <legend>Trier par</legend>
+                <select name="sort">
+                    <option value="name_asc" <?= $orderBy === 'name_asc' ? 'selected' : '' ?>>Ordre alphabétique (A-Z)</option>
+                    <option value="name_desc" <?= $orderBy === 'name_desc' ? 'selected' : '' ?>>Ordre anti-alphabétique (Z-A)</option>
+                    <option value="price_asc" <?= $orderBy === 'price_asc' ? 'selected' : '' ?>>Prix croissant</option>
+                    <option value="price_desc" <?= $orderBy === 'price_desc' ? 'selected' : '' ?>>Prix décroissant</option>
+                </select>
+            </fieldset>
+            <button type="submit" name="reset">Réinitialiser</button>
+        </form>
+    </div>
 
-<div id="filter-section">
-    <form method="post" id="filter-form">
-        <fieldset>
-            <legend>Recherche</legend>
-            <input type="text" name="search" placeholder="Rechercher un article" value="<?= htmlspecialchars($searchTerm) ?>">
-        </fieldset>
-        <fieldset>
-            <legend>Catégories</legend>
-            <label><input type="checkbox" name="category[]" value="Sucré" <?= in_array('Sucré', $filters) ? 'checked' : '' ?>> Sucré</label><br>
-            <label><input type="checkbox" name="category[]" value="Salé" <?= in_array('Salé', $filters) ? 'checked' : '' ?>> Salé</label><br>
-            <label><input type="checkbox" name="category[]" value="Boisson" <?= in_array('Boisson', $filters) ? 'checked' : '' ?>> Boisson</label><br>
-            <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label><br>
-            <label><input type="checkbox" name="category[]" value="Grade" <?= in_array('Grade', $filters) ? 'checked' : '' ?>> Grade</label>
-        </fieldset>
-        <fieldset>
-            <legend>Trier par</legend>
-            <select name="sort">
-                <option value="name_asc" <?= $orderBy === 'name_asc' ? 'selected' : '' ?>>Ordre alphabétique (A-Z)</option>
-                <option value="name_desc" <?= $orderBy === 'name_desc' ? 'selected' : '' ?>>Ordre anti-alphabétique (Z-A)</option>
-                <option value="price_asc" <?= $orderBy === 'price_asc' ? 'selected' : '' ?>>Prix croissant</option>
-                <option value="price_desc" <?= $orderBy === 'price_desc' ? 'selected' : '' ?>>Prix décroissant</option>
-            </select>
-        </fieldset>
-        <button type="submit" name="reset">Réinitialiser</button>
-    </form>
-</div>
-
-<div>
-    <button id="cart-button" >
-        <a href="cart.php">Panier</a>
-    </button>
-    <p>Nombre d'articles : <span id="count"><?= $cart->count(); ?></span></p>
+    <div id='cart-info'>
+        <button>
+            <a href="cart.php">
+                <img src="assets/logo_caddie.png" alt="Logo du panier">
+                <p>Panier (<span id="count"><?=$cart->count();?></span>)</p>
+            </a>
+        </button>
+    </div>
 </div>
 
 <?php if (!empty($products)) : ?>
