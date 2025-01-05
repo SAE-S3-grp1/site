@@ -8,7 +8,7 @@ const SERVER_API_URL = '/api';
  * If true, the fetch requests are logged in the console.
  * @constant {boolean}
 */
-const DEBUG_FETCHS = true;
+const DEBUG_FETCHS = false;
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.

@@ -14,6 +14,14 @@ body{
     padding-top: 90px;
 }
 
+/* RESPONSIVE */
+@media screen and (max-width: 1000px) {
+    body{
+        width: 1000vw;
+        overflow: auto;
+    }
+}
+
 /* HEADER */
 header{
     position: fixed;
@@ -51,6 +59,9 @@ nav li{
     user-select: none;
     margin-bottom: 10px;
     cursor: pointer;
+}
+.navadd-btn{
+    backdrop-filter: blur(40px);
 }
 
 nav li::after{
@@ -145,6 +156,32 @@ main > div{
     gap: 10px;
     padding: 25px;
     overflow-y: auto
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 1200px) {
+
+    body{
+        width: 100vw;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    nav{
+        min-height: 60vh;
+        border: none;
+        width: 100%;
+        overflow: auto;
+    }
+
+    main{
+        width: 100% !important;
+    }
+    main > div{
+        width: 100%;
+    }
+
 }
 
 /* A PROPERTIE */
