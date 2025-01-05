@@ -67,7 +67,7 @@ function get_items() : void
 function create_item() : void
 {
    $item = Item::create(
-       "Nouvel article", 1, 0, true, 1.99, null);
+       "Nouvel article", 1, 0, true, 1.99, null, "Non défini");
 
    http_response_code(201);
    echo $item;
@@ -77,7 +77,7 @@ function update_item() : void
 {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($_GET['id'], $data['name'], $data['xp'], $data['stocks'], $data['reduction'], $data['price']))
+    if (!isset($_GET['id'], $data['name'], $data['xp'], $data['stocks'], $data['reduction'], $data['price'], $data['categorie']))
     {
         http_response_code(400);
         echo json_encode(['error' => 'Missing parameters']);
@@ -90,6 +90,7 @@ function update_item() : void
     $stocks = filter::int($data['stocks']);
     $reduction = filter::bool($data['reduction']);
     $price = filter::float($data['price']);
+    $categorie = filter::string($data['categorie'], maxLenght: 100);
 
     $item = Item::getInstance($id);
 
@@ -100,7 +101,7 @@ function update_item() : void
         return;
     }
 
-    $item->update($name, $xp, $stocks, $reduction, $price);
+    $item->update($name, $xp, $stocks, $reduction, $price, $categorie);
 
     echo $item;
 }
