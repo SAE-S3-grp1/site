@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
-    <link rel="stylesheet" href="styles/events_style.css">
+    <link rel="stylesheet" href="styles/news_style.css">
 </head>
 <body>
 <?php
