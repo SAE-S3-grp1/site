@@ -19,7 +19,7 @@ class Item extends BaseModel implements JsonSerializable
 
     public function update(string $name, int $xp, int $stocks, float $reduction, float $price, string $categorie_article) : Item
     {
-        $this->DB->query("UPDATE ARTICLE SET nom_article = ?, xp_article = ?, stock_article = ?, reduction_article = ?, prix_article = ?, categorie_article = ? WHERE id_article = ?", "siiidis", [$name, $xp, $stocks, $reduction, $price, $this->id, $categorie_article]);
+        $this->DB->query("UPDATE ARTICLE SET nom_article = ?, xp_article = ?, stock_article = ?, reduction_article = ?, prix_article = ?, categorie_article = ? WHERE id_article = ?", "siiidsi", [$name, $xp, $stocks, $reduction, $price, $categorie_article, $this->id]);
 
         return $this;
     }

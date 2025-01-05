@@ -14,7 +14,6 @@ ini_set('display_errors', 1);
 header('Content-Type: application/json');
 
 $methode = $_SERVER['REQUEST_METHOD'];
-$DB = new DB();
 
 switch ($methode) {
     case 'GET':                      # READ
@@ -25,7 +24,7 @@ switch ($methode) {
         break;
     case 'PUT':                      # UPDATE (données seulement)
         if (tools::methodAccepted('application/json')) {
-            update_item($DB);
+            update_item();
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
