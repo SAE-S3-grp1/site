@@ -30,6 +30,9 @@ H1 {
     margin-top: 80px;
 }
 
+
+
+
 #cart-container table{
     width: 100%;
     border-radius: 15px;
@@ -40,13 +43,16 @@ H1 {
     overflow: hidden;
 }
 
+
+
+
 #cart-container table thead {
     border-bottom: 20px solid #1a1a1a;
     border-radius: 15px;
     overflow: hidden;
 }
 
-#cart-container table th {
+#cart-container table thead th {
     background-color: #1E1E1E;
     color:white;
     padding: 20px;
@@ -55,17 +61,18 @@ H1 {
     font-size: 1.25em;
 }
 
-#cart-container table td {
-    padding: 10px;
-    color: white;
-}
-
 #cart-container tbody tr {
     text-align: center;
 }
 
+
 #cart-container table tbody tr:not(:last-of-type) {
     border-bottom: 1px solid white;
+}
+
+#cart-container table td {
+    padding: 10px;
+    color: white;
 }
 
 #article-cell {
