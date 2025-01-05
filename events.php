@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles/footer_style.css">
     <link rel="stylesheet" href="styles/events_style.css">
 </head>
-<body>
+<body class="body_margin">
 <?php
     require_once 'header.php';
     require_once 'database.php';
