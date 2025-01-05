@@ -1,0 +1,5 @@
+# Activer le module RewriteEngine
+RewriteEngine On
+
+# Rediriger /admin vers /admin/admin.html
+RewriteRule ^admin/?$ /admin/admin.html [L]

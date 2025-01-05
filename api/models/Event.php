@@ -40,13 +40,13 @@ class Event extends BaseModel implements JsonSerializable
     {
         $DB = new \DB();
         $sql = "SELECT * FROM EVENEMENT WHERE id_evenement = ?";
-        $event = $DB->query($sql, "i", [$id]);
+        $event = $DB->select($sql, "i", [$id]);
 
-        if (empty($event)) {
+        if (count($event) == 0) {
             return null;
         }
 
-        return new Event($event[0]);
+        return new Event($id);
     }
 
     public static function create(string $nom, string $description, int $xp, int $places, bool $reductions, float $prix, string $lieu, string $date) : Event
@@ -68,7 +68,7 @@ class Event extends BaseModel implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return $this->DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$this->id])[0];
+        return $this->DB->select("SELECT * FROM EVENEMENT WHERE id_evenement = ?", "i", [$this->id])[0];
 
     }
 

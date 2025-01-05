@@ -6,7 +6,7 @@ use model\File;
 require_once 'DB.php';
 require_once 'tools.php';
 require_once 'filter.php';
-require_once 'Event.php';
+require_once 'models/event.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
@@ -49,7 +49,7 @@ function get_events() : void
         $id = filter::int($_GET['id']);
         $events = Event::getInstance($id);
 
-        if (!$events) {
+        if ($events == null) {
             http_response_code(404);
             echo json_encode(['error' => 'Event not found']);
             return;

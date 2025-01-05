@@ -5,6 +5,12 @@
 const SERVER_API_URL = '/api';
 
 /**
+ * If true, the fetch requests are logged in the console.
+ * @constant {boolean}
+*/
+const DEBUG_FETCHS = true;
+
+/**
  * Effectue une requête AJAX avec la méthode spécifiée.
  * @param {string} endpoint - L'endpoint de la requête.
  * @param {string} method - La méthode HTTP (GET, POST, PUT, PATCH, DELETE).
@@ -45,15 +51,17 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
 
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
+        if (DEBUG_FETCHS) {
+            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: royalblue;');
+        }
         const json = text ? JSON.parse(text) : null;
 
         // Vérification de la réponse
-        if (!response.ok) {
+        if (!response.ok)
             if (json && json.message)
                 throw new Error(json.message);
             else
                 throw new Error(`Erreur: ${response.status} ${response.statusText}`);
-        }
 
         return json;
 
