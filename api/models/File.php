@@ -33,39 +33,106 @@ class File implements JsonSerializable
     }
 
 
-
-    public static function saveFile() : File | null
+    // Non, je ne souhaite pas expliquer ce code.
+    // Il a été (honnetement) généré via Claude (ia) car PHP refuse de
+    // mettre les fichiers dans $_FILES si la requête n'est pas un POST.
+    // Or, on utilise PUT et PATCH pour les fichiers.
+    // Au moment d'écrire ces lignes, je suis vraiment enervé contre PHP.
+    // Villain php
+    public static function saveFile(): File | null
     {
-        // Retourne le nom du fichier si l'enregistrement a réussi, faux sinon.
+        $method = $_SERVER['REQUEST_METHOD'];
 
-        $name = tools::generateUUID() . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        // Gestion des requêtes POST (formulaires classiques)
+        if ($method === 'POST') {
+            if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+                return null;
+            }
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], 'files/' . $name)) {
-            return new File($name);
+            $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+            $name = tools::generateUUID() . '.' . $extension;
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], 'files/' . $name)) {
+                return new File($name);
+            }
+            return null;
+        }
+
+        // Gestion des requêtes PUT/PATCH
+        if ($method === 'PUT' || $method === 'PATCH') {
+            // Lecture du corps de la requête
+            $putData = fopen('php://input', 'r');
+
+            // Création d'un fichier temporaire
+            $tempFile = tempnam(sys_get_temp_dir(), 'upload_');
+            $tempHandle = fopen($tempFile, 'w');
+
+            // Copie des données
+            stream_copy_to_stream($putData, $tempHandle);
+
+            // Fermeture des flux
+            fclose($putData);
+            fclose($tempHandle);
+
+            // Détection du type de fichier
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mimeType = $finfo->file($tempFile);
+
+            // Détermination de l'extension basée sur le type MIME
+            $extensions = [
+                'image/jpeg' => 'jpg',
+                'image/png' => 'png',
+                'image/webp' => 'webp',
+            ];
+
+            $extension = $extensions[$mimeType] ?? 'bin';
+            $name = tools::generateUUID() . '.' . $extension;
+
+            // Déplacement du fichier vers sa destination finale
+            if (rename($tempFile, 'files/' . $name)) {
+                return new File($name);
+            }
+
+            // Nettoyage en cas d'échec
+            @unlink($tempFile);
+            return null;
         }
 
         return null;
     }
 
-    public static function saveImage() : File | null
+    // cf. mon commentaire de la méthode ci dessus
+    public static function saveImage(): File | null
     {
-        // Vérification des données de l'image, puis enregistrement.
-        // Retourne Faux si l'image n'en est pas une, ou si elle n'a pas pu être enregistrée.
-
-        if (!isset($_FILES['file']) || $_FILES['file']['tmp_name'] === '') {
-            return null;
-        }
-
-        // Vérifie le type MIME avec finfo
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $mimeType = $finfo->file($_FILES['file']['tmp_name']);
+        // Types MIME autorisés
         $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-        if (!in_array($mimeType, $allowedTypes)) {
-            return null;
+
+        // Lecture du corps brut de la requête
+        $rawData = file_get_contents('php://input');
+        if (!$rawData) {
+            return null; // Pas de données brutes
         }
 
-        // On s'assure que l'extension du fichier ne causerait pas de problèmes
-        return self::saveFile();
+        // Création d'un fichier temporaire pour analyser l'image
+        $tmpFile = tempnam(sys_get_temp_dir(), 'upload_');
+        file_put_contents($tmpFile, $rawData);
+
+        // Vérification du type MIME
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->file($tmpFile);
+        if (!in_array($mimeType, $allowedTypes)) {
+            unlink($tmpFile); // Nettoyage
+            echo $mimeType;
+            return null; // Type non autorisé
+        }
+
+        // Appel de la méthode `saveFile` avec le fichier temporaire
+        $savedFile = self::saveFile();
+
+        // Nettoyage du fichier temporaire après enregistrement
+        unlink($tmpFile);
+
+        return $savedFile; // Retourne l'objet File ou null si l'enregistrement échoue
     }
 
 

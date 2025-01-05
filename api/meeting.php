@@ -24,9 +24,7 @@ switch ($methode) {
         get_meetings();
         break;
     case 'POST':                     # CREATE
-        if (tools::methodAccepted('multipart/form-data')) {
             create_meeting();
-        }
         break;
     case 'DELETE':                   # DELETE
         delete_meeting();

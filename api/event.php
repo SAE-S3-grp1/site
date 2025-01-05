@@ -29,9 +29,7 @@ switch ($methode) {
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-        if (tools::methodAccepted('multipart/form-data')) {
             update_event();
-        }
         break;
     case 'DELETE':                   # DELETE
         delete_event();
