@@ -1,9 +1,9 @@
 import { refreshNavbar } from "./navbar.js";
-import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from './ajax.js';
+import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST, request } from './ajax.js';
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { getFullFilepath } from "./files.js";
+import { getFullFilepath, openFileDialog } from "./files.js";
 import { getToggleStatus, updateToggleStatus } from "./toggle.js";
 
 // Show skeleton
@@ -143,6 +143,32 @@ async function selectArticle(id_article, li){
     // Update name
     prop_name.onkeyup = ()=>{
         li.textContent = prop_name.value;
+    };
+
+    // Update image
+    document.getElementById('prop_image_edit').onclick = async ()=>{
+        
+        // Get file form
+        const image = await openFileDialog();
+
+        // Update image src
+        const url = URL.createObjectURL(image);
+        prop_image.src = url;
+
+        // Show loader
+        showLoader();
+
+        // Send data
+        try {
+            await requestPATCH('/item.php?id=' + id_article.toString(), image);
+            toast('Image mis à jour avec succès.');
+        } catch (error) {
+            toast(error.message, true);
+        }
+
+        // Stop loader
+        hideLoader();
+
     };
 
     // Hide loader
