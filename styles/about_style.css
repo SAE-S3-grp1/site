@@ -2,6 +2,10 @@
 ****** A PROPOS ******
 **********************/
 
+section{
+    display: flex;
+}
+
 .titre_section_apropos{
     font-size: 70px;
     text-align: center;
