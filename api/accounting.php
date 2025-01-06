@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\Accounting;
 use model\File;
 
@@ -15,6 +15,8 @@ require_once 'models/Accounting.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+tools::checkPermission('p_comptabilite');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 

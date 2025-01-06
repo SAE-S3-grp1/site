@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\File;
 use model\Meeting;
 use model\Member;
@@ -16,6 +16,7 @@ ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
+tools::checkPermission('p_reunion');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 

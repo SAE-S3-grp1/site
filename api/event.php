@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\Event;
 use model\File;
 
@@ -12,6 +12,8 @@ require_once 'models/event.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+tools::checkPermission('p_evenement');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 $DB = new DB();

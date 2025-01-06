@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\File;
 use model\News;
 use model\Role;
@@ -14,6 +14,8 @@ require_once 'models/File.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+tools::checkPermission('p_actualite');
 
 $DB = new DB();
 

@@ -1,12 +1,13 @@
 <?php
-
+session_start();
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
-$methode = $_SERVER['REQUEST_METHOD'];
+tools::checkPermission('p_log');
 
+$methode = $_SERVER['REQUEST_METHOD'];
 
 # On accepte le format multipart/form-data UNIQUEMENT sur les requetes POST et PATCH
 # Sinon, il faudrait coder un parser de multipart/form-data

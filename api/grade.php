@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\File;
 use model\Grade;
 
@@ -13,6 +13,8 @@ require_once 'filter.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+tools::checkPermission('p_grade');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 

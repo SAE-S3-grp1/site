@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\File;
 use model\Member;
 
@@ -14,6 +14,10 @@ require_once 'tools.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+
+tools::checkPermission('p_utilisateur');
+
 
 $methode = $_SERVER['REQUEST_METHOD'];
 

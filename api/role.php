@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\Role;
 
 require_once 'filter.php';
@@ -11,6 +11,10 @@ require_once 'tools.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+
+tools::checkPermission('p_role');
+
 
 $methode = $_SERVER['REQUEST_METHOD'];
 
