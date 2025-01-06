@@ -89,7 +89,7 @@ function update_news() : void
     $name = filter::string($data['name'], maxLenght: 100);
     $description = filter::string($data['description'], maxLenght: 1000);
     $date = filter::string($data['date']);
-    $id_membre = filter::int($data['id_membre']);
+    $id_membre = filter::int($_SESSION['userid']);
 
     $news->update($name, $description, $date, $id_membre);
 
