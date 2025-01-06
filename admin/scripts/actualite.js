@@ -3,7 +3,7 @@ import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { getFullFilepath } from "./files.js";
+import { getFullFilepath, openFileDialog } from "./files.js";
 
 // Show skeleton
 showPropertieSkeleton();
@@ -11,6 +11,7 @@ showPropertieSkeleton();
 // Get inputs
 const prop_image = document.getElementById('prop_image');
 const prop_name = document.getElementById('prop_name');
+const prop_date = document.getElementById('prop_date');
 const prop_content = document.getElementById('prop_content');
 const save_btn = document.getElementById('save_btn');
 const delete_btn = document.getElementById('delete_btn');
@@ -30,7 +31,7 @@ async function fetchData() {
     }
 
     // Transform data to navbar items
-    return actualites.map(actualite => ({label: actualite.nom_actualite, id: actualite.id_actualite}));
+    return actualites.map(actualite => ({label: actualite.titre_actualite, id: actualite.id_actualite}));
 
 }
 
@@ -48,7 +49,8 @@ async function saveNews(id_news){
     // Create data
     const data = {
         name: prop_name.value,
-        content: prop_content.value,
+        description: prop_content.value,
+        date: prop_date.value
     };
 
     // Send data
@@ -104,16 +106,12 @@ async function selectNews(id_news, li){
     // Update displayed information
     if (news.image_actualite) {
         prop_image.src = await getFullFilepath(news.image_actualite, 'none');
-        if (prop_image.src == 'none'){
-            prop_image.hidden = true;
-        } else {
-            prop_image.hidden = false;
-        }
     } else {
         prop_image.hidden = true;
     }
-    prop_name.value = news.nom_actualite;
-    prop_content.value = news.content_actualite;
+    prop_name.value = news.titre_actualite;
+    prop_date.value = news.date_actualite.split(" ")[0];
+    prop_content.value = news.contenu_actualite;
 
     // Update save button
     save_btn.onclick = ()=>{
@@ -141,6 +139,32 @@ async function selectNews(id_news, li){
         li.textContent = prop_name.value;
     };
 
+    // Update image
+    document.getElementById('prop_img_edit').onclick = async ()=>{
+        
+        // Get file form
+        const image = await openFileDialog();
+
+        // Update image src
+        const url = URL.createObjectURL(image);
+        prop_image.src = url;
+
+        // Show loader
+        showLoader();
+
+        // Send data
+        try {
+            await requestPATCH('/news.php?id=' + id_news.toString(), image);
+            toast('Image mis à jour avec succès.');
+        } catch (error) {
+            toast(error.message, true);
+        }
+
+        // Stop loader
+        hideLoader();
+
+    };
+
     // Hide loader
     hideLoader();
 
@@ -157,8 +181,8 @@ new_btn.onclick = async ()=>{
 
     // Create new news
     try {
-        const id = await requestPOST('/news.php');
-        refreshNavbar(fetchData, selectNews, id);
+        const { id_actualite } = await requestPOST('/news.php');
+        refreshNavbar(fetchData, selectNews, id_actualite);
     } catch (error) {
         toast("Erreur lors de la création de l'actualtié", true);
         hideLoader();

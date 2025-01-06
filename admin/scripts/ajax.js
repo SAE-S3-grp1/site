@@ -41,7 +41,6 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
             options.body = data;
         } else if (data instanceof FormData){
             options.body = data;
-            console.log('sus')
         } else if (data) {
             options.headers['Content-Type'] = 'application/json';
             options.body = JSON.stringify(data);

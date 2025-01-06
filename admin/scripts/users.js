@@ -58,13 +58,11 @@ async function saveUser(id_user){
         xp: prop_xp.value === '' ? 0 : prop_xp.value,
         roles: []
     };
-const roles = {roles: Array.from(prop_roles.children).filter(role => role.classList.contains('selected')).map(role => parseInt(role.getAttribute('id')))}
-
-console.log(roles);
 
     // Send data
     try {
         await requestPUT('/users.php?id=' + id_user.toString(), data);
+        const roles = {roles: Array.from(prop_roles.children).filter(role => role.classList.contains('selected')).map(role => parseInt(role.getAttribute('id')))}
         await requestPUT('/userole.php?id=' + id_user.toString(), roles);
         toast('Grade mis à jour avec succès.');
         selectUser(id_user);

@@ -13,7 +13,7 @@ export async function getFullFilepath(filename, defaultFile) {
         return defaultFile;
     }
 
-    const fullFilePath = `/api/files/${filename}`;
+    const fullFilePath = getFileBucketUrl(filename);
     try {
         const response = await fetch(fullFilePath);
         if (!response.ok) {
@@ -31,11 +31,11 @@ export async function getFullFilepath(filename, defaultFile) {
  *
  * @returns {Promise<File|Blob>} A promise that resolves to a FormData object containing the selected file.
  */
-export async function openFileDialog() {
+export async function openFileDialog(accept = 'image/*') {
     return new Promise((resolve, reject) => {
         const input = document.createElement('input');
         input.type = 'file';
-        input.accept = 'image/*';
+        input.accept = accept;
 
         input.onchange = () => {
             const file = input.files[0];
@@ -48,4 +48,14 @@ export async function openFileDialog() {
 
         input.click();
     });
+}
+
+/**
+ * Retrieves the URL of a file stored in the file bucket.
+ * 
+ * @param {string} filename - The name of the file to retrieve the URL for.
+ * @returns {string} The URL of the file.
+ */
+export function getFileBucketUrl(filename){
+    return `/api/files/${filename}`;
 }
