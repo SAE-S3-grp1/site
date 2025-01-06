@@ -58,10 +58,14 @@ async function saveUser(id_user){
         xp: prop_xp.value === '' ? 0 : prop_xp.value,
         roles: []
     };
+const roles = {roles: Array.from(prop_roles.children).filter(role => role.classList.contains('selected')).map(role => parseInt(role.getAttribute('id')))}
+
+console.log(roles);
 
     // Send data
     try {
         await requestPUT('/users.php?id=' + id_user.toString(), data);
+        await requestPUT('/userole.php?id=' + id_user.toString(), roles);
         toast('Grade mis à jour avec succès.');
         selectUser(id_user);
     } catch (error) {
@@ -170,6 +174,39 @@ async function selectUser(id_member, li){
         hideLoader();
 
     };
+
+    // Delete roles
+    while (prop_roles.firstChild)
+        prop_roles.removeChild(prop_roles.firstChild);
+
+    // Add roles
+    const roles = await requestGET('/role.php'); // Get all roles
+    const user_roles = (await requestGET(`/userole.php?id=${id_member}`)).map(role => role.id_role); // Get user roles;
+    roles.forEach(role => {
+
+        // Create role button
+        const button = document.createElement('p');
+        button.textContent = role.nom_role;
+        button.setAttribute('id', role.id_role);
+        prop_roles.appendChild(button);
+
+        // Check it if added
+        if(user_roles.includes(role.id_role))
+            button.classList.add('selected');
+
+        // Add event
+        button.onclick = async ()=>{
+
+            // Add or remove role
+            if(button.classList.contains('selected')){
+                button.classList.remove('selected');
+            } else {
+                button.classList.add('selected');
+            }
+
+        };
+
+    });
 
     // Hide loader
     hideLoader();

@@ -133,7 +133,7 @@ function addUpdloadButton(){
 
 }
 
-function uploadFile(file, name, date){
+async function uploadFile(file, name, date){
 
     // Show loader
     showLoader();
@@ -146,7 +146,7 @@ function uploadFile(file, name, date){
 
     // Send request
     try{
-        requestPOST('/accounting.php', form_data);
+        await requestPOST('/accounting.php', form_data);
         toast("Fichier uploadé avec succès");
         updateView();
     } catch (error) {
