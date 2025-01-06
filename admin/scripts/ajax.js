@@ -60,7 +60,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Vérification de la réponse
         if (!response.ok)
             if (json && json.error)
-                if (json.error == 'Unauthorized')
+                if (json.error == 'Unauthorized' || json.error == 'Forbidden')
                     window.location.href = 'unauthorized.html';
                 else
                     throw new Error(json.error);

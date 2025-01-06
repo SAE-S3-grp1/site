@@ -20,7 +20,7 @@ const prop_xp = document.getElementById('prop_xp');
 const prop_tp = document.getElementById('prop_tp');
 
 /**
- * Reloads the navigation bar with grade items.
+ * Reloads the navigation bar with user items.
  */
 async function fetchData() {
 
@@ -38,10 +38,10 @@ async function fetchData() {
 }
 
 /**
- * Saves the grade information.
+ * Saves the user information.
  *
- * @param {number} id_user - The ID of the grade to be saved.
- * @returns {Promise<void>} A promise that resolves when the grade is successfully saved.
+ * @param {number} id_user - The ID of the user to be saved.
+ * @returns {Promise<void>} A promise that resolves when the user is successfully saved.
  * @throws Will alert an error message if the request fails.
  */
 async function saveUser(id_user){
@@ -64,7 +64,7 @@ async function saveUser(id_user){
         await requestPUT('/users.php?id=' + id_user.toString(), data);
         const roles = {roles: Array.from(prop_roles.children).filter(role => role.classList.contains('selected')).map(role => parseInt(role.getAttribute('id')))}
         await requestPUT('/userole.php?id=' + id_user.toString(), roles);
-        toast('Grade mis à jour avec succès.');
+        toast('Utiliateur mis à jour avec succès.');
         selectUser(id_user);
     } catch (error) {
         toast(error.message, true);
@@ -76,7 +76,7 @@ async function saveUser(id_user){
 }
 
 /**
- * Deletes the grade from the DB.
+ * Deletes the user from the DB.
 */
 async function deleteUser(id_user){
 
@@ -220,7 +220,7 @@ new_btn.onclick = async ()=>{
     // Show loader
     showLoader();
 
-    // Create new grade
+    // Create new user
     try {
         const { id_membre } = await requestPOST('/users.php');
         refreshNavbar(fetchData, selectUser, id_membre);

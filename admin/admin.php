@@ -37,7 +37,7 @@ if (!(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'])){
     <!-- Navigation -->
     <nav>
 
-        <h1>ADIIL - Admin</h1>
+        <h1 onclick="window.location.href='/'">ADIIL - Admin</h1>
 
         <ul>
 

@@ -103,11 +103,11 @@ async function selectReunion(id_reunion, li){
 // Handle new reunion
 new_btn.onclick = async ()=>{
 
-    // Show loader
-    showLoader();
-
     // Get file
     const file = await openFileDialog("application/pdf");
+
+    // Show loader
+    showLoader();
 
     // Create form data
     const form_data = new FormData();

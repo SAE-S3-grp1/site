@@ -427,6 +427,13 @@ textarea{
     border-radius: 10px;
     animation: skeleton-loading 0.7s linear infinite alternate;
 }
+.skeleton-preview{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    animation: skeleton-loading 0.7s linear infinite alternate;
+}
 
 @keyframes skeleton-loading {
     from{
