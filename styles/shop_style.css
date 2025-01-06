@@ -8,6 +8,7 @@ H1 {
     line-height: 100px;
     font-weight: 500;
     font-family: "Koulen", sans-serif;
+    margin-bottom: 75px;
 }
 
 
@@ -16,22 +17,27 @@ H1 {
 #principal-section{
     display : flex;
     flex-direction: row;
-    gap: 30%;
+    justify-content: space-between;
 }
 
 
-#filter-section {
+#filter-form {
     background-color: rgba(0, 0, 0, 0.107);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 10px 7px 4px rgba(0, 0, 0, 0.107);
     font-size: 1.2em;
     color: rgb(169, 169, 169);
-    flex: 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    gap: 20px;
+    width: 65vw;
 }
 
 
-#filter-section fieldset{
+#filter-form fieldset{
     all: unset;
 }
 
@@ -43,24 +49,52 @@ H1 {
     font-size: 16px;               
     color: white;  
     padding-left: 40px;
-    background-image: url("/assets/logo_recherche.png"); /* Remplace 'loupe.png' par ton logo */
+    background-image: url("/assets/logo_recherche.png");
     background-position: 10px center;
     background-repeat: no-repeat;
     background-size: 20px 20px;
 }
 
-/* Lorsque le champ est rempli, on cache l'icône */
-#search-input:not(:placeholder-shown) {
+#search-input:not(:placeholder-shown) { /* Lorsque le champ est rempli, on cache l'icône */
     background-image: none;
     padding-left: 2vh;
 }
 
 
+#filter-form div:first-of-type{
+    display: flex;
+    flex-direction: row;
+    height: 4vh;
+}
 
+#filter-form div:first-of-type label{
+    width: 100px;
+}
 
-/***Concernant le panier***/
+#filter-form div:first-of-type select{
+    all: unset;
+    font-size: 16px;
+    border: 2px solid rgb(169, 169, 169);
+    background-color: #1E1E1E;
+    border-radius: 5px;
+    padding: 0.80vh 1.5vh 0.80vh 1vh;
+    background: #1E1E1E url('/assets/chevron_logo.png') no-repeat right 4px center;
+    background-size: 12px 12px;
+}
+
+#filter-form button{
+    border: none;
+    cursor: pointer;
+    background-color: rgb(27, 27, 27);
+    color: rgb(169, 169, 169);
+    font-size: 1em;
+    width: auto;
+    font-style: italic;
+    text-decoration: underline;
+}
+
 #cart-info {
-    flex: 1;
+    margin-right: 4vw;
 }
 
 #cart-info button {
@@ -140,7 +174,7 @@ H1 {
     margin-bottom: 30px;
 }
 
-#one-product p:first-of-type{
+#one-product div:first-of-type p:first-of-type{
     word-wrap: break-word;
     margin-top: auto;
     margin-bottom: 20px;
@@ -150,7 +184,7 @@ H1 {
     
 }
 
-#one-product p:nth-of-type(2) {
+#one-product div:first-of-type p:nth-of-type(2) {
     word-wrap: break-word;
     margin-top: auto;
     margin-bottom: 10px;
@@ -160,16 +194,26 @@ H1 {
     
 }
 
+#stock-status{
+    font-size: 1.2em;
+}
+
+
 #add-to-cart-button {
-    padding: 10px;
+    display: inline-block;
     background-color: rgb(119, 241, 190);
     color: #1E1E1E;
-    font-size: 1em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
     width: 100%;
+    padding: 10px;
+}
+
+#add-to-cart-button:hover {
+    background-color: #1E1E1E;
+    color: rgb(119, 241, 190);
 }
 
 #out-of-stock {

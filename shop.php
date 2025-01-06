@@ -28,11 +28,26 @@
             });
 
             // Soumission du formulaire lorsqu'une catégorie est sélectionnée
+            const detailsElement = document.querySelector("details");
+            // Restaurer l'état ouvert du menu si nécessaire
+            if (sessionStorage.getItem("details-open") === "true") {
+                detailsElement.open = true;
+            }
+            // Empêcher la fermeture du menu après soumission
             const categoryCheckboxes = document.querySelectorAll("input[name='category[]']");
             categoryCheckboxes.forEach(function (checkbox) {
                 checkbox.addEventListener("change", function () {
+                    // Sauvegarder l'état du menu
+                    sessionStorage.setItem("details-open", "true");
+                    // Soumettre le formulaire
                     form.submit();
                 });
+            });
+            // Nettoyer l'état lorsque l'utilisateur ferme manuellement le menu
+            detailsElement.addEventListener("toggle", function () {
+                if (!detailsElement.open) {
+                    sessionStorage.removeItem("details-open");
+                }
             });
 
             // Soumission du formulaire lorsqu'une option de tri est sélectionnée
@@ -133,31 +148,31 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 <H1>LA BOUTIQUE</H1>
 
 <div id="principal-section">
-    <div id="filter-section">
-        <form method="post" id="filter-form">
+    <form method="post" id="filter-form">
+        <fieldset>
+            <input id = "search-input" type="text" name="search" placeholder="Rechercher un article" value="<?= htmlspecialchars($searchTerm) ?>">
+        </fieldset>
+        <details>
+            <summary>Catégories</summary>
             <fieldset>
-                <input id = "search-input" type="text" name="search" placeholder="Rechercher un article" value="<?= htmlspecialchars($searchTerm) ?>">
-            </fieldset>
-            <fieldset>
-                <legend>Catégories</legend>
                 <label><input type="checkbox" name="category[]" value="Sucré" <?= in_array('Sucré', $filters) ? 'checked' : '' ?>> Sucré</label><br>
                 <label><input type="checkbox" name="category[]" value="Salé" <?= in_array('Salé', $filters) ? 'checked' : '' ?>> Salé</label><br>
                 <label><input type="checkbox" name="category[]" value="Boisson" <?= in_array('Boisson', $filters) ? 'checked' : '' ?>> Boisson</label><br>
                 <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label><br>
                 <label><input type="checkbox" name="category[]" value="Grade" <?= in_array('Grade', $filters) ? 'checked' : '' ?>> Grade</label>
             </fieldset>
-            <fieldset>
-                <legend>Trier par</legend>
-                <select name="sort">
-                    <option value="name_asc" <?= $orderBy === 'name_asc' ? 'selected' : '' ?>>Ordre alphabétique (A-Z)</option>
-                    <option value="name_desc" <?= $orderBy === 'name_desc' ? 'selected' : '' ?>>Ordre anti-alphabétique (Z-A)</option>
-                    <option value="price_asc" <?= $orderBy === 'price_asc' ? 'selected' : '' ?>>Prix croissant</option>
-                    <option value="price_desc" <?= $orderBy === 'price_desc' ? 'selected' : '' ?>>Prix décroissant</option>
-                </select>
-            </fieldset>
-            <button type="submit" name="reset">Réinitialiser</button>
-        </form>
-    </div>
+        </details>
+        <div>
+            <label>Trier par</label>
+            <select name="sort">
+                <option value="name_asc" <?= $orderBy === 'name_asc' ? 'selected' : '' ?>>Ordre alphabétique (A-Z)</option>
+                <option value="name_desc" <?= $orderBy === 'name_desc' ? 'selected' : '' ?>>Ordre anti-alphabétique (Z-A)</option>
+                <option value="price_asc" <?= $orderBy === 'price_asc' ? 'selected' : '' ?>>Prix croissant</option>
+                <option value="price_desc" <?= $orderBy === 'price_desc' ? 'selected' : '' ?>>Prix décroissant</option>
+            </select>
+        </div>
+        <button type="submit" name="reset">Réinitialiser</button>
+    </form>
 
     <div id='cart-info'>
         <button>
@@ -184,9 +199,9 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     <div>
                         <p id="stock-status">
                             <?php if ((int)$product['stock_article'] > 0): ?>
-                                <button id="add-to-cart-button" >
-                                    <a class="addCart" href="cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">Ajouter au panier</a>
-                                </button>
+                                <a class="addCart" id="add-to-cart-button" href="cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
+                                    Ajouter au panier
+                                </a>
                             <?php else: ?>
                                 <button id="out-of-stock">Épuisé</button>
                             <?php endif; ?>
