@@ -1,5 +1,7 @@
 <?php
 
+require_once 'DB.php';
+
 class tools
 {
     public static function generateUUID(){
