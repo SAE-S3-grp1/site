@@ -70,7 +70,7 @@ function get_news() : void
 
 function create_news() : void
 {
-    $news = News::create("Nouvel article", "Description de l'article", "2021-01-01", 1, null);
+    $news = News::create("Nouvel article", "Description de l'article", "2021-01-01", $_SESSION['userid'], null);
     echo $news;
 }
 
@@ -90,6 +90,8 @@ function update_news() : void
     $description = filter::string($data['description'], maxLenght: 1000);
     $date = filter::string($data['date']);
     $id_membre = filter::int($data['id_membre']);
+
+    $news->update($name, $description, $date, $id_membre);
 
     echo $news;
 }
@@ -125,7 +127,7 @@ function delete_news() : void
 
     if ($news == null) {
         http_response_code(404);
-        echo json_encode(['error' => 'Role not found']);
+        echo json_encode(['error' => 'News not found']);
         return;
     }
 
