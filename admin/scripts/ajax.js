@@ -45,6 +45,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         } else if (data) {
             options.headers['Content-Type'] = 'application/json';
             options.body = JSON.stringify(data);
+            console.log(options.body)
         }
 
         // Fetch data
@@ -53,8 +54,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
         if (DEBUG_FETCHS) {
-            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;');
-            console.log(`%c${text}`, 'color: powderblue;');
+            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
         }
         const json = text ? JSON.parse(text) : null;
 

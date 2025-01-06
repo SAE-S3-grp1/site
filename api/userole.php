@@ -31,7 +31,7 @@ switch ($methode) {
         break;
     case 'PUT':
         if (tools::methodAccepted('application/json')) {
-            update_role();
+            setUserRoles();
         }
         break;
 
@@ -82,9 +82,15 @@ function setUserRoles() : void
             echo json_encode(["message" => "User not found"]);
             return;
         }
+        $val = json_decode(file_get_contents('php://input'), true);
 
-        $roles = filter::json($_POST['roles']);
+        if (!isset($val['roles'])) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Missing parameters']);
+            return;
+        }
 
+        $roles = filter::json($val['roles']);
         $success = $data->setRoles($roles);
 
         if ($success) {
