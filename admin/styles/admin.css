@@ -116,6 +116,7 @@
     #main{
         flex-direction: column-reverse;
         gap: 30px;
+        padding: 10px;
     }
     #main nav{
         width: 100%;
