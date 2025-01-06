@@ -83,7 +83,6 @@ H1 {
     text-align: center;
 }
 
-
 #cart-container table tbody tr:not(:last-of-type) {
     border-bottom: 1px solid white;
 }

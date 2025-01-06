@@ -108,62 +108,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div>
     <button id="cart-button" >
-        <a href="cart.php">Retourner au panier</a>
+        <a href="cart.php">
+            <img src="assets/fleche_retour.png" alt="Fleche de retour">
+            Retourner au panier
+        </a>
     </button>
 </div>
 
 <div>
-    <table>
-        <thead>
-            <tr>
-                <th>Article</th>
-                <th>Quantité</th>
-                <th>Prix Unitaire</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($cart_items as $product_id => $item): ?>
+    <div>
+        <table>
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($item['nom_article']); ?></td>
-                    <td><?php echo $item['quantite']; ?></td>
-                    <td><?php echo number_format($item['prix_article'], 2, ',', ' ') . " €"; ?></td>
-                    <td><?php echo number_format($item['prix_article'] * $item['quantite'], 2, ',', ' ') . " €"; ?></td>
+                    <th>Article</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Total</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($cart_items as $product_id => $item): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($item['nom_article']); ?></td>
+                        <td><?php echo $item['quantite']; ?></td>
+                        <td><?php echo number_format($item['prix_article'], 2, ',', ' ') . " €"; ?></td>
+                        <td><?php echo number_format($item['prix_article'] * $item['quantite'], 2, ',', ' ') . " €"; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <h3>Total &nbsp : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
+    </div>
+
+    <form method="POST" action="order.php">
+        
+        <h3>Paiement</h3>
+
+        <label for="mode_paiement">Mode de Paiement :</label>
+        <select id="mode_paiement" name="mode_paiement" required>
+            <option value="carte_credit">Carte de Crédit</option>
+            <option value="paypal">PayPal</option>
+        </select><br><br>
+
+        <div id="carte_credit" class="mode_paiement_fields">
+            <label for="numero_carte">Numéro de Carte :</label>
+            <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
+
+            <label for="expiration">Date d'Expiration :</label>
+            <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
+
+            <label for="cvv">CVV :</label>
+            <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
+        </div>
+
+        <div id="paypal" class="mode_paiement_fields" style="display: none;">
+            <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
+        </div>
+
+        <button type="submit" id="finalise-order-button">Valider la commande</button>
+    </form>
 </div>
-
-<h3>Total : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
-
-<form method="POST" action="order.php">
-
-    <label for="mode_paiement">Mode de Paiement :</label>
-    <select id="mode_paiement" name="mode_paiement" required>
-        <option value="carte_credit">Carte de Crédit</option>
-        <option value="paypal">PayPal</option>
-    </select><br><br>
-
-    <div id="carte_credit" class="mode_paiement_fields">
-        <label for="numero_carte">Numéro de Carte :</label>
-        <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
-
-        <label for="expiration">Date d'Expiration :</label>
-        <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
-
-        <label for="cvv">CVV :</label>
-        <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
-    </div>
-
-    <div id="paypal" class="mode_paiement_fields" style="display: none;">
-        <label for="compte_paypal">Connectez-vous à votre compte PayPal :</label><br>
-        <button type="button">Se connecter à PayPal</button><br><br>
-    </div>
-
-    <button type="submit">Valider la commande</button>
-</form>
-
 
 
 
