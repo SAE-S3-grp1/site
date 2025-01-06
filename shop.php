@@ -141,6 +141,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 
 
 
+
 <!--------------->
 <!------HTML----->
 <!--------------->
@@ -158,8 +159,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                 <label><input type="checkbox" name="category[]" value="Sucré" <?= in_array('Sucré', $filters) ? 'checked' : '' ?>> Sucré</label><br>
                 <label><input type="checkbox" name="category[]" value="Salé" <?= in_array('Salé', $filters) ? 'checked' : '' ?>> Salé</label><br>
                 <label><input type="checkbox" name="category[]" value="Boisson" <?= in_array('Boisson', $filters) ? 'checked' : '' ?>> Boisson</label><br>
-                <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label><br>
-                <label><input type="checkbox" name="category[]" value="Grade" <?= in_array('Grade', $filters) ? 'checked' : '' ?>> Grade</label>
+                <label><input type="checkbox" name="category[]" value="Merch" <?= in_array('Merch', $filters) ? 'checked' : '' ?>> Merch</label>
             </fieldset>
         </details>
         <div>

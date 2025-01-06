@@ -67,8 +67,6 @@ $cart = new cart($db);
     }
 ?>
 
-
-
 <!--------------->
 <!------HTML----->
 <!--------------->
@@ -136,7 +134,41 @@ $cart = new cart($db);
                     <th>Total &nbsp : </th>
                     <td><?= number_format($cart->total(), 2, ',', ' ') ?> €</td>
                 </tr>
-            </tfoot>
+                
+                <?php if (!empty($_SESSION['userid'])) {
+                    // Vérifie l'adhésion de l'utilisateur
+                    $adherant = $db->select(
+                        "SELECT * FROM ADHESION 
+                        INNER JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade 
+                        WHERE ADHESION.id_membre = ? AND reduction_grade > 0",
+                        "i",
+                        [$_SESSION['userid']]
+                    );
+
+                    //récupérer la réduction liée au grade
+                    if (!empty($adherant)) {
+                        $reductionGrade = floatval($adherant[0]["reduction_grade"] ?? 0);
+                        $user_reduction = 1 - ($reductionGrade / 100);
+                        $totalWithReduc = 0;
+
+                        // Calcule le total en tenant compte des réductions applicables
+                        foreach ($products as $product) {
+                            if (!empty($product['reduction_article'])) { // Vérifie si une réduction est applicable
+                                $totalWithReduc += $product['prix_article'] * $_SESSION['cart'][$product['id_article']] * $user_reduction;
+                            } else {
+                                $totalWithReduc += $product['prix_article'] * $_SESSION['cart'][$product['id_article']];
+                            }
+                        }
+                        ?>
+
+                        <tr>
+                            <th>Total avec réductions &nbsp : </th>
+                            <td><?= number_format($totalWithReduc, 2, ',', ' ') ?> €</td>
+                        </tr>
+
+                    <?php }
+                }?>
+            <tfoot>
         </table>
     </form>
 </div>

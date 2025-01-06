@@ -43,8 +43,8 @@ H1 {
 }
 
 #one-product div:first-of-type img {
-    width: 15vh;
-    height: 15vh;
+    width: 11vh;
+    height: 11vh;
     overflow: hidden;
     border-radius: 20px;
     align-self: center;

@@ -72,14 +72,15 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
                     <div>
                         <p id="adhesion-status">
 
-                        <?php
-                        $unAdhérant = $db->select("SELECT * FROM GRADE INNER JOIN ADHESION ON GRADE.id_grade = ADHESION.id_grade INNER JOIN MEMBRE ON ADHESION.id_membre = MEMBRE.id_membre WHERE GRADE.id_grade = ? AND MEMBRE.id_membre = ?;",
-                        "ii",
-                        [$product['id_grade'], $_SESSION['userid']]
-                        );
-                        ?>
-
-                            <?php if (!empty($_SESSION) && !empty($unAdhérant)): ?>
+                            <?php
+                            if (!empty($_SESSION)) {
+                                $unAdherant = $db->select("SELECT * FROM GRADE INNER JOIN ADHESION ON GRADE.id_grade = ADHESION.id_grade INNER JOIN MEMBRE ON ADHESION.id_membre = MEMBRE.id_membre WHERE GRADE.id_grade = ? AND MEMBRE.id_membre = ?;",
+                                "ii",
+                                [$product['id_grade'], $_SESSION['userid']]
+                                );
+                                ?>
+                            <?php } ?>
+                            <?php if (!empty($_SESSION) && !empty($unAdherant)): ?>
                                 <button id="detention">Vous détenez ce grade</button>
                             <?php else: ?>
                                 <a id="buy-button" href="grade_subscription.php?id=<?= htmlspecialchars($product['id_grade']) ?>">

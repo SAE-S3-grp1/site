@@ -59,7 +59,7 @@ $total = 0;
 $cart = $_SESSION['cart'];
 $product_ids = array_keys($cart);
 $placeholders = implode(",", array_fill(0, count($product_ids), "?"));
-$query = "SELECT id_article, nom_article, prix_article FROM ARTICLE WHERE id_article IN ($placeholders)";
+$query = "SELECT * FROM ARTICLE WHERE id_article IN ($placeholders)";
 $types = str_repeat("i", count($product_ids));
 $products = $db->select($query, $types, $product_ids);
 
@@ -139,6 +139,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </table>
 
         <h3>Total &nbsp : &nbsp<?php echo number_format($total, 2, ',', ' '); ?> €</h3>
+        <?php if (!empty($_SESSION['userid'])) {
+                    // Vérifie l'adhésion de l'utilisateur
+                    $adherant = $db->select(
+                        "SELECT * FROM ADHESION 
+                        INNER JOIN GRADE ON ADHESION.id_grade = GRADE.id_grade 
+                        WHERE ADHESION.id_membre = ? AND reduction_grade > 0",
+                        "i",
+                        [$_SESSION['userid']]
+                    );
+
+                    //récupérer la réduction liée au grade
+                    if (!empty($adherant)) {
+                        $reductionGrade = floatval($adherant[0]["reduction_grade"] ?? 0);
+                        $user_reduction = 1 - ($reductionGrade / 100);
+                        $totalWithReduc = 0;
+
+                        // Calcule le total en tenant compte des réductions applicables
+                        foreach ($products as $product) {
+                            if (!empty($product['reduction_article'])) { // Vérifie si une réduction est applicable
+                                $totalWithReduc += $product['prix_article'] * $_SESSION['cart'][$product['id_article']] * $user_reduction;
+                            } else {
+                                $totalWithReduc += $product['prix_article'] * $_SESSION['cart'][$product['id_article']];
+                            }
+                        }
+                        ?>
+                        
+                        <h3>Total avec réductions &nbsp : &nbsp <?= number_format($totalWithReduc, 2, ',', ' ') ?> €</h3>
+                        
+                    <?php }
+                }?>
     </div>
 
     <div>    

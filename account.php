@@ -388,7 +388,7 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
 
     // Ajouter LIMIT si "viewAll" n'est pas activé
     if (!$viewAll) {
-        $sql .= " LIMIT 3";
+        $sql .= " LIMIT 6";
     }
 
     // Exécuter la requête
