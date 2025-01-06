@@ -69,7 +69,7 @@ if (!(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'])){
             ?>
             
             <?php
-                if (tools::hasPermission('p_grades')){
+                if (tools::hasPermission('p_grade')){
                     echo '
             <li perm="grades">
                 <img src="ressources/panels_icons/grades.svg" alt="Icone des grades">
