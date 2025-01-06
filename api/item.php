@@ -1,20 +1,21 @@
 <?php
-
+session_start();
 use model\File;
 use model\Item;
 
 require_once 'DB.php';
 require_once 'tools.php';
 require_once 'filter.php';
-require_once 'Item.php';
+require_once 'models/Item.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
+tools::checkPermission('p_boutique');
+
 $methode = $_SERVER['REQUEST_METHOD'];
-$DB = new DB();
 
 switch ($methode) {
     case 'GET':                      # READ
@@ -25,13 +26,11 @@ switch ($methode) {
         break;
     case 'PUT':                      # UPDATE (données seulement)
         if (tools::methodAccepted('application/json')) {
-            update_item($DB);
+            update_item();
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-        if (tools::methodAccepted('multipart/form-data')) {
             update_image();
-        }
         break;
     case 'DELETE':                   # DELETE
         delete_item();
@@ -56,8 +55,6 @@ function get_items() : void
             return;
         }
 
-        $item = $item[0];
-
     } else {
         $item = Item::bulkFetch();
     }
@@ -69,7 +66,7 @@ function get_items() : void
 function create_item() : void
 {
    $item = Item::create(
-       "Nouvel article", 1, 0, true, 1.99, null);
+       "Nouvel article", 1, 0, true, 1.99, null, "Non défini");
 
    http_response_code(201);
    echo $item;
@@ -79,7 +76,7 @@ function update_item() : void
 {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (!isset($_GET['id'], $data['name'], $data['xp'], $data['stocks'], $data['reduction'], $data['price']))
+    if (!isset($_GET['id'], $data['name'], $data['xp'], $data['stocks'], $data['reduction'], $data['price'], $data['categorie']))
     {
         http_response_code(400);
         echo json_encode(['error' => 'Missing parameters']);
@@ -92,6 +89,7 @@ function update_item() : void
     $stocks = filter::int($data['stocks']);
     $reduction = filter::bool($data['reduction']);
     $price = filter::float($data['price']);
+    $categorie = filter::string($data['categorie'], maxLenght: 100);
 
     $item = Item::getInstance($id);
 
@@ -102,7 +100,7 @@ function update_item() : void
         return;
     }
 
-    $item->update($name, $xp, $stocks, $reduction, $price);
+    $item->update($name, $xp, $stocks, $reduction, $price, $categorie);
 
     echo $item;
 }

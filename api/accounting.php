@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\Accounting;
 use model\File;
 
@@ -16,7 +16,7 @@ ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
-$DB = new DB();
+tools::checkPermission('p_comptabilite');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 
@@ -26,12 +26,10 @@ switch ($methode) {
         break;
 
     case 'POST':                     # CREATE
-        if (tools::methodAccepted('multipart/form-data')) {
-            create_accounting($DB);
-        }
+            create_accounting();
         break;
     case 'DELETE':                   # DELETE
-            delete_accounting($DB);
+            delete_accounting();
         break;
     default:
         # 405 Method Not Allowed
@@ -94,7 +92,7 @@ function create_accounting(): void
 
 }
 
-function delete_accounting($DB) : void
+function delete_accounting() : void
 {
     if (!isset($_GET['id'])) {
         http_response_code(400);

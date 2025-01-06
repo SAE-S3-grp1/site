@@ -5,6 +5,7 @@ namespace model;
 use JsonSerializable;
 
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/Member.php';
 
 class Meeting extends BaseModel implements JsonSerializable
 {

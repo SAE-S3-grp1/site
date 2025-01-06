@@ -3,6 +3,7 @@ import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
+import { getToggleStatus, updateToggleStatus } from "./toggle.js";
 
 // Show skeleton
 showPropertieSkeleton();
@@ -58,17 +59,17 @@ async function saveRole(id_role){
     const data = {
         name: prop_nom_role.value === '' ? 'N/A' : prop_nom_role.value,
         permissions: {
-            p_log: prop_logs.classList.contains('toggle-active'),
-            p_boutique: prop_boutique.classList.contains('toggle-active'),
-            p_reunion: prop_reunions.classList.contains('toggle-active'),
-            p_utilisateur: prop_users.classList.contains('toggle-active'),
-            p_grade: prop_grades.classList.contains('toggle-active'),
-            p_role: prop_roles.classList.contains('toggle-active'),
-            p_actualite: prop_actualites.classList.contains('toggle-active'),
-            p_evenement: prop_events.classList.contains('toggle-active'),
-            p_comptabilite: prop_comptabilite.classList.contains('toggle-active'),
-            p_achat: prop_historique.classList.contains('toggle-active'),
-            p_moderation: prop_moderation.classList.contains('toggle-active')
+            p_log: getToggleStatus(prop_logs),
+            p_boutique: getToggleStatus(prop_boutique),
+            p_reunion: getToggleStatus(prop_reunions),
+            p_utilisateur: getToggleStatus(prop_users),
+            p_grade: getToggleStatus(prop_grades),
+            p_role: getToggleStatus(prop_roles),
+            p_actualite: getToggleStatus(prop_actualites),
+            p_evenement: getToggleStatus(prop_events),
+            p_comptabilite: getToggleStatus(prop_comptabilite),
+            p_achat: getToggleStatus(prop_historique),
+            p_moderation: getToggleStatus(prop_moderation)
         }
     };
 
@@ -123,10 +124,6 @@ async function selectRole(id_role, li){
     const role = await requestGET(`/role.php?id=${id_role}`);
 
     // Update displayed information
-    function updateToggleStatus(toggle, status){
-        if(status) toggle.classList.add('toggle-active');
-        else toggle.classList.remove('toggle-active');
-    }
     prop_nom_role.value = role.nom_role;
     updateToggleStatus(prop_logs, role.p_log);
     updateToggleStatus(prop_boutique, role.p_boutique);

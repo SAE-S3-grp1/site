@@ -7,3 +7,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
         });
     });
 });
+
+
+export function updateToggleStatus(toggle, status){
+    if(status) toggle.classList.add('toggle-active');
+    else toggle.classList.remove('toggle-active');
+}
+export function getToggleStatus(toggle){
+    return toggle.classList.contains('toggle-active');
+}

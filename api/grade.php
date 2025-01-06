@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\File;
 use model\Grade;
 
@@ -13,6 +13,8 @@ require_once 'filter.php';
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+tools::checkPermission('p_grade');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 
@@ -30,9 +32,7 @@ switch ($methode) {
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-        if (tools::methodAccepted('multipart/form-data')) {
             update_image();
-        }
         break;
     case 'DELETE':                   # DELETE
         delete_grade();
@@ -122,13 +122,6 @@ function update_image() : void
     }
 
     $id = filter::int($_GET['id']);
-
-    if (!isset($_FILES['image'])) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Please provide an image']);
-        return;
-    }
-
     $grade = Grade::getInstance($id);
 
     if ($grade === null) {
@@ -139,10 +132,16 @@ function update_image() : void
 
     $image = File::saveImage();
 
+    if (!$image) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Image could not be processed']);
+        return;
+    }
+
     $grade->updateImage($image);
 
-    http_response_code(204);
-    echo $grade;
+    echo json_encode($grade);
+
 }
 
 function delete_grade() : void

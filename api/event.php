@@ -1,17 +1,19 @@
 <?php
-
+session_start();
 use model\Event;
 use model\File;
 
 require_once 'DB.php';
 require_once 'tools.php';
 require_once 'filter.php';
-require_once 'Event.php';
+require_once 'models/event.php';
 
 // TODO: Remove this line in production
 ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
+
+tools::checkPermission('p_evenement');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 $DB = new DB();
@@ -29,9 +31,7 @@ switch ($methode) {
         }
         break;
     case 'PATCH':                    # UPDATE (image seulement)
-        if (tools::methodAccepted('multipart/form-data')) {
-            update_event();
-        }
+            update_image();
         break;
     case 'DELETE':                   # DELETE
         delete_event();
@@ -49,7 +49,7 @@ function get_events() : void
         $id = filter::int($_GET['id']);
         $events = Event::getInstance($id);
 
-        if (!$events) {
+        if ($events == null) {
             http_response_code(404);
             echo json_encode(['error' => 'Event not found']);
             return;

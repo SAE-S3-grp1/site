@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use model\File;
 use model\Meeting;
 use model\Member;
@@ -16,6 +16,7 @@ ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 
+tools::checkPermission('p_reunion');
 
 $methode = $_SERVER['REQUEST_METHOD'];
 
@@ -24,9 +25,7 @@ switch ($methode) {
         get_meetings();
         break;
     case 'POST':                     # CREATE
-        if (tools::methodAccepted('multipart/form-data')) {
             create_meeting();
-        }
         break;
     case 'DELETE':                   # DELETE
         delete_meeting();
@@ -64,7 +63,7 @@ function create_meeting() : void
 
     if (isset($_POST['date'], $_POST['user'])) {
 
-        $date = filter::string($_POST['date']);
+        $date = filter::date($_POST['date']);
         $user = Member::getInstance(filter::int($_POST['user']));
 
         $file = File::saveFile();
