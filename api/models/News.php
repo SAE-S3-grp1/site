@@ -45,7 +45,7 @@ class News extends BaseModel implements JsonSerializable
             return null;
         }
 
-        return new News($result[0]);
+        return new News($id);
     }
 
     public static function bulkFetch() : array
