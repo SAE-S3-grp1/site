@@ -4,3 +4,11 @@
     right: 25px;
     z-index: 1000;
 }
+
+/* RESPONSIVE */
+@media screen and (max-width: 1000px) {
+    .upload-button{
+        top: auto;
+        bottom: 25px;
+    }    
+}
