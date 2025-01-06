@@ -3,7 +3,7 @@ import { requestGET, requestPUT, requestDELETE, requestPATCH, requestPOST } from
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { getFullFilepath } from "./files.js";
+import { getFullFilepath, openFileDialog } from "./files.js";
 
 // Show skeleton
 showPropertieSkeleton();
@@ -137,6 +137,32 @@ async function selectGrade(id_grade, li){
     // Update name
     prop_nom_grade.onkeyup = ()=>{
         li.textContent = prop_nom_grade.value;
+    };
+
+    // Update image
+    document.getElementById('prop_image_edit').onclick = async ()=>{
+        
+        // Get file form
+        const image = await openFileDialog();
+
+        // Update image src
+        const url = URL.createObjectURL(image);
+        prop_image_grade.src = url;
+
+        // Show loader
+        showLoader();
+
+        // Send data
+        try {
+            await requestPATCH('/grade.php?id=' + id_grade.toString(), image);
+            toast('Image mis à jour avec succès.');
+        } catch (error) {
+            toast(error.message, true);
+        }
+
+        // Stop loader
+        hideLoader();
+
     };
 
     // Hide loader

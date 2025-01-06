@@ -8,7 +8,7 @@ const SERVER_API_URL = '/api';
  * If true, the fetch requests are logged in the console.
  * @constant {boolean}
 */
-const DEBUG_FETCHS = true;
+const DEBUG_FETCHS = false;
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
@@ -19,7 +19,7 @@ const DEBUG_FETCHS = true;
  * @returns {Promise} - Résout avec les données de la réponse ou rejette avec une erreur.
  */
 async function request(endpoint, method = 'GET', data = null, headers = {}) {
-    
+
     // Create url
     if (!endpoint.startsWith('/'))
         endpoint = endpoint + '/';
@@ -36,14 +36,12 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
             }
         };
 
-        // Ajouter le corps de la requête pour POST, PUT et PATCH
-        if (data) {
+        // Handle patch (specific case for files)
+        if (method === 'PATCH' && (data instanceof File || data instanceof Blob)) {
+            options.headers['Content-Type'] = data.type;
+            options.body = data;
+        } else if (data) {
             options.body = JSON.stringify(data);
-        }
-
-        // Pour les PATCH (fichiers) mettre le Content-Type à multipart/form-data
-        if (data instanceof FormData) {
-            options.headers['Content-Type'] = 'multipart/form-data';
         }
 
         // Fetch data
@@ -52,7 +50,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
         if (DEBUG_FETCHS) {
-            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: royalblue;');
+            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
         }
         const json = text ? JSON.parse(text) : null;
 
@@ -105,7 +103,7 @@ function requestPUT(endpoint, data) {
 /**
  * Effectue une requête PATCH.
  * @param {string} endpoint - L'endpoint de la requête.
- * @param {Object} data - Les données à envoyer.
+ * @param {FormData} data - Les données à envoyer.
  * @returns {Promise}
  */
 function requestPATCH(endpoint, data) {
