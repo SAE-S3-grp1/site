@@ -41,8 +41,9 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
             options.body = data;
         } else if (data instanceof FormData){
             options.body = data;
+            console.log('sus')
         } else if (data) {
-            options['Content-Type'] = 'application/json';
+            options.headers['Content-Type'] = 'application/json';
             options.body = JSON.stringify(data);
         }
 
@@ -52,14 +53,15 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
         if (DEBUG_FETCHS) {
-            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
+            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;');
+            console.log(`%c${text}`, 'color: powderblue;');
         }
         const json = text ? JSON.parse(text) : null;
 
         // Vérification de la réponse
         if (!response.ok)
             if (json && json.error)
-                if (json.error = 'Unauthorized')
+                if (json.error == 'Unauthorized')
                     window.location.href = 'unauthorized.html';
                 else
                     throw new Error(json.error);
