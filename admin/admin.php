@@ -1,5 +1,22 @@
+<?php
+
+session_start();
+include_once '../api/tools.php';
+
+
+if(!isset($_SESSION['userid'])){
+    header('Location: ../login.php');
+    exit();
+}
+if (!(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'])){
+    header('Location: /admin/panels/unauthorized.html');
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
