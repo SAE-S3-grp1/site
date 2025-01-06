@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
 
-        <h3>Total &nbsp : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
+        <h3>Total &nbsp : &nbsp<?php echo number_format($total, 2, ',', ' '); ?> €</h3>
     </div>
 
     <div>    

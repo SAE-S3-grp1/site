@@ -45,6 +45,18 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
 
 <H1>Les grades</H1>
 
+<!-- Affichage du message de succès ou d'erreur -->
+<div>
+    <?php
+        if (isset($_SESSION['message'])) {
+            $messageStyle = isset($_SESSION['message_type']) && $_SESSION['message_type'] === "error" ? "error-message" : "success-message";
+            echo '<div id="' . $messageStyle . '">' . htmlspecialchars($_SESSION['message']) . '</div>';
+            unset($_SESSION['message']); // Supprimer le message après affichage
+            unset($_SESSION['message_type']); // Supprimer le type après affichage
+        }
+    ?>
+</div>
+
 <?php if (!empty($products)) : ?>
     <div id="product-list">
         <?php foreach ($products as $product) : ?>

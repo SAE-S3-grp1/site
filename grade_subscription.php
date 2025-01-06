@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commander</title>
+    <title>Adhérer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="styles/grade_subscription_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
-
 </head>
 
 <body class="body_margin">
@@ -23,19 +22,15 @@
 <!------PHP------>
 <!--------------->
 
-
 <?php
+
 // Importer les fichiers
-require_once "header.php" ;
+require_once "header.php";
 require_once 'database.php';
 require_once 'files_save.php';
 
-
-
-// Connexion à la base de donnees
+// Connexion à la base de données
 $db = new DB();
-
-
 
 $isLoggedIn = isset($_SESSION["userid"]);
 if (!$isLoggedIn) {
@@ -45,50 +40,57 @@ if (!$isLoggedIn) {
 
 $userid = $_SESSION["userid"];
 
-// Récupérer le panier
-if (empty($_SESSION['cart'])) {
-    header("Location: cart.php");
+
+// Vérification que l'ID du grade est fourni dans l'URL
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    header("Location: grade.php");
+    exit;
+}
+$id_grade = intval($_GET['id']);
+
+
+// On récupère les informations du grade
+$grade = $db->select(
+    "SELECT * FROM GRADE WHERE id_grade = ?",
+    "i",
+    [$id_grade]
+);
+
+// Vérifie que le grade existe
+if (empty($grade)) {
+    $_SESSION['message'] = "Le grade sélectionné n'existe pas.";
+    $_SESSION['message_type'] = "error";
+    header("Location: grade.php");
     exit;
 }
 
-// Calculer le total de la commande
-$total = 0;
-$cart = $_SESSION['cart'];
-$product_ids = array_keys($cart);
-$placeholders = implode(",", array_fill(0, count($product_ids), "?"));
-$query = "SELECT id_article, nom_article, prix_article FROM ARTICLE WHERE id_article IN ($placeholders)";
-$types = str_repeat("i", count($product_ids));
-$products = $db->select($query, $types, $product_ids);
+// Vérifie si l'utilisateur possède déjà un grade
+$currentGrade = $db->select(
+    "SELECT * FROM ADHESION WHERE id_membre = ?",
+    "i",
+    [$userid]
+);
 
-$cart_items = [];
-foreach ($products as $product) {
-    $cart_items[$product['id_article']] = [
-        'nom_article' => $product['nom_article'], // Ajout du nom de l'article
-        'prix_article' => $product['prix_article'],
-        'quantite' => $cart[$product['id_article']],
-    ];
-    $total += $product['prix_article'] * $cart[$product['id_article']];
-}
-
+// Gestion de l'achat d'un grade
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     if (isset($_POST['mode_paiement']) && !empty($_POST['mode_paiement'])) {
         $mode_paiement = $_POST['mode_paiement'];
-
-        // Enregistrer la commande dans la base de données
-        foreach ($cart_items as $product_id => $item) {
+        if (!empty($currentGrade)) {
             $db->query(
-                "CALL achat_article(?, ?, ?, ?)",
-                "iiis",
-                [$userid, $product_id, $item['quantite'], $mode_paiement]
+                "DELETE FROM ADHESION WHERE id_membre = ?",
+                "i",
+                [$userid]
             );
         }
-        $_SESSION['cart'] = [];
-        
-        $_SESSION['message'] = "Commande réalisée avec succès !";
-        $_SESSION['message_type'] = "success";
+        $db->query(
+            "INSERT INTO ADHESION (id_membre, id_grade, prix_adhesion, paiement_adhesion, date_adhesion) VALUES (?, ?, ?, ?, NOW())",
+            "iiss",
+            [$userid, $id_grade, $grade[0]['prix_grade'], $mode_paiement]
+        );
 
-        header("Location: cart.php"); // Rediriger vers le panier
+        $_SESSION['message'] = "Adhésion au grade réussie !";
+        $_SESSION['message_type'] = "success";
+        header("Location: grade.php");
         exit;
     } else {
     }
@@ -97,17 +99,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
+
 <!--------------->
 <!------HTML----->
 <!--------------->
 
-<h1>MA COMMANDE</h1>
+
+<h1>MON ADHESION</h1>
 
 <div>
-    <button id="cart-button" >
-        <a href="cart.php">
-            <img src="assets/fleche_retour.png" alt="Fleche de retour">
-            Retourner au panier
+    <button id="cart-button">
+        <a href="grade.php">
+            <img src="assets/fleche_retour.png" alt="Flèche de retour">
+            Retourner aux grades
         </a>
     </button>
 </div>
@@ -124,18 +128,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($cart_items as $product_id => $item): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($item['nom_article']); ?></td>
-                        <td><?php echo $item['quantite']; ?></td>
-                        <td><?php echo number_format($item['prix_article'], 2, ',', ' ') . " €"; ?></td>
-                        <td><?php echo number_format($item['prix_article'] * $item['quantite'], 2, ',', ' ') . " €"; ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                <tr>
+                    <td>Grade <?php echo htmlspecialchars($grade[0]['nom_grade']); ?></td>
+                    <td>1</td>
+                    <td><?= number_format(htmlspecialchars($grade[0]['prix_grade']), 2, ',', ' ') ?> €</td>
+                    <td><?= number_format(htmlspecialchars($grade[0]['prix_grade']), 2, ',', ' ') ?> €</td>
+                </tr>
             </tbody>
         </table>
 
-        <h3>Total &nbsp : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
+        <h3>Total &nbsp : &nbsp<?= number_format(htmlspecialchars($grade[0]['prix_grade']), 2, ',', ' ') ?> €</h3>
     </div>
 
     <div>    
@@ -147,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="paypal">PayPal</option>
         </select><br><br>
         <div id="carte_credit" class="mode_paiement_fields">
-            <form method="POST" action="order.php">
+            <form method="POST" action="grade_subscription.php?id=<?= $id_grade ?>">
                 <input type="hidden" name="mode_paiement" value="carte_credit">
 
                 <label for="numero_carte">Numéro de Carte :</label>
@@ -159,16 +161,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="cvv">CVV :</label>
                 <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
 
-                <button type="submit" id="finalise-order-button">Valider la commande</button>
+                <button type="submit" id="finalise-order-button">Valider l'adhésion</button>
             </form>
         </div>
         <div id="paypal" class="mode_paiement_fields" style="display: none;">
-            <form method="POST" action="order.php">
+            <form method="POST" action="grade_subscription.php?id=<?= $id_grade ?>">
                 <input type="hidden" name="mode_paiement" value="paypal">
 
                 <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
                     
-                <button type="submit" id="finalise-order-button">Valider la commande</button>
+                <button type="submit" id="finalise-order-button">Valider l'adhésion'</button>
             </form>
         </div>
     </div>
@@ -188,7 +190,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
 </script>
-
 
 <?php require_once "footer.php" ?>
 
