@@ -8,7 +8,7 @@ const SERVER_API_URL = '/api';
  * If true, the fetch requests are logged in the console.
  * @constant {boolean}
 */
-const DEBUG_FETCHS = false;
+const DEBUG_FETCHS = true;
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
@@ -31,16 +31,18 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         const options = {
             method,
             headers: {
-                'Content-Type': 'application/json',
                 ...headers
             }
         };
 
         // Handle patch (specific case for files)
-        if (method === 'PATCH' && (data instanceof File || data instanceof Blob)) {
+        if (data instanceof File || data instanceof Blob) {
             options.headers['Content-Type'] = data.type;
             options.body = data;
+        } else if (data instanceof FormData){
+            options.body = data;
         } else if (data) {
+            options['Content-Type'] = 'application/json';
             options.body = JSON.stringify(data);
         }
 
@@ -56,10 +58,13 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
 
         // Vérification de la réponse
         if (!response.ok)
-            if (json && json.message)
+            if (json && json.error)
+                if (json.error = 'Unauthorized')
+                    window.location.href = 'unauthorized.html';
+                else
+                    throw new Error(json.error);
+            else if (json && json.message)
                 throw new Error(json.message);
-            else if (json && json.error)
-                throw new Error(json.error);
             else
                 throw new Error(`Erreur: ${response.status} ${response.statusText}`);
 
