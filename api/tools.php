@@ -82,25 +82,26 @@ class tools
         exit;
     }
 
-    public static function checkPermission($permission): void
-    {
-        // Vérifie si l'utilisateur a la permission demandée
-        // Si l'utilisateur n'a pas la permission, retourne une erreur 403 Forbidden, et on met fin à la requête
+    public static function hasPermission($permission) : bool {
 
         if (!isset($_SESSION['userid'])) {
-            http_response_code(401);
-            header('Content-Type: application/json');
-            echo json_encode([
-                'error' => 'Unauthorized',
-                'message' => 'You must be logged in to access this resource.'
-            ]);
-            exit;
+            return false;
         }
 
         $db = new \DB();
         $perms = $db->select("SELECT * FROM LISTE_PERMISSIONS WHERE id_membre = ?", 'i', [$_SESSION['userid']]);
 
         if (count($perms) == 0 || !isset($perms[0][$permission]) || $perms[0][$permission] == 0) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public static function checkPermission($permission): void
+    {
+        if (self::checkPermission($permission) === false) {
             http_response_code(403);
             header('Content-Type: application/json');
             echo json_encode([
