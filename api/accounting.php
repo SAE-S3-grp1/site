@@ -65,7 +65,7 @@ function create_accounting(): void
 {
     // TODO : Récupérer l'ID de membre grace au token PHP
 
-    if (!isset($_POST['date'], $_POST['nom'], $_POST['id_membre'])) {
+    if (!isset($_POST['date'], $_POST['nom'])) {
         http_response_code(400);
         echo json_encode(["message" => "Missing parameters"]);
         return;
@@ -81,7 +81,7 @@ function create_accounting(): void
 
         $date = filter::date($_POST['date']);
         $nom = filter::string($_POST['nom'], maxLenght: 100);
-        $id_membre = filter::int($_POST['id_membre']);
+        $id_membre = filter::int($_SESSION['userid']);
 
         $compta = Accounting::create($date, $nom, $file, $id_membre);
 

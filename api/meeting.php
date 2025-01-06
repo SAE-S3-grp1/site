@@ -61,10 +61,10 @@ function create_meeting() : void
 {
     // TODO : Récupérer l'ID de membre grace au token PHP
 
-    if (isset($_POST['date'], $_POST['user'])) {
+    if (isset($_POST['date'])) {
 
         $date = filter::date($_POST['date']);
-        $user = Member::getInstance(filter::int($_POST['user']));
+        $user = Member::getInstance(filter::int($_SESSION['userid']));
 
         $file = File::saveFile();
 
