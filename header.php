@@ -39,7 +39,7 @@
 
                 <?php if ($isAdmin): ?>
                   <li>
-                      <a id="header_admin" href="./panel.php">Panel Admin</a>
+                      <a id="header_admin" href="./admin/admin.php">Panel Admin</a>
                   </li>
                 <?php endif; ?>
 
