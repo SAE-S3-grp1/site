@@ -63,20 +63,20 @@ div:nth-of-type(2) form {
     margin-top: 60px;
 }
 
-div:nth-of-type(2) form h3 {
+div:nth-of-type(2) div:nth-of-type(2) h3 {
     text-align: center;
     margin-bottom: 30px;
     font-size: 1.8em;
 }
 
-div:nth-of-type(2) form label{
+div:nth-of-type(2) div:nth-of-type(2) label{
     border-radius: 5px;
     color: rgb(169, 169, 169);
     font-size: 1.2em;
     margin-right: 5px;               
 }
 
-div:nth-of-type(2) form select{
+div:nth-of-type(2) div:nth-of-type(2) select{
     all: unset;
     border: 2px solid rgb(169, 169, 169);
     background-color: #1E1E1E;
@@ -86,7 +86,7 @@ div:nth-of-type(2) form select{
     background-size: 12px 12px;
 }
 
-div:nth-of-type(2) form input{
+div:nth-of-type(2) div:nth-of-type(2) div form input{
     border-radius: 5px;
     border: 2px solid rgb(169, 169, 169);
     background-color: #1E1E1E;
@@ -96,9 +96,11 @@ div:nth-of-type(2) form input{
     height: 3vh;
 }
 
-div:nth-of-type(2) form div:nth-of-type(2){
-    align-self: center;
-    margin: auto;
+div:nth-of-type(2) div:nth-of-type(2) div form {
+    margin-top: 0px;
+}
+
+div:nth-of-type(2) div:nth-of-type(2) div {
     margin-top: 0px;
 }
 

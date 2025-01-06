@@ -141,8 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h3>Total &nbsp : <?php echo number_format($total, 2, ',', ' ') . " €"; ?></h3>
     </div>
 
-    <form method="POST" action="order.php">
-        
+    <div>    
         <h3>Paiement</h3>
 
         <label for="mode_paiement">Mode de Paiement :</label>
@@ -150,24 +149,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="carte_credit">Carte de Crédit</option>
             <option value="paypal">PayPal</option>
         </select><br><br>
-
         <div id="carte_credit" class="mode_paiement_fields">
-            <label for="numero_carte">Numéro de Carte :</label>
-            <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
+            <form method="POST" action="order.php">
+                <input type="hidden" name="mode_paiement" value="carte_credit">
 
-            <label for="expiration">Date d'Expiration :</label>
-            <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
+                <label for="numero_carte">Numéro de Carte :</label>
+                <input type="text" id="numero_carte" name="numero_carte" placeholder="XXXX XXXX XXXX XXXX" required><br><br>
 
-            <label for="cvv">CVV :</label>
-            <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
+                <label for="expiration">Date d'Expiration :</label>
+                <input type="text" id="expiration" name="expiration" placeholder="MM/AA" required><br><br>
+
+                <label for="cvv">CVV :</label>
+                <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
+
+                <button type="submit" id="finalise-order-button">Valider la commande</button>
+            </form>
         </div>
-
         <div id="paypal" class="mode_paiement_fields" style="display: none;">
-            <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
-        </div>
+            <form method="POST" action="order.php">
+                <input type="hidden" name="mode_paiement" value="paypal">
 
-        <button type="submit" id="finalise-order-button">Valider la commande</button>
-    </form>
+                <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
+                    
+                <button type="submit" id="finalise-order-button">Valider la commande</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 
