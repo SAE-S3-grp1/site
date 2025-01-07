@@ -8,7 +8,7 @@ const SERVER_API_URL = '/~inf2pj01//api';
  * If true, the fetch requests are logged in the console.
  * @constant {boolean}
 */
-const DEBUG_FETCHS = true;
+const DEBUG_FETCHS = false;
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
@@ -42,7 +42,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         } else if (data instanceof FormData){
             options.body = data;
         } else if (data) {
-            options.headers['Content-Type'] = 'application/json';
+            options.headers['Content-Type'] = 'application/json; charset=utf-8';
             options.body = JSON.stringify(data);
             console.log(options.body)
         }
