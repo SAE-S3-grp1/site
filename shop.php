@@ -205,7 +205,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     </div>
                     <div>
                         <p id="stock-status">
-                            <?php if ((int)$product['stock_article'] > 0): ?>
+                            <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
                                 <a class="addCart" id="add-to-cart-button" href="cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
                                     Ajouter au panier
                                 </a>
