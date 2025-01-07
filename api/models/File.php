@@ -88,6 +88,7 @@ class File implements JsonSerializable
                 'image/jpeg' => 'jpg',
                 'image/png' => 'png',
                 'image/webp' => 'webp',
+                'image/gif' => 'gif',
                 'application/pdf' => 'pdf',
                 # Excel
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx',
@@ -114,7 +115,7 @@ class File implements JsonSerializable
     public static function saveImage(): File | null
     {
         // Types MIME autorisés
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
         // Lecture du corps brut de la requête
         $rawData = file_get_contents('php://input');
@@ -131,7 +132,6 @@ class File implements JsonSerializable
         $mimeType = $finfo->file($tmpFile);
         if (!in_array($mimeType, $allowedTypes)) {
             unlink($tmpFile); // Nettoyage
-            echo $mimeType;
             return null; // Type non autorisé
         }
 
