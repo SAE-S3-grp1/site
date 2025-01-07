@@ -28,6 +28,10 @@
             header("Location: index.php");
             exit;
         }
+
+        if($event['image_evenement'] == null){
+            $event['image_evenement'] = 'default-event.png';
+        }
     ?>
 
 <head>
@@ -67,11 +71,17 @@
             </h2>
             <?php if($event_date < $current_date):?>
                 <button class="subscription" id="passed_subscription">Passé</button>
-            <?php else:?>
-                <form class="subscription" action="event_subscription.php" method="post">
-                    <input type="text" name="eventid" value="<?php echo $eventid?>" hidden>
-                    <button type="submit">Inscription</a></button>
-                </form>
+            <?php else:
+                $a = $db->select("SELECT * FROM INSCRIPTION WHERE id_evenement = ? AND id_membre = ?;","ii",[$eventid, $_SESSION['userid']]);
+                $isSubscribed = !empty($a);
+                if($isSubscribed):
+                    echo '<button class="subscription" id="passed_subscription">Inscrit</button>';
+                else:?>
+                    <form class="subscription" action="event_subscription.php" method="post">
+                        <input type="text" name="eventid" value="<?php echo $eventid?>" hidden>
+                        <button type="submit">Inscription</a></button>
+                    </form>
+                <?php endif;?>
             <?php endif;?>
         </div>
 
