@@ -53,6 +53,7 @@ class File implements JsonSerializable
             $name = tools::generateUUID() . '.' . $extension;
 
             if (move_uploaded_file($_FILES['file']['tmp_name'], 'files/' . $name)) {
+                chmod('files/' . $name, 0644);
                 return new File($name);
             }
             return null;
@@ -65,6 +66,10 @@ class File implements JsonSerializable
 
             // Création d'un fichier temporaire
             $tempFile = tempnam(sys_get_temp_dir(), 'upload_');
+
+            // S'assurer que le fichier temporaire est créé avec les bonnes permissions
+            chmod($tempFile, 0644);
+
             $tempHandle = fopen($tempFile, 'w');
 
             // Copie des données
@@ -83,6 +88,10 @@ class File implements JsonSerializable
                 'image/jpeg' => 'jpg',
                 'image/png' => 'png',
                 'image/webp' => 'webp',
+                'application/pdf' => 'pdf',
+                # Excel
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx',
+                'application/vnd.ms-excel' => 'xls',
             ];
 
             $extension = $extensions[$mimeType] ?? 'bin';

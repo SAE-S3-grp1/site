@@ -5,6 +5,7 @@ namespace model;
 use JsonSerializable;
 
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/File.php';
 
 class Item extends BaseModel implements JsonSerializable
 {

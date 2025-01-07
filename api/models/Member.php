@@ -2,9 +2,11 @@
 namespace model;
 
 use Filter;
+use model\Role;
 use JsonSerializable;
 
 require_once __DIR__ . '/BaseModel.php';
+require_once __DIR__ . '/Role.php';
 
 
 class Member extends BaseModel implements JsonSerializable

@@ -2,7 +2,7 @@
  * The base URL for the server API.
  * @constant {string}
  */
-const SERVER_API_URL = '/api';
+const SERVER_API_URL = '/~inf2pj01//api';
 
 /**
  * If true, the fetch requests are logged in the console.
