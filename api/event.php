@@ -82,7 +82,7 @@ function update_event() : void
     }
 
     $event->update(filter::string($data['nom'], maxLenght:100), filter::string($data['description'], maxLenght:1000),
-                   filter::int($data['xp']), filter::int($data['places']), filter::bool($data['reductions']), filter::float($data['prix']),
+                   filter::int($data['xp']), filter::int($data['places'], -1), filter::bool($data['reductions']), filter::float($data['prix']),
                    filter::string($data['lieu'], maxLenght:50), filter::date($data['date']));
     echo json_encode($event);
 }
