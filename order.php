@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                         ?>
                         
-                        <h3>Total avec réductions &nbsp : &nbsp <?= number_format($totalWithReduc, 2, ',', ' ') ?> €</h3>
+                        <h3>Total après réductions &nbsp : &nbsp <?= number_format($totalWithReduc, 2, ',', ' ') ?> €</h3>
                         
                     <?php }
                 }?>

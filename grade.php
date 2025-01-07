@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique</title>
+    <title>Grades</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
@@ -66,7 +66,9 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
                         <h3 title="<?= htmlspecialchars($product['nom_grade']) ?>">
                             <?= htmlspecialchars($product['nom_grade']) ?>
                         </h3>
-                        <p>- <?= htmlspecialchars($product['reduction_grade']) ?> %</p>
+                        <?php if (!empty($product['description_grade'])) { ?>
+                            <p><?= htmlspecialchars($product['description_grade'])?></p>
+                        <?php } ?>
                         <p>-- Prix : <?= number_format(htmlspecialchars($product['prix_grade']), 2, ',', ' ') ?> € --</p>
                     </div>
                     <div>

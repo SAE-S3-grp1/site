@@ -184,6 +184,9 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
     </div>
 </div>
 
+<p id='message-reduc'>
+    * Articles non éligibles aux réductions de grade
+</p>
 <?php if (!empty($products)) : ?>
     <div id="product-list">
         <?php foreach ($products as $product) : ?>
@@ -194,7 +197,11 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                             <?= htmlspecialchars($product['nom_article']) ?>
                         </h3>
                         <p>+ <?= htmlspecialchars($product['xp_article']) ?> XP</p>
-                        <p>-- Prix : <?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> € --</p>
+                        <p>-- Prix : <?= number_format(htmlspecialchars($product['prix_article']), 2, ',', ' ') ?> € 
+                            <?php if (!(int)$product['reduction_article']){ ?>
+                            <span>    * </span>
+                            <?php } ?>
+                        --</p>
                     </div>
                     <div>
                         <p id="stock-status">

@@ -61,14 +61,15 @@ H1 {
     margin-bottom: 30px;
 }
 
-#one-product div:first-of-type p:first-of-type{
+#one-product div:first-of-type p:nth-of-type(1) {
     word-wrap: break-word;
     margin-top: auto;
-    margin-bottom: 20px;
-    font-size: 1.4em;
+    margin-bottom: 30px;
+    font-size: 1em;
     color: white;
-    align-self: center;
-    
+    align-self: center; 
+    text-align: center;
+    font-style: italic;
 }
 
 #one-product div:first-of-type p:nth-of-type(2) {
@@ -77,8 +78,7 @@ H1 {
     margin-bottom: 10px;
     font-size: 1.2em;
     color: rgb(169, 169, 169);
-    align-self: center;
-    
+    align-self: center; 
 }
 
 #adhesion-status{
