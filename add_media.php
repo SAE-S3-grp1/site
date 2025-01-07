@@ -1,6 +1,6 @@
 <?php
-require_once '~inf2pj01/files_save.php';
-require_once '~inf2pj01/database.php';
+require_once 'files_save.php';
+require_once 'database.php';
 $db = new DB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'], $_POST['userid'], $_POST['eventid'])) {
@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'], $_POST['user
         }
 
         // Recharge la page pour afficher la nouvelle image
-        header("Location: ~inf2pj01/my_gallery.php?eventid=".$_POST["eventid"]);
+        header("Location: /~inf2pj01/my_gallery.php?eventid=".$_POST["eventid"]);
         exit();
 
     }else{
-        header("Location: ~inf2pj01/index.php");
+        header("Location: /~inf2pj01/index.php");
         exit();
     }
 

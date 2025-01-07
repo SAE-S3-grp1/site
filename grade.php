@@ -6,11 +6,13 @@
     <title>Grades</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/grade_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/header_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/footer_style.css">
+
+    <link rel="stylesheet" href="/~inf2pj01/styles/grade_style.css">
+
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
 
 </head>
 
@@ -24,9 +26,9 @@
 
 <!-- Importer les fichiers -->
 <?php 
-require_once "~inf2pj01/header.php" ;
-require_once '~inf2pj01/database.php';
-require_once '~inf2pj01/files_save.php';
+require_once "header.php" ;
+require_once 'database.php';
+require_once 'files_save.php';
 
 // Connexion à la base de donnees
 $db = new DB();
@@ -62,7 +64,7 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
         <?php foreach ($products as $product) : ?>
                 <div id="one-product">
                     <div>
-                        <img src="~inf2pj01/api/files/<?php echo $product['image_grade']; ?>" alt="Image du grade" />
+                        <img src="/~inf2pj01/api/files/<?php echo $product['image_grade']; ?>" alt="Image du grade" />
                         <h3 title="<?= htmlspecialchars($product['nom_grade']) ?>">
                             <?= htmlspecialchars($product['nom_grade']) ?>
                         </h3>
@@ -85,7 +87,7 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
                             <?php if (!empty($_SESSION) && !empty($unAdherant)): ?>
                                 <button id="detention">Vous détenez ce grade</button>
                             <?php else: ?>
-                                <a id="buy-button" href="~inf2pj01/grade_subscription.php?id=<?= htmlspecialchars($product['id_grade']) ?>">
+                                <a id="buy-button" href="/~inf2pj01/grade_subscription.php?id=<?= htmlspecialchars($product['id_grade']) ?>">
                                     Acheter
                                 </a>
                             <?php endif; ?>
@@ -101,7 +103,7 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
 
 
 
-<?php require_once "~inf2pj01/footer.php" ?>
+<?php require_once "footer.php" ?>
 
 
 </body>

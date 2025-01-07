@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php 
-        require_once '~inf2pj01/database.php';
+        require_once 'database.php';
         $db = new DB();
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
@@ -13,12 +13,12 @@
                 [$eventid]
             );
             if(empty($event) || is_null($event)){
-                header("Location: ~inf2pj01/index.php");
+                header("Location: /~inf2pj01/index.php");
                 exit;
             }
             $event = $event[0];
         }else{
-            header("Location: ~inf2pj01/index.php");
+            header("Location: /~inf2pj01/index.php");
             exit;
         }
         if($event['image_actualite'] == null){
@@ -34,22 +34,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title><?php echo $event['titre_actualite']?></title>
+    <link rel="stylesheet" href="/~inf2pj01/styles/event_details_style.css">
 
-    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/header_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
 
-    <link rel="stylesheet" href="~inf2pj01/styles/event_details_style.css">
 
 </head>
 
 <body>
     <?php
-    require_once '~inf2pj01/header.php';
+    require_once '/~inf2pj01/header.php';
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
     <section class="event-details">
-        <img src="~inf2pj01/api/files/<?php echo $event['image_actualite']; ?>" alt="Image de l'actualité">
+        <img src="/~inf2pj01/api/files/<?php echo $event['image_actualite']; ?>" alt="Image de l'actualité">
 
         <h1><?php echo strtoupper($event['titre_actualite']); ?></h1>
 
@@ -70,7 +70,7 @@
     </section>
 
 
-    <?php require_once '~inf2pj01/footer.php';?>
+    <?php require_once 'footer.php';?>
 </body>
 
 </html>

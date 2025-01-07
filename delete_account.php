@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/delete_account_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/delete_account_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
 
     <title>Supprimer le compte</title>
 </head>
@@ -38,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </form>
                         </li>
                         <li>
-                            <button id="cancelDelete" onclick="window.location.href='~inf2pj01/account.php'">Revenir en arrière</button>
+                            <button id="cancelDelete" onclick="window.location.href='/~inf2pj01/account.php'">Revenir en arrière</button>
                         </li>
                     </ul>
                     </div>
@@ -53,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             [$_SESSION["userid"]]
         );
         session_destroy();
-        header("Location: ~inf2pj01/index.php");
+        header("Location: /~inf2pj01/index.php");
         exit();
     }
 }
 
 ?>
-<script src="~inf2pj01/scripts/confirm_account_supression.js"></script>
+<script src="/~inf2pj01/scripts/confirm_account_supression.js"></script>
 </body>
 </html>

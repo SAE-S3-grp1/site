@@ -2,11 +2,11 @@
 
 class DB
 {
-    private $host = 'lithium.voltis.cloud';
+    private $host = 'localhost';
     private $port = '3306';
-    private $db = 's101_bdeTest';
-    private $db_user = 'u101_saQxwWi2aa';
-    private $db_pass = 'L+glq7vxzK=.p9HMFwMQNssu';
+    private $db = 'inf2pj_01';
+    private $db_user = 'inf2pj01';
+    private $db_pass = 'Eokez4ie9t';
 
     public function connect()
     {

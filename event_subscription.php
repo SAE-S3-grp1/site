@@ -6,11 +6,11 @@
     <title>Inscription</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/event_subscription_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/header_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/event_subscription_style.css">
+
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
 </head>
 <body class="body_margin">
 
@@ -23,15 +23,15 @@
 <?php
 
 // Importer les fichiers
-require_once "~inf2pj01/header.php";
-require_once '~inf2pj01/database.php';
-require_once '~inf2pj01/files_save.php';
+require_once "header.php";
+require_once 'database.php';
+require_once 'files_save.php';
 
 
 // Vérifie si l'utilisateur est connecté
 $isLoggedIn = isset($_SESSION["userid"]);
 if (!$isLoggedIn) {
-    header("Location: ~inf2pj01/login.php");
+    header("Location: /~inf2pj01/login.php");
     exit;
 }
 
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "ii",
             [$xp, $userid]
         );
-        header("Location: ~inf2pj01/events.php");
+        header("Location: /~inf2pj01/events.php");
         exit;
     }
     elseif(isset($_POST["eventid"])){
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 [$eventid]
             );
             if(empty($event)){
-                header("Location: ~inf2pj01/index.php");
+                header("Location: /~inf2pj01/index.php");
                 exit;
             }
             $event = $event[0];
@@ -88,14 +88,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 );
                 if(!empty($user_reduction)){
                     $user_reduction = 1 - ($user_reduction[0]["reduction_grade"]/100);
+                }else{
+                    $user_reduction = 1;
                 }
             }
         }else{
-            header("Location: ~inf2pj01/login.php");
+            header("Location: /~inf2pj01/login.php");
             exit;
         }
     }else{
-        header("Location: ~inf2pj01/login.php");
+        header("Location: /~inf2pj01/login.php");
         exit;
     }
 ?>
@@ -111,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div>
         <button id="cart-button">
-            <a href="~inf2pj01/event_details.php?id=<?php echo $eventid?>">
-                <img src="~inf2pj01/assets/fleche_retour.png" alt="Flèche de retour">
+            <a href="/~inf2pj01/event_details.php?id=<?php echo $eventid?>">
+                <img src="/~inf2pj01/assets/fleche_retour.png" alt="Flèche de retour">
                 Retourner à l'évènement
             </a>
         </button>
@@ -140,6 +142,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </table>
 
             <h3>Total &nbsp : &nbsp <?= number_format($price, 2, ',', ' ') ?> €</h3>
+            <?php         var_dump($price);
+            var_dump($user_reduction);?>
                         <h3>Total après réductions &nbsp : &nbsp <?= number_format($price*$user_reduction, 2, ',', ' ') ?> €</h3>
                    
         </div>
@@ -153,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="paypal">PayPal</option>
             </select><br><br>
             <div id="carte_credit" class="mode_paiement_fields">
-                <form method="POST" action="~inf2pj01/event_subscription.php">
+                <form method="POST" action="/~inf2pj01/event_subscription.php">
                     <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
                     <input type="hidden" name="price" value="<?php echo $price*$user_reduction; ?>">
                     <input type="hidden" name="mode_paiement" value="carte_credit">
@@ -171,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
             <div id="paypal" class="mode_paiement_fields" style="display: none;">
-                <form method="POST" action="~inf2pj01/event_subscription.php">
+                <form method="POST" action="/~inf2pj01/event_subscription.php">
                     <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
                     <input type="hidden" name="price" value="<?php echo $price*$user_reduction; ?>">
                     <input type="hidden" name="mode_paiement" value="paypal">
@@ -198,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </script>
 
 
-<?php require_once "~inf2pj01/footer.php" ?>
+<?php require_once "footer.php" ?>
 
 </body>
 </html>

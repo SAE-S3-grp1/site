@@ -7,15 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="stylesheet" href="~inf2pj01/styles/login_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/login_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
 
 </head>
     <body>
         <?php 
-            require_once '~inf2pj01/header.php';
-            require_once '~inf2pj01/database.php';
+            require_once 'header.php';
+            require_once 'database.php';
             $db = new DB();
 
             function format_input($text){
@@ -79,7 +79,7 @@
                         [$lname,$fname,$mail,password_hash($password, PASSWORD_DEFAULT),'defaultPP.png']
                     );
                 }
-                header("Location: ~inf2pj01/login.php");
+                header("Location: /~inf2pj01/login.php");
                 exit;
             }else{
                 echo 'Utilisateur déjà présent';
