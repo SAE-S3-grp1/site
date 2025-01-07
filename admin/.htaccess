@@ -1,5 +1,0 @@
-# Activer le module RewriteEngine
-RewriteEngine On
-
-# Rediriger /admin vers /admin/admin.php
-RewriteRule ^admin/?$ /admin/admin.php [L]

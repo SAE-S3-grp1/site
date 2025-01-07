@@ -36,16 +36,10 @@
                     $current_date = new DateTime(date("Y-m-d"));
 
                     $events_to_display = $db->select(
-                        "SELECT id_actualite, titre_actualite, date_actualite FROM ACTUALITE WHERE date_actualite >= ? ORDER BY date_actualite ASC;",
-                        "s",
-                        [$sql_date]
+                        "SELECT id_actualite, titre_actualite, date_actualite FROM ACTUALITE WHERE date_actualite <= NOW() ORDER BY date_actualite ASC LIMIT ?;",
+                        "i",
+                        [$show]
                     );
-                    $passed_events = $db->select(
-                        "SELECT id_actualite, titre_actualite, date_actualite FROM ACTUALITE WHERE date_actualite < ? ORDER BY date_actualite ASC LIMIT ?;",
-                        "si",
-                        [$sql_date, $show]
-                    );
-                    $events_to_display = array_merge($passed_events, $events_to_display);
 
                     $closest_event_id = "";
 
