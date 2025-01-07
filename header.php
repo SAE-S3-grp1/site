@@ -1,7 +1,7 @@
 <link rel="shortcut icon" href="/~inf2pj01/admin/ressources/favicon.png" type="image/x-icon">
 
 <?php
-    session_start();
+    @session_start();
     $isUserLoggedIn = isset($_SESSION['userid']);
     $isAdmin = isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] ;
 ?>

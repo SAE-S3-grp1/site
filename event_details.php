@@ -74,7 +74,7 @@
             <?php if($event_date < $current_date):?>
                 <button class="subscription" id="passed_subscription">Passé</button>
             <?php else:
-                $a = $db->select("SELECT * FROM INSCRIPTION WHERE id_evenement = ? AND id_membre = ?;","ii",[$eventid, $_SESSION['userid']]);
+                @$a = $db->select("SELECT * FROM INSCRIPTION WHERE id_evenement = ? AND id_membre = ?;","ii",[$_GET['id'], $_SESSION['userid']]);
                 $isSubscribed = !empty($a);
                 if($isSubscribed):
                     echo '<button class="subscription" id="passed_subscription">Inscrit</button>';
