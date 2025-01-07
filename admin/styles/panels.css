@@ -179,10 +179,25 @@ main > div{
     main > div{
         width: 100%;
         overflow-y: initial;
+        gap: 30px;
     }
 
     .saves-buttons{
         bottom: 25px;
+    }
+
+    .propertie{
+        flex-direction: column !important;
+        min-height: auto !important;
+    }
+    .propertie >div:last-child{
+        width: auto !important;
+        height: auto !important;
+        justify-content: flex-start !important;
+    }
+    .navadd-btn{
+        position: initial;
+        width: 100%;
     }
 
 }
