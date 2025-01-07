@@ -157,6 +157,7 @@ h1 {
   text-decoration: none;
 
   margin: 8vh auto 8vh auto ;
+  margin-bottom: 30px;
 }
 .show-more:hover {
   background-color: rgb(98, 207, 162);

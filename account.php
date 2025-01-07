@@ -6,11 +6,10 @@
     <title>Mon compte</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link rel="stylesheet" href="styles/general_style.css">
-    <link rel="stylesheet" href="styles/account_style.css">
-    <link rel="stylesheet" href="styles/header_style.css">
-    <link rel="stylesheet" href="styles/footer_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/account_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
 
 </head>
 
@@ -41,7 +40,7 @@ $isLoggedIn = isset($_SESSION["userid"]);
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['deconnexion']) && $_POST['deconnexion'] === 'true') {
             session_destroy();
-            header("Location: index.php"); 
+            header("Location: /~inf2pj01/index.php"); 
             exit();
         }
     }
@@ -226,13 +225,13 @@ if (isset($_SESSION['message'])) {
         <form method="POST" enctype="multipart/form-data" id="pp-form">
 
             <label id="cadre-pp" for="profilePictureInput">
-                <img src="/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
+                <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
             </label>
 
             <input type="file" id="profilePictureInput" name="file" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="this.form.submit()">
 
             <button type="button" id="edit-icon" onclick="document.getElementById('profilePictureInput').click()">
-                <img src="assets/edit_logo.png" alt="Icone éditer la photo de profil" />
+                <img src="/~inf2pj01/assets/edit_logo.png" alt="Icone éditer la photo de profil" />
             </button>
         </form>
     </div>
@@ -246,7 +245,7 @@ if (isset($_SESSION['message'])) {
         <?php else: ?>
             <p><?php echo $infoUser[0]['nom_grade']; ?></p>
             <div id="cadre-grade">
-                <img src="/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
+                <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
             </div>
         <?php endif; ?>
     </div>
@@ -303,7 +302,7 @@ if (isset($_SESSION['message'])) {
         </div>
 
         <button type="submit">
-            <img src="assets/save_logo.png" alt="Logo enregistrer les modifications"/>
+            <img src="/~inf2pj01/assets/save_logo.png" alt="Logo enregistrer les modifications"/>
         </button>
     </form>
 
@@ -323,7 +322,7 @@ if (isset($_SESSION['message'])) {
             </div>
         </div>
 
-        <button type="submit"><img src="assets/save_logo.png" alt="Logo editer la photo de profil"/></button>
+        <button type="submit"><img src="/~inf2pj01/assets/save_logo.png" alt="Logo editer la photo de profil"/></button>
     </form>
 </section>
 
@@ -337,8 +336,8 @@ if (isset($_SESSION['message'])) {
     <div id="buttons-section">
         <!--Discord-->
         <button type="button">
-            <a href="https://discord.com" target="_blank">
-                <img src="assets/logo_discord.png" alt="Logo de Discord">
+            <a href="https://discord.com/login" target="_blank">
+                <img src="/~inf2pj01/assets/logo_discord.png" alt="Logo de Discord">
                 Associer mon compte à Discord
             </a>
         </button>
@@ -347,7 +346,7 @@ if (isset($_SESSION['message'])) {
         <form action="" method="post">
             <input type="hidden" name="deconnexion" value="true">
             <button type="submit">
-                    <img src="assets/logOut_icon.png" alt="icone de deconnexion">
+                    <img src="/~inf2pj01/assets/logOut_icon.png" alt="icone de deconnexion">
                     Déconnexion
             </button>
         </form>
@@ -356,7 +355,7 @@ if (isset($_SESSION['message'])) {
         <form action="delete_account.php" method="post">
             <input type="hidden" name="delete_account" value="true">
             <button type="submit">
-                <img src="assets/delete_icon.png" alt="icone de suppression">
+                <img src="/~inf2pj01/assets/delete_icon.png" alt="icone de suppression">
                 Supprimer mon compte
             </button>
         </form>

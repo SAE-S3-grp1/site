@@ -6,11 +6,11 @@
     <title>Agenda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link rel="stylesheet" href="styles/general_style.css">
-    <link rel="stylesheet" href="styles/header_style.css">
-    <link rel="stylesheet" href="styles/planner_style.css">
-    <link rel="stylesheet" href="styles/footer_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/planner_style.css">
+
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
     
 </head>
 <body class="body_margin">
