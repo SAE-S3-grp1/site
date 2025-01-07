@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div>
         <button id="cart-button">
-            <a href="event_details.php">
+            <a href="event_details.php?id=<?php echo $eventid?>">
                 <img src="assets/fleche_retour.png" alt="Flèche de retour">
                 Retourner à l'évènement
             </a>
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="carte_credit" class="mode_paiement_fields">
                 <form method="POST" action="event_subscription.php">
                     <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
-                    <input type="hidden" name="price" value="<?php echo $price; ?>">
+                    <input type="hidden" name="price" value="<?php echo $price*$user_reduction; ?>">
                     <input type="hidden" name="mode_paiement" value="carte_credit">
 
                     <label for="numero_carte">Numéro de Carte :</label>
@@ -172,29 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
 
-            <div id="paypal" class="mode_paiement_fields" style="display: none;">
-                <form method="POST" action="event_subscription.php">
-                    <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
-                    <input type="hidden" name="price" value="<?php echo $price; ?>">
-                    <input type="hidden" name="mode_paiement" value="paypal">
-
-                    <button type="submit" id="paypal-button">Valider avec PayPal</button><br><br>
-                </form>
-            </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('mode_paiement').addEventListener('change', function () {
-            var modePaiement = this.value;
-            if (modePaiement === 'carte_credit') {
-                document.getElementById('carte_credit').style.display = 'block';
-                document.getElementById('paypal').style.display = 'none';
-            } else if (modePaiement === 'paypal') {
-                document.getElementById('carte_credit').style.display = 'none';
-                document.getElementById('paypal').style.display = 'block';
-            }
-        });
-    </script>
 </body>
 </html>
