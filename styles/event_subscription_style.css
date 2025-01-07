@@ -1,85 +1,140 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/**************************
+******  Inscription  ******
+***************************/
+
+H1 {
+    font-size: 4.5em;
+    letter-spacing: 15px;
+    line-height: 100px;
+    font-weight: 500;
+    font-family: "Koulen", sans-serif;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #000000;
+#cart-button {
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: rgb(119, 241, 190);
+    background-color: #1E1E1E;
+    margin-top: 30px;
+}
+
+#cart-button a {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 10vw;
-    height: 100vh;
-    color: #fff;
+    justify-content: space-around;
+    text-decoration: none; /* Supprime le soulignement */
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    gap : 10px;
 }
 
-h1 {
-    font-size: 2.5rem;
+#cart-button img {
+    width: 30px;
+    height: 30px;
+}
+
+
+div:nth-of-type(2){
+    align-self: center;
+    margin: auto;
+    margin-top: 80px;
+}
+
+div:nth-of-type(2) div:first-of-type table thead th {
+    padding: 20px;
+}
+
+div:nth-of-type(2) div:first-of-type table tbody tr {
+    text-align: center;
+}
+
+div:nth-of-type(2) div:first-of-type h3{
+    margin-top: 10px;
+    border-top: 1px solid white;
+    padding-top: 10px;
+    text-align:end;
+}
+
+div:nth-of-type(2) form {
+    align-self: flex-start;
+    margin: auto;
+    margin-top: 60px;
+}
+
+div:nth-of-type(2) div:nth-of-type(2) h3 {
     text-align: center;
     margin-bottom: 30px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: rgb(64, 180, 141);
+    font-size: 1.8em;
 }
 
-form {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 450px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+div:nth-of-type(2) div:nth-of-type(2) label{
+    border-radius: 5px;
+    color: rgb(169, 169, 169);
+    font-size: 1.2em;
+    margin-right: 5px;               
 }
 
-label {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    display: block;
-    color: rgb(64, 180, 141);
+div:nth-of-type(2) div:nth-of-type(2) select{
+    all: unset;
+    border: 2px solid rgb(169, 169, 169);
+    background-color: #1E1E1E;
+    border-radius: 5px;
+    padding: 0.80vh 2.5vh 0.80vh 1vh;
+    background: #1E1E1E url('/assets/chevron_logo.png') no-repeat right 4px center;
+    background-size: 12px 12px;
 }
 
-input[type="text"],
-select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
+div:nth-of-type(2) div:nth-of-type(2) div form input{
+    border-radius: 5px;
+    border: 2px solid rgb(169, 169, 169);
+    background-color: #1E1E1E;
+    font-size: 16px;               
+    color: white;  
+    padding-left: 2vh;
+    height: 3vh;
+}
+
+div:nth-of-type(2) div:nth-of-type(2) div form {
+    margin-top: 0px;
+}
+
+div:nth-of-type(2) div:nth-of-type(2) div {
+    margin-top: 0px;
+}
+
+#paypal-button {
+    display: flex;
+    flex-direction: row;
+    padding: 1vh;
+    border-radius: 10px;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    background: #333;
-    color: #fff;
-    transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-select:focus {
-    background-color: rgb(64, 180, 141);
-    border: 1px solid #3b6d3b;
-    outline: none;
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    background-color: rgb(64, 180, 141);
-    color: #fff;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    border: none;
+    font-size: 1em;
+    align-items: center;
+    justify-content: space-around;
     cursor: pointer;
-    transition: all 0.3s ease;
+    background-color:  #1E1E1E;
+    color: rgb(119, 241, 190);
+    margin: auto;
+    margin-top: 10px;
+}
+
+#finalise-order-button {
+    display: flex;
+    flex-direction: row;
+    padding: 1vh;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.5em;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    width: 270px;
+    height: 60px;
+    background-color:  rgb(119, 241, 190);
+    color: #1E1E1E;
+    margin: auto;
+    margin-top: 50px;
     font-weight: bold;
-}
-
-button:hover {
-    background-color: #3b6d3b;
-    transform: translateY(-3px);
-}
-
-button:active {
-    background-color: #45a745;
-    transform: translateY(2px);
 }
