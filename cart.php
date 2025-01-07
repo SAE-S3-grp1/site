@@ -162,7 +162,7 @@ $cart = new cart($db);
                         ?>
 
                         <tr>
-                            <th>Total avec réductions &nbsp : </th>
+                            <th>Total après réductions &nbsp : </th>
                             <td><?= number_format($totalWithReduc, 2, ',', ' ') ?> €</td>
                         </tr>
 

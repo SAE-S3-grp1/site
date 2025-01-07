@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </table>
 
             <h3>Total &nbsp : &nbsp <?= number_format($price, 2, ',', ' ') ?> €</h3>
-                        <h3>Total avec réductions &nbsp : &nbsp <?= number_format($price*$user_reduction, 2, ',', ' ') ?> €</h3>
+                        <h3>Total après réductions &nbsp : &nbsp <?= number_format($price*$user_reduction, 2, ',', ' ') ?> €</h3>
                    
         </div>
 
@@ -152,7 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="carte_credit">Carte de Crédit</option>
                 <option value="paypal">PayPal</option>
             </select><br><br>
-
             <div id="carte_credit" class="mode_paiement_fields">
                 <form method="POST" action="event_subscription.php">
                     <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
@@ -168,11 +167,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="cvv">CVV :</label>
                     <input type="text" id="cvv" name="cvv" placeholder="XXX" required><br><br>
 
-                    <button type="submit" id="finalise-order-button">Valider l'inscription</button>
+                    <button type="submit" id="finalise-order-button">Valider la commande</button>
                 </form>
             </div>
+            <div id="paypal" class="mode_paiement_fields" style="display: none;">
+                <form method="POST" action="event_subscription.php">
+                    <input type="hidden" name="eventid" value="<?php echo $eventid; ?>">
+                    <input type="hidden" name="price" value="<?php echo $price*$user_reduction; ?>">
+                    <input type="hidden" name="mode_paiement" value="paypal">
 
+                    <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
+                        
+                    <button type="submit" id="finalise-order-button">Valider la commande</button>
+                </form>
+            </div>
         </div>
     </div>
+
+    <script>
+    document.getElementById('mode_paiement').addEventListener('change', function() {
+        var modePaiement = this.value;
+        if (modePaiement === 'carte_credit') {
+            document.getElementById('carte_credit').style.display = 'block';
+            document.getElementById('paypal').style.display = 'none';
+        } else if (modePaiement === 'paypal') {
+            document.getElementById('carte_credit').style.display = 'none';
+            document.getElementById('paypal').style.display = 'block';
+        }
+    });
+</script>
+
+
+<?php require_once "footer.php" ?>
+
 </body>
 </html>
