@@ -8,15 +8,15 @@
 
     <title>Evenements</title>
 
-    <link rel="stylesheet" href="styles/general_style.css">
-    <link rel="stylesheet" href="styles/header_style.css">
-    <link rel="stylesheet" href="styles/footer_style.css">
-    <link rel="stylesheet" href="styles/events_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/events_style.css">
 </head>
 <body class="body_margin">
 <?php
-    require_once 'header.php';
-    require_once 'database.php';
+    require_once '~inf2pj01/header.php';
+    require_once '~inf2pj01/database.php';
     $db = new DB();
     $isLoggedIn = isset($_SESSION["userid"]);
     $show = 5;
@@ -27,7 +27,7 @@
 ?>
 <h1>LES EVENEMENTS</h1>
 <section>
-    <a class="show-more" href="events.php?show= <?php echo $show + 10?>">Voir plus loin dans le passé</a>
+    <a class="show-more" href="~inf2pj01/events.php?show= <?php echo $show + 10?>">Voir plus loin dans le passé</a>
     <div class="events-display">
                 <?php
                     $date = getdate();
@@ -131,8 +131,8 @@
                 <?php endforeach; ?>
         </div>
 </section>
-    <?php require_once 'footer.php';?>
-    <script src="/scripts/event_details_redirect.js"></script>
-    <script src="/scripts/scroll_to_closest_event.js"></script>
+    <?php require_once '~inf2pj01/footer.php';?>
+    <script src="~inf2pj01/scripts/event_details_redirect.js"></script>
+    <script src="~inf2pj01/scripts/scroll_to_closest_event.js"></script>
 </body>
 </html>

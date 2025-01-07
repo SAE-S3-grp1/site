@@ -7,10 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles/general_style.css">
-    <link rel="stylesheet" href="styles/header_style.css">
-    <link rel="stylesheet" href="styles/planner_style.css">
-    <link rel="stylesheet" href="styles/footer_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/planner_style.css">
+    <link rel="stylesheet" href="~inf2pj01/styles/footer_style.css">
     
 </head>
 <body class="body_margin">
@@ -22,9 +22,9 @@
 <?php 
 
 // Importer les fichiers
-require_once "header.php" ;
-require_once 'database.php';
-require_once 'files_save.php';
+require_once "~inf2pj01/header.php" ;
+require_once '~inf2pj01/database.php';
+require_once '~inf2pj01/files_save.php';
 ?>
 
 
@@ -40,6 +40,6 @@ require_once 'files_save.php';
 </div>
 
 
-<?php require_once "footer.php" ?>
+<?php require_once "~inf2pj01/footer.php" ?>
 </body>
 </html>
