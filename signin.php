@@ -24,7 +24,7 @@
         ?>
 
         <form method="POST" action="" class="login-form">
-            <h1>Rejoindre l'ADIIL</h1>
+            <h1>S'inscrire</h1>
 
             <label for="mail">Prénom :</label>
             <input type="text" name="fname">

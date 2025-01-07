@@ -139,26 +139,24 @@ h1 {
 
 
 .show-more {
-    position: relative;
-    margin: 3vh auto 0 auto;
-    left: 5vw;
+  opacity: 80%;
+  display: block;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 500;
 
-    opacity: 80%;
-    display: block;
-    text-align: center;
-    font-size: 1.2em;
-    font-weight: 500;
+  width: fit-content;
 
-    width: fit-content;
+  padding: 15px 30px;
 
-    padding: 15px 30px;
+  color: rgb(119, 241, 190);
+  border-radius: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
 
-    color: rgb(119, 241, 190);
-    border-radius: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
 
-    transition: all 0.3s ease-in-out;
-    text-decoration: none;
+  margin: 8vh auto 8vh auto ;
 }
 .show-more:hover {
   background-color: rgb(98, 207, 162);

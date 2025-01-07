@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles/footer_style.css">
     <link rel="stylesheet" href="styles/events_style.css">
 </head>
-<body>
+<body class="body_margin">
 <?php
     require_once 'header.php';
     require_once 'database.php';
@@ -48,33 +48,33 @@
                     );
                     $events_to_display = array_merge($passed_events, $events_to_display);
 
-                $closest_event_id = "";
+                    $closest_event_id = "";
 
-                foreach ($events_to_display as $event):
-                    $eventid = $event["id_evenement"];
-                    $event_date = substr($event['date_evenement'], 0, 10);
-                    $event_date_info = getdate(strtotime($event_date));
-                    $event_date = new DateTime($event_date);
-                    $other_classes = "";
-                    $isPassed = false;
+                    foreach ($events_to_display as $event):
+                        $eventid = $event["id_evenement"];
+                        $event_date = substr($event['date_evenement'], 0, 10);
+                        $event_date_info = getdate(strtotime($event_date));
+                        $event_date = new DateTime($event_date);
+                        $other_classes = "";
+                        $isPassed = false;
 
-                    if ($event_date < $current_date) {
-                        $date_pin_class = "passed";
-                        $date_pin_label = "Passé";
-                        $other_classes = 'passed';
-                        $isPassed = true;
-                    } elseif ($event_date == $current_date) {
-                        $date_pin_class = "today";
-                        $date_pin_label = "Aujourd'hui";
-                        $closest_event_id = "closest-event"; // Marquer l'événement du jour comme le plus proche
-                    } else {
-                        $date_pin_class = "upcoming";
-                        $date_pin_label = "A venir";
-                        if (empty($closest_event_id)) {
-                            $closest_event_id = "closest-event"; // Marquer le premier événement futur comme le plus proche
+                        if ($event_date < $current_date) {
+                            $date_pin_class = "passed";
+                            $date_pin_label = "Passé";
+                            $other_classes = 'passed';
+                            $isPassed = true;
+                        } elseif ($event_date == $current_date) {
+                            $date_pin_class = "today";
+                            $date_pin_label = "Aujourd'hui";
+                            $closest_event_id = "closest-event"; // Marquer l'événement du jour comme le plus proche
+                        } else {
+                            $date_pin_class = "upcoming";
+                            $date_pin_label = "A venir";
+                            if (empty($closest_event_id)) {
+                                $closest_event_id = "closest-event"; // Marquer le premier événement futur comme le plus proche
+                            }
                         }
-                    }
-                    ?>
+                ?>
                     <div class="event-box <?php echo "$other_classes";?>" id="<?php echo $closest_event_id ?>">
                         <div class="timeline-event">
                             <h4> <?php echo ucwords($joursFr[$event_date_info['wday']]." ".$event_date_info["mday"]." ".$moisFr[$event_date_info['mon']]);?></h4>
