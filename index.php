@@ -65,13 +65,19 @@
 
                foreach ([2,1,3] as $member_number):
                 $pod = $podium[$member_number-1];
+
             ?>
                 <div class="podium_unit">
                     <h3>#0<?php echo $member_number?></h3>
                     <h4><?php echo $pod['prenom_membre'];?></h4>
                     <div>
-                        <img src="/~inf2pj01/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
+                        <?php if($pod['pp_membre'] == null):?>
+                            <img src="/~inf2pj01/admin/ressources/default_images/user.jpg" alt="Profile Picture"
                             class="profile_picture">
+                        <?php else:?>
+                            <img src="/~inf2pj01/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
+                                class="profile_picture">
+                        <?php endif?>
                         <?php echo $pod['xp_membre'];?> xp
                     </div>
                 </div>

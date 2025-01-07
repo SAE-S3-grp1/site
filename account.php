@@ -218,14 +218,18 @@ if (isset($_SESSION['message'])) {
 <section> <!-- Ensemble des différents formulaires du compte -->
     
 
-
     <!-- Partie contenant les informations générales sur le compte de l'utilisateur -->
     <div id="account-generalInfo">
     <div>
         <form method="POST" enctype="multipart/form-data" id="pp-form">
 
+
             <label id="cadre-pp" for="profilePictureInput">
-                <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
+                <?php if($pod['pp_membre'] == null):?>
+                    <img src="/~inf2pj01/admin/ressources/default_images/user.jpg" alt="Photo de profil de l'utilisateur" />
+                <?php else:?>
+                    <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
+                <?php endif?>
             </label>
 
             <input type="file" id="profilePictureInput" name="file" accept="image/jpeg, image/png, image/webp" style="display: none;" onchange="this.form.submit()">
@@ -244,8 +248,12 @@ if (isset($_SESSION['message'])) {
             <p>Vous n'avez pas de grade</p>
         <?php else: ?>
             <p><?php echo $infoUser[0]['nom_grade']; ?></p>
-            <div id="cadre-grade">
+            <?php if($infoUser[0]['image_grade'] == null):?>
+                <img src="/~inf2pj01/admin/ressources/default_images/grade.webp" alt="Image du grade" />
+            <?php else:?>
                 <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
+            <?php endif?>
+            <div id="cadre-grade">
             </div>
         <?php endif; ?>
     </div>

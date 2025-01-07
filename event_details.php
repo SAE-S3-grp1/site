@@ -28,10 +28,6 @@
             header("Location: /~inf2pj01/index.php");
             exit;
         }
-
-        if($event['image_evenement'] == null){
-            $event['image_evenement'] = '/~inf2pj01/default-event.png';
-        }
     ?>
 
 <head>
@@ -59,7 +55,11 @@
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
     <section class="event-details">
-        <img src="/~inf2pj01/api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
+        <?php if($event['image_evenement'] == null):?>
+            <img src="/~inf2pj01/admin/ressources/default_images/event.jpg" alt="Image de l'événement">
+        <?php else:?>
+            <img src="/~inf2pj01/api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
+        <?php endif?>
 
         <h1><?php echo strtoupper($event['nom_evenement']); ?></h1>
 
