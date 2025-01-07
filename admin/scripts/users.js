@@ -33,9 +33,11 @@ async function fetchData() {
     }
 
     // Transform data to navbar items
-    return users.map(user => ({label: user.prenom_membre + ' ' + user.nom_membre.toUpperCase(), id: user.id_membre}));
+    return users
+        .filter(user => user.prenom_membre !== 'N/A')
+        .map(user => ({label: user.prenom_membre + ' ' + user.nom_membre.toUpperCase(), id: user.id_membre}));
 
-}
+    }
 
 /**
  * Saves the user information.
