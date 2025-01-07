@@ -21,6 +21,9 @@
             header("Location: index.php");
             exit;
         }
+        if($event['image_actualite'] == null){
+            $event['image_actualite'] = 'default-event.png';
+        }
     ?>
 
 <head>
