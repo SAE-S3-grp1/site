@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/general_style.css">
     <link rel="stylesheet" href="styles/header_style.css">
     <link rel="stylesheet" href="styles/footer_style.css">
+    <link rel="stylesheet" href="styles/bubble.css">
 
 </head>
 
@@ -149,6 +150,7 @@
     </div>
     <?php require_once 'footer.php';?>
     <script src="/scripts/event_details_redirect.js"></script>
+    <script src="/scripts/bubble.js"></script>
 </body>
 
 </html>

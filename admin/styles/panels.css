@@ -159,6 +159,11 @@ main > div{
         align-items: flex-start;
         justify-content: flex-start;
         overflow: auto;
+        padding-top: 0;
+    }
+
+    header{
+        display: none;
     }
 
     nav{
@@ -172,6 +177,26 @@ main > div{
         width: 100% !important;
     }
     main > div{
+        width: 100%;
+        overflow-y: initial;
+        gap: 30px;
+    }
+
+    .saves-buttons{
+        bottom: 25px;
+    }
+
+    .propertie{
+        flex-direction: column !important;
+        min-height: auto !important;
+    }
+    .propertie >div:last-child{
+        width: auto !important;
+        height: auto !important;
+        justify-content: flex-start !important;
+    }
+    .navadd-btn{
+        position: initial;
         width: 100%;
     }
 
@@ -413,8 +438,15 @@ textarea{
 }
 .file-skeleton{
     width: 100%;
-    height: 100px;
+    height: 86px;
     border-radius: 10px;
+    animation: skeleton-loading 0.7s linear infinite alternate;
+}
+.skeleton-preview{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
     animation: skeleton-loading 0.7s linear infinite alternate;
 }
 
@@ -437,12 +469,12 @@ textarea{
     border: 1px solid var(--background-color-darker);
     padding: 15px;
     border-radius: 10px;
-    gap: 15px;
     width: 100%;
 }
 .file-element > img{
     width: 50px;
     height: 50px;
+    margin-right: 20px;
 }
 .file-element > *:nth-child(2){
     width: 100%;

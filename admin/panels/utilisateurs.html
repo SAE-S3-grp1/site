@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/panels.css">
+    <link rel="stylesheet" href="../styles/users.css">
 
 </head>
 <body>
@@ -93,6 +94,26 @@
                 <div>
                     <div class="skeleton-text"></div>
                 </div>
+            </div>
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>  
+
+            <div class="propertie">
+                <div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+                <div>
+                    <div class="skeleton-text"></div>
+                </div>
             </div>  
 
         </div>
@@ -143,16 +164,6 @@
 
             <div class="propertie">
                 <div>
-                    <p>Rôles</p>
-                    <p>Lister les rôles à attribuer aux utilisateurs.</p>
-                </div>
-                <div>
-                    <input type="text" placeholder="Parking Batiment Info" id="prop_roles">
-                </div>
-            </div>
-
-            <div class="propertie">
-                <div>
                     <p>Points d'éxperiences</p>
                     <p>Sélectionnez le niveau d’xp de l’utilisateur.</p>
                 </div>
@@ -185,6 +196,18 @@
                 </div>
             </div>
 
+            <div class="propertie">
+                <div>
+                    <p>Rôles</p>
+                    <p>Lister les rôles à attribuer aux utilisateurs.</p>
+                </div>
+                <div id="prop_roles">
+                    <p>Administrateur</p>
+                    <p class="selected">fruit</p>
+                    <p>administrateu</p>
+                </div>
+            </div>
+
             <div class="saves-buttons">
                 <button class="btn-transparent btn-blue" id="save_btn"><img src="../ressources/save.svg" alt="Sauvegarde">Sauvegarder</button>
                 <button class="btn-transparent btn-red" id="delete_btn"><img src="../ressources/delete.svg" alt="Supprimer">Supprimer</button>
@@ -196,7 +219,6 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="module" src="../scripts/toggle.js"></script>
     <script type="module" src="../scripts/users.js"></script>
     
 </body>

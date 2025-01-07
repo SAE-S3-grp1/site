@@ -33,7 +33,7 @@ async function fetchData() {
     try{
         events = await requestGET('/event.php');
     } catch (error) {
-        toast('Erreur lors du chargement des grades.', true);
+        toast('Erreur lors du chargement des evenements.', true);
     }
 
     // Transform data to navbar items
@@ -67,7 +67,7 @@ async function saveEvent(id_event){
     // Send data
     try {
         await requestPUT('/event.php?id=' + id_event.toString(), data);
-        toast('Grade mis à jour avec succès.');
+        toast('Evenement mis à jour avec succès.');
         selectEvent(id_event);
     } catch (error) {
         toast(error.message, true);
@@ -111,7 +111,7 @@ async function selectEvent(id_event, li){
     // Show loader
     showLoader();
 
-    // Fetch grade information
+    // Fetch event information
     const event = await requestGET(`/event.php?id=${id_event}`);
 
     // Update displayed information
@@ -191,10 +191,10 @@ new_btn.onclick = async ()=>{
     // Show loader
     showLoader();
 
-    // Create new grade
+    // Create new event
     try {
-        const id = await requestPOST('/event.php');
-        refreshNavbar(fetchData, selectEvent, id);
+        const { id_evenement } = await requestPOST('/event.php');
+        refreshNavbar(fetchData, selectEvent, id_evenement);
     } catch (error) {
         toast("Erreur lors de la création de l'évenement", true);
         hideLoader();

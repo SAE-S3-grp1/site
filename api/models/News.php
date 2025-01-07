@@ -13,7 +13,8 @@ class News extends BaseModel implements JsonSerializable
     public static function create(string $nom, string $description, string $date, int $id_membre, File | null $image) : News
     {
         $DB = new \DB();
-        $id = $DB->query("INSERT INTO ACTUALITE (titre_actualite, contenu_actualite, date_actualite, id_membre, image_actualite) VALUES (?, ?, ?, ?, ?)", "sssis", [$nom, $description, $date, $id_membre, $image->getFileName()]);
+        $imageFileName = $image ? $image->getFileName() : null;
+        $id = $DB->query("INSERT INTO ACTUALITE (titre_actualite, contenu_actualite, date_actualite, id_membre, image_actualite) VALUES (?, ?, ?, ?, ?)", "sssis", [$nom, $description, $date, $id_membre, $imageFileName]);
         return News::getInstance($id);
     }
 
@@ -45,7 +46,7 @@ class News extends BaseModel implements JsonSerializable
             return null;
         }
 
-        return new News($result[0]);
+        return new News($id);
     }
 
     public static function bulkFetch() : array
@@ -57,13 +58,9 @@ class News extends BaseModel implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        $data = $this->DB->select("SELECT * FROM ACTUALITE WHERE id_actualite = ?", "i", [$this->id]);
+        $data = $this->DB->select("SELECT A.*, M.prenom_membre, M.prenom_membre FROM ACTUALITE as A INNER JOIN MEMBRE M on A.id_membre = M.id_membre WHERE id_actualite = ?", "i", [$this->id]);
 
-        $data['user'] = (Member::getInstance($data['id_membre']))->toJson();
-
-        unset($data['id_membre']);
-
-        return $data;
+        return $data[0];
     }
 
     public function __toString() : string

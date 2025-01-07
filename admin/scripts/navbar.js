@@ -9,6 +9,7 @@ import { showLoader, hideLoader } from "./loader.js";
 const navbar = document.getElementById('content_navbar');
 const skeleton = document.getElementById('skeleton_navbar');
 const empty_navbar = document.getElementById('empty_navbar');
+const main = document.querySelector('main');
 
 /**
  * Refreshes the navbar by fetching new data and updating the items.
@@ -60,6 +61,12 @@ export async function refreshNavbar(fetchData, selectItem, defaultSelectedItem =
     // Select default item
     if (needToBeSelectedLi !== null)
         needToBeSelectedLi.click();
+
+    // If empty
+    if (items.length === 0)
+        main.style = 'display: none';
+    else
+        main.style = '';
 
     // Hide loader
     hideLoader();

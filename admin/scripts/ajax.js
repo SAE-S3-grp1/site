@@ -42,8 +42,9 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         } else if (data instanceof FormData){
             options.body = data;
         } else if (data) {
-            options['Content-Type'] = 'application/json';
+            options.headers['Content-Type'] = 'application/json';
             options.body = JSON.stringify(data);
+            console.log(options.body)
         }
 
         // Fetch data
@@ -59,7 +60,7 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Vérification de la réponse
         if (!response.ok)
             if (json && json.error)
-                if (json.error = 'Unauthorized')
+                if (json.error == 'Unauthorized' || json.error == 'Forbidden')
                     window.location.href = 'unauthorized.html';
                 else
                     throw new Error(json.error);

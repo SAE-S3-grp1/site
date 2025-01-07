@@ -20,7 +20,7 @@ const prop_xp = document.getElementById('prop_xp');
 const prop_tp = document.getElementById('prop_tp');
 
 /**
- * Reloads the navigation bar with grade items.
+ * Reloads the navigation bar with user items.
  */
 async function fetchData() {
 
@@ -38,10 +38,10 @@ async function fetchData() {
 }
 
 /**
- * Saves the grade information.
+ * Saves the user information.
  *
- * @param {number} id_user - The ID of the grade to be saved.
- * @returns {Promise<void>} A promise that resolves when the grade is successfully saved.
+ * @param {number} id_user - The ID of the user to be saved.
+ * @returns {Promise<void>} A promise that resolves when the user is successfully saved.
  * @throws Will alert an error message if the request fails.
  */
 async function saveUser(id_user){
@@ -62,7 +62,9 @@ async function saveUser(id_user){
     // Send data
     try {
         await requestPUT('/users.php?id=' + id_user.toString(), data);
-        toast('Grade mis à jour avec succès.');
+        const roles = {roles: Array.from(prop_roles.children).filter(role => role.classList.contains('selected')).map(role => parseInt(role.getAttribute('id')))}
+        await requestPUT('/userole.php?id=' + id_user.toString(), roles);
+        toast('Utiliateur mis à jour avec succès.');
         selectUser(id_user);
     } catch (error) {
         toast(error.message, true);
@@ -74,7 +76,7 @@ async function saveUser(id_user){
 }
 
 /**
- * Deletes the grade from the DB.
+ * Deletes the user from the DB.
 */
 async function deleteUser(id_user){
 
@@ -171,6 +173,39 @@ async function selectUser(id_member, li){
 
     };
 
+    // Delete roles
+    while (prop_roles.firstChild)
+        prop_roles.removeChild(prop_roles.firstChild);
+
+    // Add roles
+    const roles = await requestGET('/role.php'); // Get all roles
+    const user_roles = (await requestGET(`/userole.php?id=${id_member}`)).map(role => role.id_role); // Get user roles;
+    roles.forEach(role => {
+
+        // Create role button
+        const button = document.createElement('p');
+        button.textContent = role.nom_role;
+        button.setAttribute('id', role.id_role);
+        prop_roles.appendChild(button);
+
+        // Check it if added
+        if(user_roles.includes(role.id_role))
+            button.classList.add('selected');
+
+        // Add event
+        button.onclick = async ()=>{
+
+            // Add or remove role
+            if(button.classList.contains('selected')){
+                button.classList.remove('selected');
+            } else {
+                button.classList.add('selected');
+            }
+
+        };
+
+    });
+
     // Hide loader
     hideLoader();
 
@@ -185,7 +220,7 @@ new_btn.onclick = async ()=>{
     // Show loader
     showLoader();
 
-    // Create new grade
+    // Create new user
     try {
         const { id_membre } = await requestPOST('/users.php');
         refreshNavbar(fetchData, selectUser, id_membre);
