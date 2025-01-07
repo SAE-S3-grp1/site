@@ -21,6 +21,9 @@
             <li>
                 <a href="./shop.php">Boutique</a>
             </li>
+            <li>
+                <a href="./grade.php">Grades</a>
+            </li>
             
             <?php if ($isUserLoggedIn): ?>
                 <li>

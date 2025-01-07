@@ -57,7 +57,7 @@ $isLoggedIn = isset($_SESSION["userid"]);
 
 <!-- Formulaire permettant de modifier la photo de profil de l'utilisateur-->
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     // Appelle saveImage() pour traiter l'image
     $fileName = saveImage();
 
@@ -257,13 +257,6 @@ if (isset($_SESSION['message'])) {
 
  <!-- Formulaire contenant les données personnelles de l'utilisateur -->
     <form method="POST" action="" id="account-personalInfo-form">
-        <?php if (isset($successMessage)): ?>
-            <p class="success-message"><?php echo $successMessage; ?></p>
-        <?php endif; ?>
-        <?php if (isset($errorMessage)): ?>
-            <p class="error-message"><?php echo $errorMessage; ?></p>
-        <?php endif; ?>
-
         <div>
             <div>
                 <input 
@@ -395,7 +388,7 @@ $viewAll = isset($_GET['viewAll']) && $_GET['viewAll'] === '1';
 
     // Ajouter LIMIT si "viewAll" n'est pas activé
     if (!$viewAll) {
-        $sql .= " LIMIT 3";
+        $sql .= " LIMIT 6";
     }
 
     // Exécuter la requête

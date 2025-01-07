@@ -11,17 +11,23 @@
     z-index: 2;
 }
 
-.body_margin > *:not(header):not(footer) {
-    margin-right: 2vw;
-    margin-left: 2vw;
-}
-
-
 html{
     font-family: "Inter", sans-serif;
     color: white;
     background-color: #1E1E1E;
     margin-top: 20vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.body_margin > *:not(header):not(footer) {
+    margin-right: 2vw;
+    margin-left: 2vw;
+    flex: 1;
 }
 
 p {
@@ -40,4 +46,23 @@ a {
 .hover_effect:hover{
     background-color: rgb(119, 241, 190);
     color: rgb(23, 23, 23);    
+}
+
+/*Messages des succès ou d'erreur*/
+#success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+#error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
 }
