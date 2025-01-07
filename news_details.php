@@ -34,18 +34,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <title><?php echo $event['titre_actualite']?></title>
-    <link rel="stylesheet" href="/~inf2pj01/styles/event_details_style.css">
 
     <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
     <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
     <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
+
+    <link rel="stylesheet" href="/~inf2pj01/styles/event_details_style.css">
+
 
 
 </head>
 
 <body>
     <?php
-    require_once '/~inf2pj01/header.php';
+    require_once 'header.php';
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
     <section class="event-details">
