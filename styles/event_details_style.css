@@ -43,7 +43,7 @@ footer{
 }
 .event-details > div{
     margin-left: 8vw;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     width: fit-content;
     display: flex;
     align-content: center;
@@ -316,4 +316,8 @@ footer{
 
 .show-more button:active {
     transform: scale(0.98);
+}
+
+ul{
+    margin-bottom: 200px;
 }
