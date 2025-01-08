@@ -8,7 +8,7 @@ const SERVER_API_URL = '/~inf2pj01//api';
  * If true, the fetch requests are logged in the console.
  * @constant {boolean}
 */
-const DEBUG_FETCHS = false;
+const DEBUG_FETCHS = true;
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
@@ -55,7 +55,12 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         if (DEBUG_FETCHS) {
             console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
         }
-        const json = text ? JSON.parse(text) : null;
+        let json = null;
+        try {
+            json = JSON.parse(text);
+        } catch (error) {
+            console.error("The API returned a error.");
+        }
 
         // Vérification de la réponse
         if (!response.ok)
