@@ -132,6 +132,7 @@ function delete_news() : void
     }
 
     $news->delete();
-    http_response_code(204);
+    http_response_code(200);
+    echo json_encode(['message' => 'News deleted']);
 }
 

@@ -86,7 +86,7 @@ function update_item() : void
     $id = filter::int($_GET['id']);
     $name = filter::string($data['name'], maxLenght: 100);
     $xp = filter::int($data['xp']);
-    $stocks = filter::int($data['stocks'], min: -1);
+    $stocks = filter::int($data['stocks'], min: -100000);
     $reduction = filter::bool($data['reduction']);
     $price = filter::float($data['price']);
     $categorie = filter::string($data['categorie'], maxLenght: 100);
@@ -162,5 +162,6 @@ function delete_item() : void
 
     $item->delete();
 
-    http_response_code(204);
+    http_response_code(200);
+    echo json_encode(['message' => 'Item deleted']);
 }

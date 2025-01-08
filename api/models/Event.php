@@ -12,8 +12,7 @@ class Event extends BaseModel implements JsonSerializable
 
     public function delete() : void
     {
-        $this->DB->query("UPDATE INSCRIPTION SET id_evenement = NULL WHERE id_evenement = ?", "i", [$this->id]);
-        $this->DB->query("DELETE FROM EVENEMENT WHERE id_evenement = ?", "i", [$this->id]);
+        $this->DB->query("UPDATE EVENEMENT SET deleted=true WHERE id_evenement = ?", "i", [$this->id]);
     }
 
     public function update(string $nom, string $description, int $xp, int $places, bool $reductions, float $prix, string $lieu, string $date) : Event
@@ -39,7 +38,7 @@ class Event extends BaseModel implements JsonSerializable
     public static function getInstance(int $id): ?Event
     {
         $DB = new \DB();
-        $sql = "SELECT * FROM EVENEMENT WHERE id_evenement = ?";
+        $sql = "SELECT * FROM EVENEMENT WHERE id_evenement = ? AND deleted=false";
         $event = $DB->select($sql, "i", [$id]);
 
         if (count($event) == 0) {
@@ -62,7 +61,7 @@ class Event extends BaseModel implements JsonSerializable
     public static function bulkFetch() : array
     {
         $DB = new \DB();
-        $sql = "SELECT * FROM EVENEMENT";
+        $sql = "SELECT * FROM EVENEMENT WHERE deleted=false";
         return $DB->select($sql);
     }
 

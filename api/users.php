@@ -177,7 +177,7 @@ function delete_user() :void
 
     $user->delete();
 
-    http_response_code(204);
+    http_response_code(200);
     echo json_encode(["message" => "User deleted"]);
 }
 

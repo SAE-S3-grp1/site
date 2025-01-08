@@ -84,7 +84,6 @@ function update_grade() : void
 
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
-    echo json_encode($data);
 
     if (!isset($_GET['id'], $data['name'], $data['description'], $data['price'], $data['reduction'])) {
         http_response_code(400);
@@ -108,7 +107,7 @@ function update_grade() : void
 
     $grade->update($name, $description, $price, $reduction);
 
-    http_response_code(204);
+    http_response_code(200);
     echo $grade;
 }
 
@@ -163,6 +162,7 @@ function delete_grade() : void
 
     $grade->delete();
 
-    http_response_code(204);
+    http_response_code(200);
+    echo json_encode(['message' => 'Grade deleted']);
 }
 
