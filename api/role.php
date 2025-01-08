@@ -132,7 +132,7 @@ function delete_role() : void
 
     $role->delete();
 
-    http_response_code(204);
+    http_response_code(200);
     echo json_encode(['message' => 'Role deleted']);
 }
 

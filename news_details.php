@@ -21,9 +21,6 @@
             header("Location: /~inf2pj01/index.php");
             exit;
         }
-        if($event['image_actualite'] == null){
-            $event['image_actualite'] = 'default-event.png';
-        }
     ?>
 
 <head>
@@ -51,8 +48,11 @@
     $isLoggedIn = isset($_SESSION["userid"]);
 ?>
     <section class="event-details">
-        <img src="/~inf2pj01/api/files/<?php echo $event['image_actualite']; ?>" alt="Image de l'actualité">
-
+        <?php if($event['image_actualite'] == null):?>
+            <img src="/~inf2pj01/admin/ressources/default_images/event.jpg" alt="Image de l'actualite">
+        <?php else:?>
+            <img src="/~inf2pj01/api/files/<?php echo $event['image_actualite']; ?>" alt="Image de l'actualite">
+        <?php endif?>
         <h1><?php echo strtoupper($event['titre_actualite']); ?></h1>
 
         <div>
@@ -64,7 +64,7 @@
                 ?>
             </h2>
         </div>
-
+        <ul></ul>
         <p>
             <?php echo nl2br(htmlspecialchars($event['contenu_actualite'])); ?>
         </p>

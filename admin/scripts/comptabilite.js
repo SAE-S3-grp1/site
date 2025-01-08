@@ -109,7 +109,7 @@ function addUpdloadButton(){
     upload_button.onclick = async () => {
 
         // Get file
-        const file = await openFileDialog();
+        const file = await openFileDialog("document/*");
 
         // Ask name
         swal({

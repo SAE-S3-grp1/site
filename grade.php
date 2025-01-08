@@ -35,7 +35,7 @@ $db = new DB();
 
 
 //Requête SQL
-$products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
+$products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix_grade");
 
 ?>
 
@@ -64,7 +64,12 @@ $products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
         <?php foreach ($products as $product) : ?>
                 <div id="one-product">
                     <div>
-                        <img src="/~inf2pj01/api/files/<?php echo $product['image_grade']; ?>" alt="Image du grade" />
+                        <?php if($product['image_grade'] == null):?>
+                            <img src="/~inf2pj01/admin/ressources/default_images/grade.webp" alt="Image du grade" />
+                        <?php else:?>
+                            <img src="/~inf2pj01/api/files/<?php echo $product['image_grade']; ?>" alt="Image du grade" />
+                        <?php endif?>
+
                         <h3 title="<?= htmlspecialchars($product['nom_grade']) ?>">
                             <?= htmlspecialchars($product['nom_grade']) ?>
                         </h3>

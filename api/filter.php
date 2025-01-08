@@ -14,7 +14,7 @@ class Filter
     public static function string(mixed $value, int $minLenght=0, int $maxLenght=5000) : string
     {
         // On retire la "merde" de la chaine
-        $filtered = htmlspecialchars($value);
+        $filtered = htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
 
         if (strlen($filtered) < $minLenght || strlen($filtered) > $maxLenght)
         {

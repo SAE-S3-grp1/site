@@ -41,14 +41,13 @@ class Item extends BaseModel implements JsonSerializable
     public function delete() : void
     {
         $this->getImage()?->deleteFile();
-        $this->DB->query("UPDATE COMMANDE SET id_article=null WHERE id_article = ?", "i", [$this->id]);
-        $this->DB->query("DELETE FROM ARTICLE WHERE id_article = ?", "i", [$this->id]);
+        $this->DB->query("UPDATE ARTICLE SET deleted=true WHERE id_article = ?", "i", [$this->id]);
     }
 
     public static function getInstance($id): ?Item
     {
         $DB = new \DB();
-        $result = $DB->select("SELECT * FROM ARTICLE WHERE id_article = ?", "i", [$id]);
+        $result = $DB->select("SELECT * FROM ARTICLE WHERE id_article = ? AND DELETED = FALSE", "i", [$id]);
 
         if (count($result) == 0) {
             return null;
@@ -65,7 +64,7 @@ class Item extends BaseModel implements JsonSerializable
     public static function bulkFetch() : array
     {
         $DB = new \DB();
-        return $DB->select("SELECT * FROM ARTICLE");
+        return $DB->select("SELECT * FROM ARTICLE WHERE DELETED = FALSE");
     }
 
     public function __toString() : string

@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 //Construction de la requête SQL
-$query = "SELECT * FROM ARTICLE";
+$query = "SELECT * FROM ARTICLE WHERE deleted = false";
 $whereClauses = [];
 $params = [];
 // Ajout de la recherche par nom
@@ -191,7 +191,11 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
         <?php foreach ($products as $product) : ?>
                 <div id="one-product">
                     <div>
-                        <img src="/~inf2pj01/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                        <?php if($product['image_article'] == null):?>
+                            <img src="/~inf2pj01/admin/ressources/default_images/boutique.png" alt="Image de l'article" />
+                        <?php else:?>
+                            <img src="/~inf2pj01/api/files/<?php echo $product['image_article']; ?>" alt="Image de l'article" />
+                        <?php endif?>
                         <h3 title="<?= htmlspecialchars($product['nom_article']) ?>">
                             <?= htmlspecialchars($product['nom_article']) ?>
                         </h3>

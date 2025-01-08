@@ -44,13 +44,13 @@ class Grade extends BaseModel implements JsonSerializable
     public function delete() : void
     {
         $this->getImage()?->deleteFile();
-        $this->DB->query("DELETE FROM GRADE WHERE id_grade = ?", "i", [$this->id]);
+        $this->DB->query("UPDATE GRADE SET deleted=true WHERE id_grade = ?", "i", [$this->id]);
     }
 
     public static function getInstance($id): Grade | null
     {
         $DB = new \DB();
-        $result = $DB->select("SELECT * FROM GRADE WHERE id_grade = ?", "i", [$id]);
+        $result = $DB->select("SELECT * FROM GRADE WHERE id_grade = ? AND deleted=false", "i", [$id]);
 
         if (count($result) == 0) {
             return null;
@@ -62,7 +62,7 @@ class Grade extends BaseModel implements JsonSerializable
     public static function bulkFetch(): array
     {
         $DB = new \DB();
-        return $DB->select("SELECT * FROM GRADE");
+        return $DB->select("SELECT * FROM GRADE WHERE deleted=false");
     }
 
     public function __toString(): string
