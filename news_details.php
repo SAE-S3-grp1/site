@@ -64,7 +64,7 @@
                 ?>
             </h2>
         </div>
-
+        <ul></ul>
         <p>
             <?php echo nl2br(htmlspecialchars($event['contenu_actualite'])); ?>
         </p>
