@@ -2,13 +2,13 @@
  * The base URL for the server API.
  * @constant {string}
  */
-const SERVER_API_URL = '/~inf2pj01//api';
+const SERVER_API_URL = '/~inf2pj01/api';
 
 /**
  * If true, the fetch requests are logged in the console.
  * @constant {boolean}
 */
-const DEBUG_FETCHS = false;
+const DEBUG_FETCHS = isDebug();
 
 /**
  * Effectue une requête AJAX avec la méthode spécifiée.
@@ -44,7 +44,6 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         } else if (data) {
             options.headers['Content-Type'] = 'application/json; charset=utf-8';
             options.body = JSON.stringify(data);
-            console.log(options.body)
         }
 
         // Fetch data
@@ -53,9 +52,14 @@ async function request(endpoint, method = 'GET', data = null, headers = {}) {
         // Récupérer et retourner le résultat en JSON
         const text = await response.text();
         if (DEBUG_FETCHS) {
-            console.log(`%c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
+            console.log(`%c(${response.status}) %c${method} %c${endpoint}%c${text.startsWith('\n') ? '' : '\n'}${text}`, 'color: red', 'color: peachpuff; font-weight: bold;', 'color: peachpuff;', 'color: powderblue;');
         }
-        const json = text ? JSON.parse(text) : null;
+        let json = null;
+        try {
+            json = JSON.parse(text);
+        } catch (error) {
+            throw new Error("The API returned a error : " + error.message);
+        }
 
         // Vérification de la réponse
         if (!response.ok)
@@ -127,3 +131,18 @@ function requestDELETE(endpoint) {
 
 // Export des fonctions
 export { request, requestGET, requestPOST, requestPUT, requestPATCH, requestDELETE };
+
+// Check for debug
+function isDebug() {
+
+    // Récupère l'URL actuelle
+    const url = window.location.href;
+    
+    // Vérifie si l'URL contient '?debug'
+    if (url.includes('?debug')) {
+        return true;
+    } else {
+        return false;
+    }
+
+}

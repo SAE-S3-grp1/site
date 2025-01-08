@@ -2,7 +2,7 @@ import { requestGET, requestDELETE, requestPOST } from './ajax.js';
 import { showLoader, hideLoader } from "./loader.js";
 import { toast } from "./toaster.js";
 import { showPropertieSkeleton, hidePropertieSkeleton } from "./propertieskeleton.js";
-import { openFileDialog } from "./files.js";
+import { getFileBucketUrl, openFileDialog } from "./files.js";
 
 // Elements
 const main_content = document.getElementById('main_content');
@@ -70,7 +70,7 @@ function addAccountingElement(data){
 
     // Add download event
     download_button.onclick = () => {
-        window.open(data.url_comptabilite, '_blank');
+        window.open(getFileBucketUrl(data.url_comptabilite), '_blank');
     }
 
     // Add delete event
