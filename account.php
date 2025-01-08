@@ -225,7 +225,7 @@ if (isset($_SESSION['message'])) {
 
 
             <label id="cadre-pp" for="profilePictureInput">
-                <?php if($pod['pp_membre'] == null):?>
+                <?php if($infoUser[0]['pp_membre'] == null):?>
                     <img src="/~inf2pj01/admin/ressources/default_images/user.jpg" alt="Photo de profil de l'utilisateur" />
                 <?php else:?>
                     <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['pp_membre']; ?>" alt="Photo de profil de l'utilisateur" />
@@ -243,7 +243,7 @@ if (isset($_SESSION['message'])) {
         <p><?php echo $infoUser[0]['xp_membre']; ?></p>
         <p>XP</p>
     </div>
-    <div>
+    <div id="cadre-grade">
         <?php if (empty($infoUser[0]['nom_grade'])): ?>
             <p>Vous n'avez pas de grade</p>
         <?php else: ?>
@@ -253,7 +253,7 @@ if (isset($_SESSION['message'])) {
             <?php else:?>
                 <img src="/~inf2pj01/api/files/<?php echo $infoUser[0]['image_grade']; ?>" alt="Illustration du grade de l'utilisateur" />
             <?php endif?>
-            <div id="cadre-grade">
+            <div >
             </div>
         <?php endif; ?>
     </div>

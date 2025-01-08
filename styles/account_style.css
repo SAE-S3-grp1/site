@@ -98,8 +98,8 @@ H2 {
 }
 
 #cadre-grade {
-    width: 8vh;
-    height: 8vh;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
     margin-top: 2vh;
 }

@@ -208,7 +208,14 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     </div>
                     <div>
                         <p id="stock-status">
-                            <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
+                            <?php
+                                $ok = (int)$product['stock_article'] > 0;
+                                if(!empty($_SESSION['cart'][$product['id_article']])){
+                                    $ok = $ok && ((int)$product['stock_article'] - $_SESSION['cart'][$product['id_article']] > 0);
+                                }
+                                $ok = $ok || (int)$product['stock_article'] < 0;
+                            ?>
+                            <?php if ($ok): ?>
                                 <a class="addCart" id="add-to-cart-button" href="/~inf2pj01/cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
                                     Ajouter au panier
                                 </a>
