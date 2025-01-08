@@ -35,7 +35,7 @@ $db = new DB();
 
 
 //Requête SQL
-$products = $db->select("SELECT * FROM GRADE ORDER BY prix_grade");
+$products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix_grade");
 
 ?>
 
