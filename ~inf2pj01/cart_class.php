@@ -98,6 +98,7 @@ public function recalc() {
 
     public function add ($product_id) {
         if(isset($_SESSION['cart'][$product_id])){
+            //
             $product = $this->db->select("SELECT stock_article FROM ARTICLE WHERE id_article = ?","i",[$product_id])[0];
 
             if(
@@ -107,6 +108,7 @@ public function recalc() {
             ){
                 $_SESSION['cart'][$product_id]++;
             }
+            //
         }
         else{
             $_SESSION['cart'][$product_id] = 1;
