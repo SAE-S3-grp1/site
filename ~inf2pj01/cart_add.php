@@ -15,7 +15,7 @@ $json = array('error' => true);
 
 if(isset($_GET['id'])){
     $product = $db->select(
-        "SELECT id_article FROM ARTICLE WHERE id_article = ?",
+        "SELECT id_article, stock_article FROM ARTICLE WHERE id_article = ?",
         "i",
         [$_GET['id']]
     );
@@ -24,8 +24,14 @@ if(isset($_GET['id'])){
         $json['message'] = "Ce produit n'existe pas"; 
     }
 
-
     $cart->add($product[0]['id_article']);
+    //
+    if(
+        $_SESSION['cart'][$product[0]['id_article']] > $product[0]['stock_article']
+    ){
+        $_SESSION['cart'][$product[0]['id_article']] = $product[0]['stock_article'];
+    }
+    //
     $json['error'] = false;
     $json['total'] = $cart->total();
     $json['count'] = $cart->count();
