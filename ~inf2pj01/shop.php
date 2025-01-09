@@ -106,8 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 //Construction de la requête SQL
-$query = "SELECT * FROM ARTICLE WHERE deleted = false";
-$whereClauses = [];
+$query = "SELECT * FROM ARTICLE";
+$whereClauses = ["deleted = false"];
 $params = [];
 // Ajout de la recherche par nom
 if (!empty($searchTerm)) {
