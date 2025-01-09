@@ -65,6 +65,11 @@ $products = $db->select($query, $types, $product_ids);
 
 $cart_items = [];
 foreach ($products as $product) {
+    if(
+        $_SESSION['cart'][$product['id_article']] > $product['stock_article']
+    ){
+        $cart[$product['id_article']] = $product['stock_article'];
+    }
     $cart_items[$product['id_article']] = [
         'nom_article' => $product['nom_article'], // Ajout du nom de l'article
         'prix_article' => $product['prix_article'],
