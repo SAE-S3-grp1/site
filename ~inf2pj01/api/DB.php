@@ -5,8 +5,8 @@ class DB
     private $host = 'localhost';
     private $port = '3306';
     private $db = 'inf2pj_01';
-    private $db_user = 'inf2pj01';
-    private $db_pass = 'Eokez4ie9t';
+    private $db_user = 'root';
+    private $db_pass = '';
 
     public function connect()
     {
