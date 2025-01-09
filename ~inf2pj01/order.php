@@ -66,7 +66,7 @@ $products = $db->select($query, $types, $product_ids);
 $cart_items = [];
 foreach ($products as $product) {
     if(
-        $_SESSION['cart'][$product['id_article']] > $product['stock_article']
+        $product['stock_article'] > 0 && $_SESSION['cart'][$product['id_article']] > $product['stock_article']
     ){
         $cart[$product['id_article']] = $product['stock_article'];
     }

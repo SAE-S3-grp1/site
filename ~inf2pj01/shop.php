@@ -12,50 +12,7 @@
     <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
 
 
-    <!--Automatisation de la soumission du formulaire (filter-form)-->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("#filter-form");
-            
-            // Soumission du formulaire lorsqu'on appuie sur "Entrée" dans le champ de recherche
-            const searchInput = document.querySelector("input[name='search']");
-            searchInput.addEventListener("keydown", function (event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    form.submit();
-                }
-            });
 
-            // Soumission du formulaire lorsqu'une catégorie est sélectionnée
-            const detailsElement = document.querySelector("details");
-            // Restaurer l'état ouvert du menu si nécessaire
-            if (sessionStorage.getItem("details-open") === "true") {
-                detailsElement.open = true;
-            }
-            // Empêcher la fermeture du menu après soumission
-            const categoryCheckboxes = document.querySelectorAll("input[name='category[]']");
-            categoryCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener("change", function () {
-                    // Sauvegarder l'état du menu
-                    sessionStorage.setItem("details-open", "true");
-                    // Soumettre le formulaire
-                    form.submit();
-                });
-            });
-            // Nettoyer l'état lorsque l'utilisateur ferme manuellement le menu
-            detailsElement.addEventListener("toggle", function () {
-                if (!detailsElement.open) {
-                    sessionStorage.removeItem("details-open");
-                }
-            });
-
-            // Soumission du formulaire lorsqu'une option de tri est sélectionnée
-            const sortSelect = document.querySelector("select[name='sort']");
-            sortSelect.addEventListener("change", function () {
-                form.submit();
-            });
-        });
-    </script>
 
 </head>
 
@@ -208,14 +165,7 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
                     </div>
                     <div>
                         <p id="stock-status">
-                            <?php
-                                $ok = (int)$product['stock_article'] > 0;
-                                if(!empty($_SESSION['cart'][$product['id_article']])){
-                                    $ok = $ok && ((int)$product['stock_article'] - $_SESSION['cart'][$product['id_article']] > 0);
-                                }
-                                $ok = $ok || (int)$product['stock_article'] < 0;
-                            ?>
-                            <?php if ($ok): ?>
+                            <?php if ((int)$product['stock_article'] > 0 || (int)$product['stock_article'] < 0): ?>
                                 <a class="addCart" id="add-to-cart-button" href="/~inf2pj01/cart_add.php?id=<?= htmlspecialchars($product['id_article']) ?>">
                                     Ajouter au panier
                                 </a>
@@ -237,6 +187,50 @@ $products = $db->select($query, str_repeat("s", count($params)), $params);
 <?php require_once "footer.php" ?>
 
 <!--Dynamisme du panier-->
+    <!--Automatisation de la soumission du formulaire (filter-form)-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("#filter-form");
+            
+            // Soumission du formulaire lorsqu'on appuie sur "Entrée" dans le champ de recherche
+            const searchInput = document.querySelector("input[name='search']");
+            searchInput.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    form.submit();
+                }
+            });
+
+            // Soumission du formulaire lorsqu'une catégorie est sélectionnée
+            const detailsElement = document.querySelector("details");
+            // Restaurer l'état ouvert du menu si nécessaire
+            if (sessionStorage.getItem("details-open") === "true") {
+                detailsElement.open = true;
+            }
+            // Empêcher la fermeture du menu après soumission
+            const categoryCheckboxes = document.querySelectorAll("input[name='category[]']");
+            categoryCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener("change", function () {
+                    // Sauvegarder l'état du menu
+                    sessionStorage.setItem("details-open", "true");
+                    // Soumettre le formulaire
+                    form.submit();
+                });
+            });
+            // Nettoyer l'état lorsque l'utilisateur ferme manuellement le menu
+            detailsElement.addEventListener("toggle", function () {
+                if (!detailsElement.open) {
+                    sessionStorage.removeItem("details-open");
+                }
+            });
+
+            // Soumission du formulaire lorsqu'une option de tri est sélectionnée
+            const sortSelect = document.querySelector("select[name='sort']");
+            sortSelect.addEventListener("change", function () {
+                form.submit();
+            });
+        });
+    </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/~inf2pj01/scripts/add_cart.js"></script>
 
