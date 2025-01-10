@@ -11,10 +11,10 @@ h1 {
 }
 
 .event-subscribed {
-  background-color: rgb(38, 100, 49);
+  background-color: rgb(84, 160, 128);
 }
 .event-not-subscribed {
-  background-color: rgb(119, 241, 190);
+  background-color: rgb(84, 160, 128);
 }
 .event-full {
   background-color: #5d5757;
