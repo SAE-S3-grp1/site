@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 
         if (!empty($user)){
             // Vérifier la correspondance des nouveaux mots de passe
-            if ($password_ok) {
+            if ($password_ok && $newPassword == $newPasswordVerif ) {
                 // Mettre à jour le mot de passe dans la base de données
                 $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                 $db->query(
