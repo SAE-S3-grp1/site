@@ -64,9 +64,6 @@
                     }else{
                         $password_ok = password_verify($password, $db_password);
                     }
-                    var_dump($password_ok);
-                    var_dump($password);
-                    var_dump(empty($db_password));
                     if($mail_ok && $password_ok){
 
                         $_SESSION['userid'] = $selection_db[0]["id_membre"];
