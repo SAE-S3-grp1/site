@@ -99,8 +99,7 @@ public function recalc() {
     public function add ($product_id) {
         if(isset($_SESSION['cart'][$product_id])){
             $_SESSION['cart'][$product_id]++;
-        }
-        else{
+        }else{
             $_SESSION['cart'][$product_id] = 1;
         }
     }

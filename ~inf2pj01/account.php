@@ -159,10 +159,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
             "i",
             [$_SESSION['userid']]
         );
-        
-        if (!empty($user) && password_verify($currentPassword, $user[0]['password_membre'])) {
+
+        if($user[0]['password_membre'] == NULL && $currentPassword == ""){
+            $password_ok = true;
+        }else{
+            $password_ok = password_verify($currentPassword, $user[0]['password_membre']);
+        }
+
+        if (!empty($user)){
             // Vérifier la correspondance des nouveaux mots de passe
-            if ($newPassword === $newPasswordVerif) {
+            if ($password_ok && $newPassword == $newPasswordVerif ) {
                 // Mettre à jour le mot de passe dans la base de données
                 $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
                 $db->query(
@@ -322,7 +328,7 @@ if (isset($_SESSION['message'])) {
         <div>
             <div>
                 <p>Modifier mon mot de passe :</p>
-                <input type="password" id="mdp" name="mdp" placeholder="Mot de passe actuel" required>
+                <input type="password" id="mdp" name="mdp" placeholder="Mot de passe actuel">
             </div>
             <div>
                 <input type="password" id="newMdp" name="newMdp" placeholder="Nouveau mot de passe" required>
