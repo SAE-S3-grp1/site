@@ -82,7 +82,7 @@ $products = $db->select("SELECT * FROM GRADE WHERE deleted = false ORDER BY prix
                         <p id="adhesion-status">
 
                             <?php
-                            if (!empty($_SESSION)) {
+                            if (!empty($_SESSION['userid'])) {
                                 $unAdherant = $db->select("SELECT * FROM GRADE INNER JOIN ADHESION ON GRADE.id_grade = ADHESION.id_grade INNER JOIN MEMBRE ON ADHESION.id_membre = MEMBRE.id_membre WHERE GRADE.id_grade = ? AND MEMBRE.id_membre = ?;",
                                 "ii",
                                 [$product['id_grade'], $_SESSION['userid']]

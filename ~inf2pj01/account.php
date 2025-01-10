@@ -296,7 +296,7 @@ if (isset($_SESSION['message'])) {
                     value="<?php echo htmlspecialchars($infoUser[0]['email_membre']); ?>" 
                     required>
                 
-                <?php if (!is_null($infoUser[0]['tp_membre'])): ?>
+                <?php if (!empty($infoUser[0]['tp_membre'])): ?>
                 <select id="tp" name="tp">
                     <option value="11A" <?php echo $infoUser[0]['tp_membre'] === '11A' ? 'selected' : ''; ?>>TP 11 A</option>
                     <option value="11B" <?php echo $infoUser[0]['tp_membre'] === '11B' ? 'selected' : ''; ?>>TP 11 B</option>
