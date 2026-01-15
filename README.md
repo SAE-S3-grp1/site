@@ -24,8 +24,8 @@ cd /var/www/html
 sudo chmown -R www-data html
 ```
 
-# infos
-Voici les logins des utilisateurs par défaut :
+# infos db
+## Logins des utilisateurs par défaut 
 
 | email | mot_de_passe |
 |---|---|
@@ -40,3 +40,29 @@ Voici les logins des utilisateurs par défaut :
 | evann.congnard@example.com | password1 |
 | erwan.lecoz@example.com | password1 |
 
+## Roles
+
+## Attribution 
+
+| id_membre | nom | prenom | role |
+|----------:|--------------------|---------|-------------------|
+| 1 | RUFFAULT--RAVENEL | Gemino   | Administrateur |
+| 2 | HANNIER            | Axelle   | Membre |
+| 3 | DAUVERGNE          | Julien   | Bureau |
+| 4 | DELAYE             | Baptiste | Modérateur |
+| 5 | VIEILLARD          | Nathalie | Responsable com |
+| 6 | HAVARD             | Barnabe  | Bureau |
+| 7 | FEVRIER            | Theo     | Membre |
+| 8 | GOUIN              | Tom      | Membre |
+| 9 | CONGNARD           | Evann    | Modérateur |
+|10 | LE COZ             | Erwan    | Membre |
+
+## Permissions
+
+| nom_role        | p_log | p_boutique | p_reunion | p_utilisateur | p_grade | p_roles | p_actualite | p_evenements | p_comptabilite | p_achats | p_moderation |
+|-----------------|-------|------------|-----------|---------------|---------|---------|-------------|--------------|----------------|----------|--------------|
+| Administrateur  | 1     | 1          | 1         | 1             | 1       | 1       | 1           | 1            | 1              | 1        | 1            |
+| Bureau          | 1     | 1          | 1         | 0             | 0       | 0       | 1           | 1            | 1              | 1        | 0            |
+| Responsable com | 0     | 0          | 0         | 0             | 0       | 0       | 0           | 0            | 1              | 1        | 0            |
+| Modérateur      | 0     | 0          | 0         | 1             | 0       | 0       | 1           | 0            | 0              | 0        | 1            |
+| Membre          | 0     | 0          | 0         | 0             | 0       | 0       | 0           | 0            | 0              | 0        | 0            |
