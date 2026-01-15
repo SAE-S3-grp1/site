@@ -24,3 +24,19 @@ cd /var/www/html
 sudo chmown -R www-data html
 ```
 
+# infos
+Voici les logins des utilisateurs par défaut :
+
+| email | mot_de_passe |
+|---|---|
+| gemino.ruffault@example.com | password1 |
+| axelle.hannier@example.com | password1 |
+| julien.dauvergne@example.com | password1 |
+| baptiste.delahay@example.com | password1 |
+| nathalie.vieillard@example.com | password1 |
+| barnabe.havard@example.com | password1 |
+| theo.fevrier@example.com | password1 |
+| tom.gouin@example.com | password1 |
+| evann.congnard@example.com | password1 |
+| erwan.lecoz@example.com | password1 |
+
