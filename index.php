@@ -9,11 +9,11 @@
 
     <title>Accueil</title>
 
-    <link rel="stylesheet" href="/styles/index_style.css">
-    <link rel="stylesheet" href="/styles/general_style.css">
-    <link rel="stylesheet" href="/styles/header_style.css">
-    <link rel="stylesheet" href="/styles/footer_style.css">
-    <link rel="stylesheet" href="/styles/bubble.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/index_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="/~inf2pj01/styles/bubble.css">
 
 </head>
 
@@ -24,14 +24,13 @@
      require_once 'database.php';
      $db = new DB();
      $isLoggedIn = isset($_SESSION["userid"]);
-
     ?>
     <div id="page-container">
         <!--H1 A METTRE -->
         <section>
             <h2 class="titre_vertical"> ADIIL</h2>
             <div id="index_carrousel">
-                <img src="/assets/photo_accueil_BDE.png" alt="Carrousel ADIIL">
+                <img src="/~inf2pj01/assets/photo_accueil_BDE.png" alt="Carrousel ADIIL">
             </div>
         </section>
 
@@ -72,10 +71,10 @@
                     <h4><?php echo $pod['prenom_membre'];?></h4>
                     <div>
                         <?php if($pod['pp_membre'] == null):?>
-                            <img src="/admin/ressources/default_images/user.jpg" alt="Profile Picture"
+                            <img src="/~inf2pj01/admin/ressources/default_images/user.jpg" alt="Profile Picture"
                             class="profile_picture">
                         <?php else:?>
-                            <img src="/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
+                            <img src="/~inf2pj01/api/files/<?php echo $pod['pp_membre'];?>" alt="Profile Picture"
                                 class="profile_picture">
                         <?php endif?>
                         <?php echo $pod['xp_membre'];?> xp
@@ -148,15 +147,15 @@
                     </h4>
                 </div>
                 <?php endforeach; ?>
-                <h3><a href="/events.php">Voir tous les événements</a></h3>
+                <h3><a href="/~inf2pj01/events.php">Voir tous les événements</a></h3>
             </div>
             <h2 class="titre_vertical">EVENT</h2>
 
         </section>
     </div>
     <?php require_once 'footer.php';?>
-    <script src="/scripts/event_details_redirect.js"></script>
-    <script src="/scripts/bubble.js"></script>
+    <script src="/~inf2pj01/scripts/event_details_redirect.js"></script>
+    <script src="/~inf2pj01/scripts/bubble.js"></script>
 </body>
 
 </html>
