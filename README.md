@@ -6,7 +6,7 @@
 sudo usermod -a -G www-data "$USER"
 ```
 
-## Git pull
+## Git clone
 
 ```bash
 cd /var/www/html
