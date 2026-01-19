@@ -468,6 +468,8 @@ les stocks de l'article convcerne par la commande*/
 
 DROP PROCEDURE IF EXISTS refund_transaction;
 
+DELIMITER $$
+
 CREATE PROCEDURE refund_transaction
 (IN _id_commande INT)
 BEGIN
@@ -485,7 +487,9 @@ BEGIN
         UPDATE ARTICLE SET stock_article = stock_article + _qtty_bought WHERE id_article = _id_article;
         
         DELETE FROM COMMANDE WHERE id_commande = _id_commande;
-END;
+END$$
+
+DELIMITER ;
 
 
 /* Test */
@@ -512,15 +516,15 @@ l'evenement*/
 
 DROP PROCEDURE IF EXISTS delete_event;
 
-
+DELIMITER $$
 CREATE PROCEDURE delete_event
 (IN _id_event INT)
     BEGIN
         DELETE FROM MEDIA WHERE id_evenement = _id_event;
 		DELETE FROM EVENEMENT WHERE id_evenement = _id_event;
-    END;
+    END$$
 
-
+DELIMITER ;
 /* Test */
 SELECT * FROM MEDIA WHERE id_evenement = 2;    -- Deux memdias sont en lien avec l'evenement
 CALL delete_event(2); --  On supprime l'evenement
@@ -541,7 +545,7 @@ l'utilisateur a les permissions pour le faire sinon on annule*/
 
 DROP TRIGGER IF EXISTS permissions_create_event;
 
-
+DELIMITER $$
 CREATE TRIGGER permissions_create_event AFTER INSERT ON ACTUALITE FOR EACH ROW
 	BEGIN
 		DECLARE _user_id INT;
@@ -553,18 +557,18 @@ CREATE TRIGGER permissions_create_event AFTER INSERT ON ACTUALITE FOR EACH ROW
 			-- ROLLBACK TRANSACTION n'existe pas en MySQL, on utilise donc une erreur pour annuler l'insertion
             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Vous n''avez pas les permissions pour ajouter une actualite';
 		END IF;
-	END;
+	END$$
 
-
+DELIMITER ;
 
 /* Test */
 -- Le membre 2 n'a pas les permissions pour ajouter une actualit� donc l'actualit� ne va pas �tre cr��e
-INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.jpg', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 2);
-SELECT* FROM ACTUALITE;
+-- INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.jpg', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 2);
+-- SELECT* FROM ACTUALITE;
 
 -- Le membre 1 a les permissions pour ajouter une actualit� donc l'actualit� va bien �tre cr��e
-INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.jpg', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 1);
-SELECT* FROM ACTUALITE;
+-- INSERT INTO ACTUALITE (image_actualite, titre_actualite, contenu_actualite, date_actualite, id_membre) VALUES ('http://files.bdeinfo.fr/lougarou2024.jpg', 'Un loup garou qui a fait son effet', 'Hier soir a eu lieu le goup garou annuel et le moins qu''on puisse dire c''est qu''on va recommencer et bientot!', '2024-10-25 19:45:00', 1);
+-- SELECT* FROM ACTUALITE;
 
 
 
@@ -637,6 +641,8 @@ SELECT MEDIA.url_media from MEDIA WHERE MEDIA.id_membre = 3 AND MEDIA.id_eveneme
 
 drop procedure if exists achat_article;
 
+DELIMITER $$
+
 create procedure achat_article(
     IN _id_membre_acheteur INT,
     IN _id_article_achat INT,
@@ -684,7 +690,9 @@ BEGIN
 
 	-- Baisse des stocks
  	update ARTICLE set ARTICLE.stock_article = ARTICLE.stock_article - _quantite where ARTICLE.id_article = _id_article_achat;
-end;
+end$$
+
+DELIMITER ;
 
 
 
@@ -720,6 +728,8 @@ SELECT ARTICLE.stock_article FROM ARTICLE WHERE ARTICLE.id_article = 1; -- Le st
 
 DROP PROCEDURE IF EXISTS suppressionCompte;
 
+DELIMITER $$
+
 CREATE PROCEDURE suppressionCompte
 (IN _id_utilisateur_supprime INT)
 BEGIN
@@ -729,7 +739,9 @@ BEGIN
 	DELETE FROM MEDIA WHERE id_membre = _id_utilisateur_supprime;
 	-- De meme le membre perd ses roles
 	DELETE FROM ASSIGNATION WHERE id_membre = _id_utilisateur_supprime;
-END;
+END$$
+
+DELIMITER ;
 
 
 /* Test */
@@ -748,6 +760,7 @@ automatiquement si l'evenements est deja complet. */
 
 DROP trigger IF EXISTS verif_places_event;
 
+DELIMITER $$
 
 CREATE TRIGGER verif_places_eventb AFTER INSERT ON INSCRIPTION FOR EACH ROW
 BEGIN
@@ -769,7 +782,9 @@ BEGIN
         -- ROLLBACK TRANSACTION n'existe pas sur MySQL, on utilise donc une erreur pour annuler l'insertion
         SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'Il n''y a plus de places disponibles pour cet evenement';
     END IF;
-END;
+END$$
+
+DELIMITER ;
 
 
 /* Test */
@@ -778,7 +793,7 @@ SELECT EVENEMENT.places_evenement - COUNT(*) as places_restantes from EVENEMENT
             group by EVENEMENT.id_evenement, EVENEMENT.places_evenement
             having EVENEMENT.id_evenement = 5;
 
-insert into INSCRIPTION VALUES(2, 5, NOW(), 'PAYPAL', 12); -- Erreur: transaction annuler parce que pas assez de places
+-- insert into INSCRIPTION VALUES(2, 5, NOW(), 'PAYPAL', 12); -- Erreur: transaction annuler parce que pas assez de places
 
 SELECT EVENEMENT.places_evenement - COUNT(*) as places_restantes from EVENEMENT
             join INSCRIPTION on INSCRIPTION.id_evenement = EVENEMENT.id_evenement
@@ -871,6 +886,8 @@ SELECT * FROM ACTUALITE;
 
 DROP PROCEDURE IF EXISTS creationCompte;
 
+DELIMITER $$
+
 CREATE PROCEDURE creationCompte
 (
     IN _name_user VARCHAR(100),
@@ -884,7 +901,9 @@ BEGIN
 	IF NOT EXISTS (SELECT * FROM MEMBRE WHERE email_membre = _email_user) THEN
 		INSERT INTO MEMBRE (nom_membre, prenom_membre, email_membre, password_membre, pp_membre) VALUES (_name_user, _firstName_user, _email_user, _password_user, _pp_user);
 	END IF;
-END;
+END$$
+
+DELIMITER ;
 
 
 CALL creationCompte('HANNIER', 'axelle', 'axelle.hannier@example.com', 'krjtj4jykjyi8oi', 'http://files.bdeinfo.fr/defaultPP.jpg');
