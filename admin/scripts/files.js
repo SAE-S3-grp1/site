@@ -57,5 +57,5 @@ export async function openFileDialog(accept = 'image/*') {
  * @returns {string} The URL of the file.
  */
 export function getFileBucketUrl(filename){
-    return `/~inf2pj01/api/files/${filename}`;
+    return `/api/files/${filename}`;
 }

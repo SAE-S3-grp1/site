@@ -10,10 +10,10 @@
 
     <title>Ma Gallerie</title>
     
-    <link rel="stylesheet" href="/~inf2pj01/styles/my_gallery_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="/styles/my_gallery_style.css">
+    <link rel="stylesheet" href="/styles/general_style.css">
+    <link rel="stylesheet" href="/styles/header_style.css">
+    <link rel="stylesheet" href="/styles/footer_style.css">
 
  
 
@@ -38,7 +38,7 @@
                 $eventid = $_GET['eventid'];
                 $userid = $_SESSION["userid"];
             }else {
-                header("Location: /~inf2pj01/index.php");
+                header("Location: /index.php");
                 exit;
             }
         }
@@ -53,7 +53,7 @@
 
 <section class="user-gallery">
 
-    <a href="/~inf2pj01/event_details.php?id=<?php echo "$eventid";?>" class="back-arrow">
+    <a href="/event_details.php?id=<?php echo "$eventid";?>" class="back-arrow">
         &#8592;<span>Retour</span>
     </a>
     <h1>MA GALLERIE</h1>
@@ -63,7 +63,7 @@
 
             <form id="add-media" action="add_media.php" method="post" enctype="multipart/form-data">
                 <label for="file-picker">
-                    <img src="/~inf2pj01/assets/add_media.png" alt="Ajouter un média">
+                    <img src="/assets/add_media.png" alt="Ajouter un média">
                 </label>
                 <input type="hidden" name="eventid" value="<?php echo $eventid?>">
                 <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
@@ -82,7 +82,7 @@
                    
            foreach($medias as $media => $img):?>
                 <div class="media-container">
-                    <img src="/~inf2pj01/api/files/<?php echo trim($img['url_media']); ?>" alt="Image Personnelle de l'événement">
+                    <img src="/api/files/<?php echo trim($img['url_media']); ?>" alt="Image Personnelle de l'événement">
                     <div class="delete-icon">
 
                         <form class="delete-media" action="delete_media.php" method="post">
@@ -106,9 +106,9 @@
 
 <?php require_once 'footer.php';?>
 
-<script src="/~inf2pj01/scripts/open_media.js"></script>
-<script src="/~inf2pj01/scripts/add_media.js"></script>
-<script src="/~inf2pj01/scripts/delete_media.js"></script>
+<script src="/scripts/open_media.js"></script>
+<script src="/scripts/add_media.js"></script>
+<script src="/scripts/delete_media.js"></script>
 
 
 </body>

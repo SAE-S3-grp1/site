@@ -15,7 +15,7 @@
                 [$eventid]
             );
             if(empty($event) || is_null($event)){
-                header("Location: /~inf2pj01/index.php");
+                header("Location: /index.php");
                 exit;
             }
             $event = $event[0];
@@ -25,7 +25,7 @@
             }
 
         }else{
-            header("Location: /~inf2pj01/index.php");
+            header("Location: /index.php");
             exit;
         }
     ?>
@@ -39,11 +39,11 @@
 
     <title><?php echo $event['nom_evenement']?></title>
 
-    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="/styles/header_style.css">
+    <link rel="stylesheet" href="/styles/footer_style.css">
 
-    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/event_details_style.css">
+    <link rel="stylesheet" href="/styles/general_style.css">
+    <link rel="stylesheet" href="/styles/event_details_style.css">
 
 
 
@@ -56,9 +56,9 @@
 ?>
     <section class="event-details">
         <?php if($event['image_evenement'] == null):?>
-            <img src="/~inf2pj01/admin/ressources/default_images/event.jpg" alt="Image de l'événement">
+            <img src="/admin/ressources/default_images/event.jpg" alt="Image de l'événement">
         <?php else:?>
-            <img src="/~inf2pj01/api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
+            <img src="/api/files/<?php echo $event['image_evenement']; ?>" alt="Image de l'événement">
         <?php endif?>
 
         <h1><?php echo strtoupper($event['nom_evenement']); ?></h1>
@@ -119,12 +119,12 @@
                 [$_SESSION["userid"], $eventid]
             );
             foreach($medias as $media => $img):?>
-            <img src="/~inf2pj01/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
+            <img src="/api/files/<?php echo trim($img['url_media']);?>" alt="Image Personelle de l'événement">
             <?php endforeach;?>
 
-            <form id="add-media" action="/~inf2pj01/add_media.php" method="post" enctype="multipart/form-data">
+            <form id="add-media" action="/add_media.php" method="post" enctype="multipart/form-data">
                 <label for="file-picker">
-                    <img src="/~inf2pj01/assets/add_media.png" alt="Ajouter un média">
+                    <img src="/assets/add_media.png" alt="Ajouter un média">
                 </label>
                 <input type="hidden" name="eventid" value="<?php echo $eventid?>">
                 <input type="hidden" name="userid" value="<?php echo $_SESSION['userid']?>">
@@ -133,9 +133,9 @@
                 <button type="submit" style="display:none;">Envoyer</button>
             </form>
 
-            <form id="open-gallery" action="/~inf2pj01/my_gallery.php" method="get">
+            <form id="open-gallery" action="/my_gallery.php" method="get">
                 <label for="open-gallery-button">
-                    <img src="/~inf2pj01/assets/explore_gallery.png" alt="Voir ma galerie entière">
+                    <img src="/assets/explore_gallery.png" alt="Voir ma galerie entière">
                 </label>
                 <input type="hidden" name="eventid" value="<?php echo $eventid ?>">
                 <button id="open-gallery-button" type="submit" style="display:none;">Envoyer</button>
@@ -155,7 +155,7 @@
                 [$eventid, $show]
             );
             foreach($medias as $media => $img):?>
-            <img src="/~inf2pj01/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
+            <img src="/api/files/<?php echo trim($img['url_media']);?>" alt="Image de l'événement">
             <?php endforeach;?>
 
 
@@ -182,9 +182,9 @@
 
 
     <?php require_once 'footer.php';?>
-    <script src="/~inf2pj01/scripts/open_media.js"></script>
-    <script src="/~inf2pj01/scripts/add_media.js"></script>
-    <script src="/~inf2pj01/scripts/open_gallery.js"></script>
+    <script src="/scripts/open_media.js"></script>
+    <script src="/scripts/add_media.js"></script>
+    <script src="/scripts/open_gallery.js"></script>
 
 </body>
 

@@ -6,11 +6,11 @@
     <title>Commander</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="/~inf2pj01/styles/order_style.css">
+    <link rel="stylesheet" href="/styles/order_style.css">
 
-    <link rel="stylesheet" href="/~inf2pj01/styles/general_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/header_style.css">
-    <link rel="stylesheet" href="/~inf2pj01/styles/footer_style.css">
+    <link rel="stylesheet" href="/styles/general_style.css">
+    <link rel="stylesheet" href="/styles/header_style.css">
+    <link rel="stylesheet" href="/styles/footer_style.css">
 
 </head>
 
@@ -42,7 +42,7 @@ $cart = new cart($db);
 
 $isLoggedIn = isset($_SESSION["userid"]);
 if (!$isLoggedIn) {
-    header("Location: /~inf2pj01/login.php");
+    header("Location: /login.php");
     exit;
 }
 
@@ -50,7 +50,7 @@ $userid = $_SESSION["userid"];
 
 // Récupérer le panier
 if (empty($_SESSION['cart'])) {
-    header("Location: /~inf2pj01/cart.php");
+    header("Location: /cart.php");
     exit;
 }
 
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = "Commande réalisée avec succès !";
         $_SESSION['message_type'] = "success";
 
-        header("Location: /~inf2pj01/cart.php"); // Rediriger vers le panier
+        header("Location: /cart.php"); // Rediriger vers le panier
         exit;
     } else {
     }
@@ -113,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div>
     <button id="cart-button" >
-        <a href="/~inf2pj01/cart.php">
-            <img src="/~inf2pj01/assets/fleche_retour.png" alt="Fleche de retour">
+        <a href="/cart.php">
+            <img src="/assets/fleche_retour.png" alt="Fleche de retour">
             Retourner au panier
         </a>
     </button>
@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <option value="paypal">PayPal</option>
         </select><br><br>
         <div id="carte_credit" class="mode_paiement_fields">
-            <form method="POST" action="/~inf2pj01/order.php">
+            <form method="POST" action="/order.php">
                 <input type="hidden" name="mode_paiement" value="carte_credit">
 
                 <label for="numero_carte">Numéro de Carte :</label>
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div id="paypal" class="mode_paiement_fields" style="display: none;">
-            <form method="POST" action="/~inf2pj01/order.php">
+            <form method="POST" action="/order.php">
                 <input type="hidden" name="mode_paiement" value="paypal">
 
                 <button type="button" id="paypal-button">Se connecter à PayPal</button><br><br>
