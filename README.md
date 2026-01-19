@@ -1,27 +1,54 @@
 # Setup
 
+## Droits
+```bash
+# ajout de l'utilisateur actuel au groupe www-data pour avoir les droits sur le dossier /var/www/html
+sudo usermod -a -G www-data "$USER"
+```
+
 ## Git pull
 
 ```bash
 cd /var/www/html
-sudo git pull https://github.com/SAE-S3-grp1/site.git .
+rm index.html
+git clone https://github.com/SAE-S3-grp1/site.git .
 ```
 
 ## DB setup
 
 ```bash
 cd /var/www/html
-mysql -u etu -psae32024 sae < ./script.sql
-# ou avec un prompt interactif : 
-# mysql -u etu -p -D sae < ./script.sql
+# mot de passe avec prompt interactif
+mysql -u etu -p -D sae < ./script.sql
+
+# ou avec le mot de passe directement (-p[motdepasse]) :
+# mysql -u etu -psae32024 sae < ./script.sql
 ```
 
 ## Ownership
 
-www-data doit AU MINIMUM avoir le dossier api/files.
+www-data doit AU MINIMUM posséder le dossier api/files.
 ```bash
 cd /var/www/html
-sudo chmown -R www-data html
+sudo chown -R www-data .
+sudo chgrp -R www-data .
+```
+
+## Configuration
+
+Afin de lier la DB au code source, il faut éditer les fichiers :
+- `api/DB.php`
+- `database.php`
+
+Et modifier les champs comme ci-dessous.
+```php
+class DB
+{
+    private $host = 'localhost';
+    private $port = '3306';
+    private $db = 'sae'; // <- ici
+    private $db_user = 'etu'; // <- ici
+    private $db_pass = '[VOTRE_MDP]'; // <- ici
 ```
 
 # infos db
