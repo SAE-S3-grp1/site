@@ -41,13 +41,6 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
-
-## Droits finaux
-```bash
-sudo chown -R www-data /var/www/html
-sudo chgrp -R www-data /var/www/html
-```
-
 ## Configuration
 
 Afin de lier la DB au code source, il faut éditer les fichiers :
@@ -63,6 +56,12 @@ class DB
     private $db = 'sae'; // <- ici
     private $db_user = 'etu'; // <- ici
     private $db_pass = '[VOTRE_MDP]'; // <- ici
+```
+
+## Droits finaux
+```bash
+sudo chown -R www-data /var/www/html
+sudo chgrp -R www-data /var/www/html
 ```
 
 # infos db
