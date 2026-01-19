@@ -1,9 +1,8 @@
 # Setup
 
-## Droits
+## Droits pour le setup
 ```bash
-# ajout de l'utilisateur actuel au groupe www-data pour avoir les droits sur le dossier /var/www/html
-sudo usermod -a -G www-data "$USER"
+sudo chown -R "$USER" /var/www/html
 ```
 
 ## Git clone
@@ -16,22 +15,30 @@ git clone https://github.com/SAE-S3-grp1/site.git .
 
 ## DB setup
 
+Mot de passe avec prompt interactif
 ```bash
 cd /var/www/html
-# mot de passe avec prompt interactif
 mysql -u etu -p -D sae < ./script.sql
-
-# ou avec le mot de passe directement (-p[motdepasse]) :
-# mysql -u etu -psae32024 sae < ./script.sql
 ```
 
-## Ownership
-
-www-data doit AU MINIMUM posséder le dossier api/files.
+Ou avec le mot de passe directement :
 ```bash
 cd /var/www/html
-sudo chown -R www-data .
-sudo chgrp -R www-data .
+mysql -u etu -pMonMotDePasse sae < ./script.sql
+# (pas d'espace entre -p et le mdp)
+```
+
+Si le mot de passe de l'utilisateur "etu" est incorrect, vous pouvez le modifier avec :
+```bash
+sudo mysql -u root
+```
+```sql
+ALTER USER 'etu'@'%' IDENTIFIED BY 'motdepasse';
+ALTER USER 'etu'@'localhost' IDENTIFIED BY 'motdepasse';
+
+FLUSH PRIVILEGES;
+
+exit;
 ```
 
 ## Configuration
@@ -49,6 +56,12 @@ class DB
     private $db = 'sae'; // <- ici
     private $db_user = 'etu'; // <- ici
     private $db_pass = '[VOTRE_MDP]'; // <- ici
+```
+
+## Droits finaux
+```bash
+sudo chown -R www-data /var/www/html
+sudo chgrp -R www-data /var/www/html
 ```
 
 # infos db
