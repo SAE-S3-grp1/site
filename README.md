@@ -65,6 +65,12 @@ sudo chgrp -R www-data /var/www/html
 ```
 
 # infos db
+
+## Problèmes connus 
+- Erreur lors de la modification d'un article/event dans le panel admin; probablement un problème avec la DB.
+- Le script de remplissage des données fait pointer des liens vers des fichiers qui ne sont pas présent dans le répo (documents, images) -> erreurs d'affichage
+
+
 ## Logins des utilisateurs par défaut 
 
 | email | mot_de_passe |
